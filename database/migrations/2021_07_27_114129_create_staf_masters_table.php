@@ -19,7 +19,8 @@ class CreateStafMastersTable extends Migration
             $table->string("email")->unique();
             $table->timestamp("email_verified_at")->nullable();
             $table->string("password");
-            $table->integer('phone');
+            $table->string('phone');
+            $table->integer('status');
             $table->string("qualification");
             $table->string("blood_group");
             $table->string("joined_on");
