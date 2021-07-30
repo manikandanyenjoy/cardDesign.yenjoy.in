@@ -253,16 +253,6 @@ return [
             'icon'        => 'fas fa-fw fa-user-shield',
         ],
         [
-            'text'        => ['Sellers'],
-            'url'         => 'sellers',
-            'icon'        => 'fas fa-fw fa-user-tie',
-        ],
-        [
-            'text'        => ['Buyers'],
-            'url'         => 'buyers',
-            'icon'        => 'fas fa-fw fa-user',
-        ],
-        [
             'text'        => ['Designers'],
             'url'         => 'designers',
             'icon'        => 'fas fa-fw fa-user',
