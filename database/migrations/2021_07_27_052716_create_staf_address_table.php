@@ -26,10 +26,7 @@ class CreateStafAddressTable extends Migration
             $table->string("country");
             $table->string("state");
             $table->timestamps();
-            $table
-            ->foreign("staf_id")
-            ->references("id")
-            ->on("users");
+            
         });
     }
 
