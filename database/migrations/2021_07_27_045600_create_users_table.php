@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string("password");
             $table->integer('phone');
             $table->string("qualification");
-            $table->string("bllod_group");
+            $table->string("blood_group");
             $table->string("joined_on");
             $table->string("left_on");
             $table->unsignedBigInteger("role_id");
