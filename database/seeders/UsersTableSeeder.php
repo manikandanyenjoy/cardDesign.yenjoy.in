@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 "name" => "Guna",
-                "email" => "guna@zydni.com",
+                "email" => "guna@yenjoy.in",
                 "password" => "password",
             ],
         ];
