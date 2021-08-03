@@ -36,6 +36,7 @@
                             <thead>
                             <tr>
                                 <th style="width: 50px">#</th>
+                                <th>Name</th>
                                 <th>Colour</th>
                                 <th style="width: 200px">Action</th>
                             </tr>
@@ -44,7 +45,8 @@
                             @foreach ($warps as $index => $warp)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $warp->colour }}</td>
+                                    <td>{{ $warp->name }}</td>
+                                    <td style="background-color: {{ $warp->colour }};"></td>
                                     <td>
                                         <a href="{{ route('warps.show',$warp->id) }}" class="btn btn-sm btn-warning">View</a>
                                         @if(!$warp->deleted_at)

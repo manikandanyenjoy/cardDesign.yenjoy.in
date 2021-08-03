@@ -16,6 +16,7 @@ class CreateWarpMastersTable extends Migration
         Schema::create('warp_masters', function (Blueprint $table) {
             $table->id();
             $table->string("colour");
+            $table->string("colour");
             $table->timestamps();
             $table->softDeletes();
         });

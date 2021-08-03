@@ -13,6 +13,7 @@ class WarpMaster extends Model
 
     protected $fillable = [
         "colour",
+        "name"
 
     ];
 }

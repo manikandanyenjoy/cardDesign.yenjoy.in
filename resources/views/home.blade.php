@@ -22,7 +22,7 @@
                         <div class="inner">
                             <h3>{{ cache('seller_count') ?? 0 }}</h3>
 
-                            <p>{{ __('Sellers') }}</p>
+                            <p>{{ __('Vendors') }}</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-user-tie"></i>
@@ -36,7 +36,7 @@
                         <div class="inner">
                             <h3>{{ cache('buyer_count') ?? 0 }}</h3>
 
-                            <p>{{ __('Buyers') }}</p>
+                            <p>{{ __('Customers') }}</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-user"></i>

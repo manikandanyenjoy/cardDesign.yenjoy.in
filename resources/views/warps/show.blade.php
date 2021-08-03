@@ -26,9 +26,14 @@
                         <div class="card-body">
                             <table class="table table-bordered table-sm">
                                 <tbody>
+                                <tr>
+                                        <td><strong>{{ __('Name') }}</strong></td>
+                                        <td>{{ $warp->name }}</td>
+                                    </tr>
                                     <tr>
-                                        <td><strong>{{ __('Colour Name') }}</strong></td>
-                                        <td>{{ $warp->colour }}</td>
+                                        <td><strong>{{ __('Colour') }}</strong></td>
+                                        <td style="background-color: {{ $warp->colour }};"></td>
+                                        
                                     </tr>
                                     
                                 </tbody>

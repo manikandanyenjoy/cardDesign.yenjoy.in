@@ -40,9 +40,18 @@
                             <div class="card-body row">
 
                                <div class="col-md-6" style=""> 
+
+                               <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{old('name')}}" placeholder="Name">
+                                    @error('name')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                               
                                 <div class="form-group">
                                     <label for="colour">Colour</label>
-                                    <input type="text" class="form-control @error('colour') is-invalid @enderror" id="colour" name="colour" value="{{old('colour')}}" placeholder="colour">
+                                    <input type="color" class="form-control @error('colour') is-invalid @enderror" id="colour" name="colour" value="#ff0000" placeholder="colour">
                                     @error('colour')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror

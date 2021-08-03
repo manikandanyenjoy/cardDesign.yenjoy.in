@@ -18,6 +18,7 @@ class CreateFoldMastersTable extends Migration
             $table->string("type_of_fold");
             $table->string("image");
             $table->string("minimum_mm");
+            $table->string("notes");
             $table->timestamps();
             $table->softDeletes();
         });
