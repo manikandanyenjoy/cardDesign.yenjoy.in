@@ -25,20 +25,36 @@ class SellerRequest extends FormRequest
     {
         $validation = [
             "first_name" => "required|alpha_num|min:4|max:50",
-            "last_name" => "required|alpha_num|min:4|max:50",
-            "email" => "required|email|unique:buyers,email",
+            "last_name" => "required|alpha_num|max:50",
+            "email" => "required|email|unique:vendor_masters,email",
             "password" =>
-                'required|confirmed|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
-            "address_line" => 'required|string|max:200',
-            "location_id" => 'required|exists:states,id',
-            "postal_code" => 'required|numeric|integer|min:5|max:10',
-            "subscription_plan_id" => 'required|exists:subscription_plans,id'
+                'required|confirmed|min:8',
+            "mobile_number" => 'required|min:10|numeric',
+            "bank_name" => 'required',
+            "account_no" => 'required',
+            "IFSCCode" => 'required',
+            "opening_balance" => 'required',
+            "credit_period" => 'required',
+            "grade" => 'required',
+            
         ];
 
         if ($this->isMethod("put")) {
-            $validation["email"] = "required|string|max:50|unique:buyers,email," . $this->route("seller")->id;
-            $validation["password"] = 'nullable|confirmed|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/';
-        }
+        $validation = [
+            "first_name" => "required|alpha_num|min:4|max:50",
+            "last_name" => "required|alpha_num|max:50",
+            "password" =>
+                'required|confirmed|min:8',
+            "mobile_number" => 'required|min:10|numeric',
+            "bank_name" => 'required',
+            "account_no" => 'required',
+            "IFSCCode" => 'required',
+            "opening_balance" => 'required',
+            "credit_period" => 'required',
+            "grade" => 'required',
+            
+        ];
+    }
 
         return $validation;
     }

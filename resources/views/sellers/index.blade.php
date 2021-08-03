@@ -3,7 +3,14 @@
 @section('title', 'Sellers')
 
 @section('content_header')
-    <h1>{{ __('Sellers') }}</h1>
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1>{{ __('Sellers') }}</h1>
+        </div>
+        <div class="col-sm-6">
+            <a href="{{ route('sellers.create') }}" class="btn bg-gradient-primary float-right">{{ __('Add Seller') }}</a>
+        </div>
+    </div>
 @stop
 
 @section('content')
@@ -11,14 +18,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    @foreach (['danger', 'warning', 'success', 'info'] as $message)
-                        @if(Session::has($message))
-                            <div class="alert alert-{{ $message }}">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                {{ session($message) }}
-                            </div>
-                        @endif
-                    @endforeach
+                    @include('shared.errors')
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Sellers</h3>
@@ -32,8 +32,8 @@
                                     <th>Firstname</th>
                                     <th>Lastname</th>
                                     <th>Email</th>
-                                    <th>Location</th>
-                                    <th>Subscription</th>
+                                    <th>Phone</th>
+                                    
                                     <th style="width: 200px">Action</th>
                                 </tr>
                                 </thead>
@@ -44,8 +44,8 @@
                                         <td>{{ $seller->first_name }}</td>
                                         <td>{{ $seller->last_name }}</td>
                                         <td>{{ $seller->email }}</td>
-                                        <td>{{ $seller->location->name }}</td>
-                                        <td>{{ $seller->subscriptionPlan->name }}</td>
+                                        <td>{{ $seller->mobile_number }}</td>
+                                       
                                         <td>
                                             <a href="{{ route('sellers.show',$seller->id) }}" class="btn btn-sm btn-warning">View</a>
                                             <a href="{{ route('sellers.edit',$seller->id) }}" class="btn btn-sm btn-info">Edit</a>

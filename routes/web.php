@@ -25,7 +25,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('users/{user}/edit', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('users.edit');
     Route::put('users/{user}', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('users.update');
     Route::delete('users/{user}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('users.destroy');
-
     Route::get('users/change-password', [\App\Http\Controllers\Admin\UserController::class, 'showChangePasswordForm'])->name('changePasswordForm');
     Route::post('users/change-password', [\App\Http\Controllers\Admin\UserController::class, 'changePassword'])->name('changePassword');
 
@@ -120,6 +119,75 @@ Route::middleware(['auth'])->group(function () {
    Route::put('qualitycheckers/{qualitychecker}', [\App\Http\Controllers\Admin\QualityCheckerController::class, 'update'])->name('qualitycheckers.update');
    Route::get('qualitycheckers/{qualitychecker}', [\App\Http\Controllers\Admin\QualityCheckerController::class, 'show'])->name('qualitycheckers.show');
    Route::delete('qualitycheckers/{qualitychecker}', [\App\Http\Controllers\Admin\QualityCheckerController::class, 'destroy'])->name('qualitycheckers.destroy');
+
+
+
+    //Warp Masters
+
+    Route::get('warps', [\App\Http\Controllers\Admin\WarpController::class, 'index'])->name('warps.index');
+    Route::get('warps/create', [\App\Http\Controllers\Admin\WarpController::class, 'create'])->name('warps.create');
+    Route::post('warps', [\App\Http\Controllers\Admin\WarpController::class, 'store'])->name('warps.store');
+    Route::get('warps/{warp}/edit', [\App\Http\Controllers\Admin\WarpController::class, 'edit'])->name('warps.edit');
+    Route::put('warps/{warp}', [\App\Http\Controllers\Admin\WarpController::class, 'update'])->name('warps.update');
+    Route::get('warps/{warp}', [\App\Http\Controllers\Admin\WarpController::class, 'show'])->name('warps.show');
+    Route::delete('warps/{warp}', [\App\Http\Controllers\Admin\WarpController::class, 'destroy'])->name('warps.destroy');
+ 
+
+    //wovenqualitys
+
+    Route::get('wovenqualitys', [\App\Http\Controllers\Admin\wovenQualityController::class, 'index'])->name('wovenqualitys.index');
+    Route::get('wovenqualitys/create', [\App\Http\Controllers\Admin\wovenQualityController::class, 'create'])->name('wovenqualitys.create');
+    Route::post('wovenqualitys', [\App\Http\Controllers\Admin\wovenQualityController::class, 'store'])->name('wovenqualitys.store');
+    Route::get('wovenqualitys/{wovenquality}/edit', [\App\Http\Controllers\Admin\wovenQualityController::class, 'edit'])->name('wovenqualitys.edit');
+    Route::put('wovenqualitys/{wovenquality}', [\App\Http\Controllers\Admin\wovenQualityController::class, 'update'])->name('wovenqualitys.update');
+    Route::get('wovenqualitys/{wovenquality}', [\App\Http\Controllers\Admin\wovenQualityController::class, 'show'])->name('wovenqualitys.show');
+    Route::delete('wovenqualitys/{wovenquality}', [\App\Http\Controllers\Admin\wovenQualityController::class, 'destroy'])->name('wovenqualitys.destroy');
+
+
+     //finishingmachines
+
+     Route::get('finishingmachines', [\App\Http\Controllers\Admin\FinishingMachinesController::class, 'index'])->name('finishingmachines.index');
+     Route::get('finishingmachines/create', [\App\Http\Controllers\Admin\FinishingMachinesController::class, 'create'])->name('finishingmachines.create');
+     Route::post('finishingmachines', [\App\Http\Controllers\Admin\FinishingMachinesController::class, 'store'])->name('finishingmachines.store');
+     Route::get('finishingmachines/{finishingmachine}/edit', [\App\Http\Controllers\Admin\FinishingMachinesController::class, 'edit'])->name('finishingmachines.edit');
+     Route::put('finishingmachines/{finishingmachine}', [\App\Http\Controllers\Admin\FinishingMachinesController::class, 'update'])->name('finishingmachines.update');
+     Route::get('finishingmachines/{finishingmachine}', [\App\Http\Controllers\Admin\FinishingMachinesController::class, 'show'])->name('finishingmachines.show');
+     Route::delete('finishingmachines/{finishingmachine}', [\App\Http\Controllers\Admin\FinishingMachinesController::class, 'destroy'])->name('finishingmachines.destroy');
+ 
+
+
+      //looms
+
+      Route::get('looms', [\App\Http\Controllers\Admin\LoomController::class, 'index'])->name('looms.index');
+      Route::get('looms/create', [\App\Http\Controllers\Admin\LoomController::class, 'create'])->name('looms.create');
+      Route::post('looms', [\App\Http\Controllers\Admin\LoomController::class, 'store'])->name('looms.store');
+      Route::get('looms/{loom}/edit', [\App\Http\Controllers\Admin\LoomController::class, 'edit'])->name('looms.edit');
+      Route::put('looms/{loom}', [\App\Http\Controllers\Admin\LoomController::class, 'update'])->name('looms.update');
+      Route::get('looms/{loom}', [\App\Http\Controllers\Admin\LoomController::class, 'show'])->name('looms.show');
+      Route::delete('looms/{loom}', [\App\Http\Controllers\Admin\LoomController::class, 'destroy'])->name('looms.destroy');
+  
+  
+      //yarns
+
+  Route::get('yarns', [\App\Http\Controllers\Admin\YarnController::class, 'index'])->name('yarns.index');
+  Route::get('yarns/create', [\App\Http\Controllers\Admin\YarnController::class, 'create'])->name('yarns.create');
+  Route::post('yarns', [\App\Http\Controllers\Admin\YarnController::class, 'store'])->name('yarns.store');
+  Route::get('yarns/{yarn}/edit', [\App\Http\Controllers\Admin\YarnController::class, 'edit'])->name('yarns.edit');
+  Route::put('yarns/{yarn}', [\App\Http\Controllers\Admin\YarnController::class, 'update'])->name('yarns.update');
+  Route::get('yarns/{yarn}', [\App\Http\Controllers\Admin\YarnController::class, 'show'])->name('yarns.show');
+  Route::delete('yarns/{yarn}', [\App\Http\Controllers\Admin\YarnController::class, 'destroy'])->name('yarns.destroy');
+
+
+  //folds
+
+  Route::get('folds', [\App\Http\Controllers\Admin\FoldController::class, 'index'])->name('folds.index');
+  Route::get('folds/create', [\App\Http\Controllers\Admin\FoldController::class, 'create'])->name('folds.create');
+  Route::post('folds', [\App\Http\Controllers\Admin\FoldController::class, 'store'])->name('folds.store');
+  Route::get('folds/{fold}/edit', [\App\Http\Controllers\Admin\FoldController::class, 'edit'])->name('folds.edit');
+  Route::put('folds/{fold}', [\App\Http\Controllers\Admin\FoldController::class, 'update'])->name('folds.update');
+  Route::get('folds/{fold}', [\App\Http\Controllers\Admin\FoldController::class, 'show'])->name('folds.show');
+  Route::delete('folds/{fold}', [\App\Http\Controllers\Admin\FoldController::class, 'destroy'])->name('folds.destroy');
+
 
 });
 

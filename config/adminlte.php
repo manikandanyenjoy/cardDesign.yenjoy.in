@@ -253,6 +253,16 @@ return [
             'icon'        => 'fas fa-fw fa-user-shield',
         ],
         [
+            'text'        => ['Vendors'],
+            'url'         => 'sellers',
+            'icon'        => 'fas fa-fw fa-user',
+        ],
+        [
+            'text'        => ['Customers'],
+            'url'         => 'buyers',
+            'icon'        => 'fas fa-fw fa-user',
+        ],
+        [
             'text'        => ['Designers'],
             'url'         => 'designers',
             'icon'        => 'fas fa-fw fa-user',
@@ -285,6 +295,37 @@ return [
         [
             'text'        => ['Quality Checkers'],
             'url'         => 'qualitycheckers',
+            'icon'        => 'fas fa-fw fa-user',
+        ],
+        [
+            'text'        => ['Warps'],
+            'url'         => 'warps',
+            'icon'        => 'fas fa-fw fa-user',
+        ],
+        [
+            'text'        => ['FinishingMachines'],
+            'url'         => 'finishingmachines',
+            'icon'        => 'fas fa-fw fa-user',
+        ],
+        [
+            'text'        => ['Looms'],
+            'url'         => 'looms',
+            'icon'        => 'fas fa-fw fa-user',
+        ],
+        [
+            'text'        => ['Yarns'],
+            'url'         => 'yarns',
+            'icon'        => 'fas fa-fw fa-user',
+        ],
+
+        [
+            'text'        => ['WovenQualitys'],
+            'url'         => 'wovenqualitys',
+            'icon'        => 'fas fa-fw fa-user',
+        ],
+        [
+            'text'        => ['Folds'],
+            'url'         => 'folds',
             'icon'        => 'fas fa-fw fa-user',
         ],
         ['header' => 'account_settings'],

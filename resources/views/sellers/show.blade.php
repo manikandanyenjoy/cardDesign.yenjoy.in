@@ -38,21 +38,42 @@
                                         <td><strong>{{ __('Email') }}</strong></td>
                                         <td>{{ $seller->email }}</td>
                                     </tr>
+                                   
                                     <tr>
-                                        <td><strong>{{ __('Address Line') }}</strong></td>
-                                        <td>{{ $seller->address_line }}</td>
+                                        <td><strong>{{ __('Phone') }}</strong></td>
+                                        <td>{{ $seller->mobile_number }}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>{{ __('Location') }}</strong></td>
-                                        <td>{{ $seller->location->name }}</td>
+                                        <td><strong>{{ __('Bank Name') }}</strong></td>
+                                        <td>{{ $seller->bank_name }}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>{{ __('Postal Code') }}</strong></td>
-                                        <td>{{ $seller->postal_code }}</td>
+                                        <td><strong>{{ __('Account Number') }}</strong></td>
+                                        <td>{{ $seller->account_no }}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>{{ __('Subscription Plan') }}</strong></td>
-                                        <td>{{ $seller->subscriptionPlan->name }}</td>
+                                        <td><strong>{{ __('IFSC Code') }}</strong></td>
+                                        <td>{{ $seller->IFSCCode }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Opening Balance') }}</strong></td>
+                                        <td>{{ $seller->opening_balance }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Credit Period') }}</strong></td>
+                                        <td>{{ $seller->credit_period }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Grade') }}</strong></td>
+                                        <td>{{ $seller->grade }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Shipping Address') }}</strong></td>
+                                        <td>{{ $shippingAddress->flatno }},{{ $shippingAddress->apartment }},{{ $shippingAddress->area }},{{ $shippingAddress->landmark }},{{ $shippingAddress->city }},{{ $shippingAddress->state }},{{ $shippingAddress->country }}-{{ $shippingAddress->zipcode }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Billing Address') }}</strong></td>
+                                        <td>{{ $billingAddress->flatno }},{{ $billingAddress->apartment }},{{ $billingAddress->area }},{{ $billingAddress->landmark }},{{ $billingAddress->city }},{{ $billingAddress->state }},{{ $billingAddress->country }}-{{ $billingAddress->zipcode }}</td>
                                     </tr>
                                 </tbody>
                             </table>

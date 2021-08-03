@@ -1,9 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'Buyers')
+@section('title', 'Customers')
 
 @section('content_header')
-    <h1>{{ __('Buyers') }}</h1>
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1>{{ __('Customers') }}</h1>
+        </div>
+        <div class="col-sm-6">
+            <a href="{{ route('buyers.create') }}" class="btn bg-gradient-primary float-right">{{ __('Add buyer') }}</a>
+        </div>
+    </div>
 @stop
 
 @section('content')
@@ -11,17 +18,10 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    @foreach (['danger', 'warning', 'success', 'info'] as $message)
-                        @if(Session::has($message))
-                            <div class="alert alert-{{ $message }}">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                {{ session($message) }}
-                            </div>
-                        @endif
-                    @endforeach
+                    @include('shared.errors')
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Buyers</h3>
+                            <h3 class="card-title">Customers</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -32,8 +32,8 @@
                                     <th>Firstname</th>
                                     <th>Lastname</th>
                                     <th>Email</th>
-                                    <th>Location</th>
-                                    <th>Postal Code</th>
+                                    <th>Phone</th>
+                                    
                                     <th style="width: 200px">Action</th>
                                 </tr>
                                 </thead>
@@ -44,14 +44,14 @@
                                         <td>{{ $buyer->first_name }}</td>
                                         <td>{{ $buyer->last_name }}</td>
                                         <td>{{ $buyer->email }}</td>
-                                        <td>{{ $buyer->location->name }}</td>
-                                        <td>{{ $buyer->postal_code }}</td>
+                                        <td>{{ $buyer->mobile_number }}</td>
+                                       
                                         <td>
                                             <a href="{{ route('buyers.show',$buyer->id) }}" class="btn btn-sm btn-warning">View</a>
                                             <a href="{{ route('buyers.edit',$buyer->id) }}" class="btn btn-sm btn-info">Edit</a>
                                             <form method="POST" action="{{ route('buyers.destroy', $buyer->id) }}"
                                                   accept-charset="UTF-8"
-                                                  style="display: inline-block; margin: auto"
+                                                  style="display: inline-block;"
                                                   onsubmit="return confirm('Are you sure do you want to delete?');">
                                                 @csrf
                                                 @method('DELETE')
@@ -80,9 +80,3 @@
         </div>
     </section>
 @stop
-<script>
-    import RouterView from "vue-router";
-    export default {
-        components: { RouterView }
-    }
-</script>

@@ -52,6 +52,13 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'folds' => [
+            'driver' => 'local',
+            'root' => storage_path('app/folds'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'private',
+        ],
+
     ],
 
     /*

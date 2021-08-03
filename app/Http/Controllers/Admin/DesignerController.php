@@ -21,7 +21,7 @@ class DesignerController extends Controller
      */
     public function index()
     {
-        $designers = Staf_master::where('role_id',1)->orderBy('id', 'DESC')->withTrashed()->paginate(
+        $designers = Staf_master::where('role_id',1)->orderBy('created_at', 'DESC')->withTrashed()->paginate(
             config("motorTraders.paginate.perPage")
         );
 

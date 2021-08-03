@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Seeders;
-
+use App\Models\Admin_address;
 use Illuminate\Database\Seeder;
 
 class AdminAddressTableSeeder extends Seeder
@@ -16,7 +16,7 @@ class AdminAddressTableSeeder extends Seeder
         $address = [
             [
                 "admin_id" => "1",
-                "fullname" => "Manikandan s",
+                "fullname" => "Manikandan S",
                 "flatno" => "#34",
                 "apartment" => "Mk apaetment",
                 "landmark" => "Near Cell shop",
@@ -28,8 +28,8 @@ class AdminAddressTableSeeder extends Seeder
 
             ],
             [
-                "admin_id" => "1",
-                "fullname" => "Manikandan s",
+                "admin_id" => "2",
+                "fullname" => "Gunasekaran G",
                 "flatno" => "#34",
                 "apartment" => "Mk apaetment",
                 "landmark" => "Near Cell shop",
@@ -43,8 +43,8 @@ class AdminAddressTableSeeder extends Seeder
         ];
 
         foreach ($address as $user) {
-            admin_addresses::create($user);
+            Admin_address::create($user);
         }
-    }
+    
     }
 }
