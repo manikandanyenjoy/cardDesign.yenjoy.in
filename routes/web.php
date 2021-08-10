@@ -189,5 +189,16 @@ Route::middleware(['auth'])->group(function () {
   Route::delete('folds/{fold}', [\App\Http\Controllers\Admin\FoldController::class, 'destroy'])->name('folds.destroy');
 
 
+ //woven design card
+
+ Route::get('woven-design-cards', [\App\Http\Controllers\Admin\WovenController::class, 'index'])->name('woven.index');
+ Route::get('woven-design-card/create', [\App\Http\Controllers\Admin\WovenController::class, 'create'])->name('woven.create');
+ Route::post('woven-design-card', [\App\Http\Controllers\Admin\WovenController::class, 'store'])->name('woven.store');
+ Route::get('woven-design-card/{woven}/edit', [\App\Http\Controllers\Admin\WovenController::class, 'edit'])->name('woven.edit');
+ Route::put('woven-design-card/{woven}', [\App\Http\Controllers\Admin\WovenController::class, 'update'])->name('woven.update');
+ Route::get('woven-design-card/{woven}', [\App\Http\Controllers\Admin\WovenController::class, 'show'])->name('woven.show');
+ Route::delete('woven-design-card/{woven}', [\App\Http\Controllers\Admin\WovenController::class, 'destroy'])->name('woven.destroy');
+
+
 });
 
