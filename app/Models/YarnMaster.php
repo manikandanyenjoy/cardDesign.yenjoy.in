@@ -15,6 +15,7 @@ class YarnMaster extends Model
     protected $fillable = [
         "supplier",
         "yarn_denier",
+        "shade_No_suffix",
         "shade_No",
         "yarn_color",
         "color_shade",

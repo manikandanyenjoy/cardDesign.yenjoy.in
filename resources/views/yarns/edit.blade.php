@@ -5,7 +5,7 @@
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1>{{ __('Edit yarn - ') . $yarn->yarn_name }}</h1>
+            <h1>{{ __('Edit yarn - ') . $yarn->supplier }}</h1>
         </div>
         <div class="col-sm-6">
             <a href="{{ route('yarns.index') }}" class="btn bg-gradient-primary float-right">Back</a>
@@ -55,28 +55,28 @@
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-6">
+                                <div class="form-group col-3">
                                     <label for="shade_No">Shade No</label>
                                     <input type="text" class="form-control @error('shade_No') is-invalid @enderror" id="shade_No" name="shade_No" value="{{$yarn->shade_No}}" placeholder="Shade No">
                                     @error('shade_No')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                
-                                <div class="form-group col-6">
-                                    <label for="yarn_color">Yarn Color</label>
-                                    <input type="text" class="form-control @error('yarn_color') is-invalid @enderror" id="yarn_color" name="yarn_color" value="{{$yarn->yarn_color}}" placeholder="Yarn Color">
-                                    @error('yarn_color')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
                                 <div class="form-group col-3">
                                     <label for="shade_No_suffix"></label>
-                                    <input type="text" class="form-control @error('shade_No_suffix') is-invalid @enderror" id="shade_No_suffix" name="shade_No_suffix" value="{{old('shade_No_suffix')}}" placeholder="Shade No">
+                                    <input type="text" class="form-control @error('shade_No_suffix') is-invalid @enderror" id="shade_No_suffix" name="shade_No_suffix" value="{{$yarn->shade_No_suffix}}" placeholder="Shade No">
                                     @error('shade_No_suffix')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <div class="form-group col-6">
+                                    <label for="yarn_color">Yarn Color</label>
+                                    <input type="color" class="form-control @error('yarn_color') is-invalid @enderror" id="yarn_color" name="yarn_color" value="{{$yarn->yarn_color}}" placeholder="Yarn Color">
+                                    @error('yarn_color')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                               
                                 <div class="form-group col-6">
                                     <label for="color_shade">Color Shade</label>
                                     <input type="text" class="form-control @error('color_shade') is-invalid @enderror" id="color_shade" name="color_shade" value="{{$yarn->color_shade}}" placeholder="Color Shade">

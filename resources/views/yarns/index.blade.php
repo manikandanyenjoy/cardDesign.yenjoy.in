@@ -53,7 +53,7 @@
                                     <td>{{ $yarn->yarn_denier }}</td>
                                     <td>{{ $yarn->shade_No }}{{ $yarn->shade_No_suffix }}</td>
                                     <td>{{ $yarn->yarn_color }}</td>
-                                    <td style="background-color: {{ $yarn->color_shade }};"></td>
+                                    <td style="background-color: {{ $yarn->yarn_color }};"></td>
                                     <td>{{ $yarn->notes }}</td>
                                     <td>
                                         <a href="{{ route('yarns.show',$yarn->id) }}" class="btn btn-sm btn-warning">View</a>
