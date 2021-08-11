@@ -44,6 +44,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('buyers/{buyer}', [\App\Http\Controllers\Admin\BuyerController::class, 'show'])->name('buyers.show');
     Route::delete('buyers/{buyer}', [\App\Http\Controllers\Admin\BuyerController::class, 'destroy'])->name('buyers.destroy');
     
+
+    Route::get('staffs/create', [\App\Http\Controllers\Admin\StaffController::class, 'create'])->name('staffs.create');
+    Route::post('staffs', [\App\Http\Controllers\Admin\StaffController::class, 'store'])->name('staffs.store');
+    Route::get('staffs/{staff}/edit', [\App\Http\Controllers\Admin\StaffController::class, 'edit'])->name('staffs.edit');
+    Route::put('staffs/{staff}', [\App\Http\Controllers\Admin\StaffController::class, 'update'])->name('staffs.update');
+    Route::get('staffs/{staff}', [\App\Http\Controllers\Admin\StaffController::class, 'show'])->name('staffs.show');
+
+
+
     //Designer
 
     Route::get('designers', [\App\Http\Controllers\Admin\DesignerController::class, 'index'])->name('designers.index');
@@ -76,7 +85,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('printers/{printer}', [\App\Http\Controllers\Admin\PrinterController::class, 'show'])->name('printers.show');
     Route::delete('printers/{printer}', [\App\Http\Controllers\Admin\PrinterController::class, 'destroy'])->name('printers.destroy');
 
-   //Printers
+   //finishers
 
    Route::get('finishers', [\App\Http\Controllers\Admin\FinisherController::class, 'index'])->name('finishers.index');
    Route::get('finishers/create', [\App\Http\Controllers\Admin\FinisherController::class, 'create'])->name('finishers.create');

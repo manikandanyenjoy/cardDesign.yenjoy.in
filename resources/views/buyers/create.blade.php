@@ -3,7 +3,7 @@
 @section('title', 'Customers')
 
 @section('content_header')
-    <div class="row mb-2">
+    <div class="row mb-3">
         <div class="col-sm-6">
             <h1>{{ __('Customers') }}</h1>
         </div>
@@ -17,7 +17,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="offset-md-3 col-md-6">
+                <div class="offset-md-1 col-md-10">
 
                 @include('shared.errors')
 
@@ -29,6 +29,22 @@
                         <form method="POST" action="{{ route('buyers.store') }}" enctype="multipart/form-data" novalidate>
                             @csrf
                             <div class="card-body row">
+                            <h5 class="mt-4 mb-2 col-12">{{ _('Company Details') }}</h5>
+                                <div class="form-group col-6">
+                                    <label for="company_name">Company Name</label>
+                                    <input type="text" class="form-control @error('company_name') is-invalid @enderror" id="company_name" name="company_name" value="{{ old('company_name') }}" placeholder="Company Name">
+                                    @error('company_name')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="company_phone">Company Phone Number</label>
+                                    <input type="text" class="form-control @error('company_phone') is-invalid @enderror" id="company_phone" name="company_phone" value="{{ old('company_phone') }}" placeholder="Company Phone Number">
+                                    @error('company_phone')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            <h5 class="mt-4 mb-2 col-12">{{ _('Representative Details') }}</h5>
                                 <div class="form-group col-6">
                                     <label for="first_name">First Name</label>
                                     <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="first_name" name="first_name" value="{{ old('first_name') }}" placeholder="First Name">
@@ -68,6 +84,32 @@
                                     <label for="password_confirmation">Confirm Password</label>
                                     <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password">
                                     @error('password_confirmation')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                
+                                <h5 class="mt-4 mb-2 col-12">{{ _('Billing Address') }}</h5>
+                                <div class="form-group col-12">
+                                    <label for="billing_address">Billing Address</label>
+                                    <textarea class="form-control @error('billing_address') is-invalid @enderror" id="billing_address" name="billing_address" value="{{old('billing_address')}}"></textarea>
+                                    
+                                    @error('billing_address')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <h5 class="mt-4 mb-2 col-12">{{ _('Shipping Address') }}</h5>
+                                <div class="form-group">
+                                    <label for="same_as">Same as Billing Address</label>
+                                    <input style="width:10%;margin-left: 45px;" type="checkbox" class="form-control @error('same_as') is-invalid @enderror" id="same_as" name="same_as" value="1">
+                                    @error('same_as')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="shipping_address">Address</label>
+                                    <textarea class="form-control @error('shipping_address') is-invalid @enderror" id="shipping_address" name="shipping_address" value="{{old('shipping_address')}}"></textarea>
+                                    
+                                    @error('shipping_address')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -111,122 +153,6 @@
                                     <label for="grade">Grade</label>
                                     <input type="text" class="form-control @error('grade') is-invalid @enderror" id="grade" name="grade" value="{{ old('grade') }}" placeholder="Grade">
                                     @error('grade')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <h5 class="mt-4 mb-2 col-12">{{ _('Shipping Address') }}</h5>
-                                <div class="form-group col-6">
-                                    <label for="flatno">flat No</label>
-                                    <input type="text" class="form-control @error('flatno') is-invalid @enderror" id="flatno" value="{{old('flatno')}}" name="flatno" placeholder="Flatno">
-                                    @error('flatno')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="apartment">Apartment</label>
-                                    <input type="text" class="form-control @error('apartment') is-invalid @enderror" id="apartment" value="{{old('apartment')}}" name="apartment" placeholder="Apartment">
-                                    @error('apartment')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="landmark">Landmark</label>
-                                    <input type="text" class="form-control @error('landmark') is-invalid @enderror" id="landmark" value="{{old('landmark')}}" name="landmark" placeholder="Landmark">
-                                    @error('landmark')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="area">Area</label>
-                                    <input type="text" class="form-control @error('area') is-invalid @enderror" id="area" value="{{old('area')}}" name="area" placeholder="Area">
-                                    @error('area')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                
-                                <div class="form-group col-6">
-                                    <label for="city">City</label>
-                                    <input type="text" class="form-control @error('city') is-invalid @enderror" id="city" value="{{old('city')}}" name="city" placeholder="City">
-                                    @error('city')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="state">State</label>
-                                    <input type="text" class="form-control @error('state') is-invalid @enderror" id="state" value="{{old('state')}}" name="state" placeholder="State">
-                                    @error('state')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="country">Country</label>
-                                    <input type="text" class="form-control @error('country') is-invalid @enderror" id="country" value="{{old('country')}}" name="country" placeholder="Country">
-                                    @error('country')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="zipcode">Zipcode</label>
-                                    <input type="text" class="form-control @error('zipcode') is-invalid @enderror" id="zipcode" value="{{old('zipcode')}}" name="zipcode" placeholder="zipcode">
-                                    @error('zipcode')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <h5 class="mt-4 mb-2 col-12">{{ _('Billing Address') }}</h5>
-                                <div class="form-group col-6">
-                                    <label for="billing_flatno">flat No</label>
-                                    <input type="text" class="form-control @error('billing_flatno') is-invalid @enderror" id="billing_flatno" value="{{old('billing_flatno')}}" name="billing_flatno" placeholder="Flatno">
-                                    @error('billing_flatno')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="billing_apartment">Apartment</label>
-                                    <input type="text" class="form-control @error('billing_apartment') is-invalid @enderror" id="billing_apartment" value="{{old('billing_apartment')}}" name="billing_apartment" placeholder="Apartment">
-                                    @error('billing_apartment')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="billing_landmark">Landmark</label>
-                                    <input type="text" class="form-control @error('billing_landmark') is-invalid @enderror" id="billing_landmark" value="{{old('billing_landmark')}}" name="billing_landmark" placeholder="Landmark">
-                                    @error('billing_landmark')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="billing_area">Area</label>
-                                    <input type="text" class="form-control @error('billing_area') is-invalid @enderror" id="billing_area" value="{{old('billing_area')}}" name="billing_area" placeholder="Area">
-                                    @error('billing_area')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                
-                                <div class="form-group col-6">
-                                    <label for="billing_city">City</label>
-                                    <input type="text" class="form-control @error('billing_city') is-invalid @enderror" id="billing_city" value="{{old('billing_city')}}" name="billing_city" placeholder="City">
-                                    @error('billing_city')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="billing_state">State</label>
-                                    <input type="text" class="form-control @error('billing_state') is-invalid @enderror" id="billing_state" value="{{old('billing_state')}}" name="billing_state" placeholder="State">
-                                    @error('billing_state')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="billing_country">Country</label>
-                                    <input type="text" class="form-control @error('billing_country') is-invalid @enderror" id="billing_country" value="{{old('billing_country')}}" name="billing_country" placeholder="Country">
-                                    @error('billing_country')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="billing_zipcode">Zipcode</label>
-                                    <input type="text" class="form-control @error('billing_zipcode') is-invalid @enderror" id="billing_zipcode" value="{{old('billing_zipcode')}}" name="billing_zipcode" placeholder="zipcode">
-                                    @error('billing_zipcode')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>

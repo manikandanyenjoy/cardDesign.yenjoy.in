@@ -25,15 +25,15 @@ class CreateStafMastersTable extends Migration
             $table->string("blood_group");
             $table->string("joined_on");
             $table->string("left_on");
+            $table->string("documentID");
+            $table->string("document_name");
+            $table->text("address");
             $table->unsignedBigInteger("role_id");
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
 
-            $table
-            ->foreign("role_id")
-            ->references("id")
-            ->on("role_masters");
+            
         });
     }
 

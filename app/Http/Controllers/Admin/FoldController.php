@@ -25,7 +25,6 @@ class FoldController extends Controller
    
     public function store(FoldRequest $request)
     {
-      
 
         try {
             $validatedFields = $request->validated();
@@ -99,6 +98,7 @@ class FoldController extends Controller
             return redirect()
         ->route("folds.index")
         ->with("success", "fold created successfully.");
+
         } catch (\Exception $exception) {
             DB::rollBack();
             return redirect()

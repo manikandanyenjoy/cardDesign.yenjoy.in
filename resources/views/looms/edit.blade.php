@@ -40,22 +40,22 @@
                             @method('PUT')
                             <div class="card-body row">
 
-                            <div class="col-md-6" style=""> 
-                            <div class="form-group">
+                            
+                            <div class="form-group col-6">
                                     <label for="loom_name">Loom Name</label>
                                     <input type="text" class="form-control @error('loom_name') is-invalid @enderror" id="loom_name" name="loom_name" value="{{$loom->loom_name}}" placeholder="Loom Name">
                                     @error('loom_name')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-6">
                                     <label for="weaving_width_Meter">Weaving</label>
                                     <input type="text" class="form-control @error('weaving_width_Meter') is-invalid @enderror" id="weaving_width_Meter" name="weaving_width_Meter" value="{{$loom->weaving_width_Meter}}" placeholder="Weaving width Meter">
                                     @error('weaving_width_Meter')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-6">
                                     <label for="sections">Sections</label>
                                     <input type="text" class="form-control @error('sections') is-invalid @enderror" id="sections" name="sections" value="{{$loom->sections}}" placeholder="Sections">
                                     @error('sections')
@@ -63,14 +63,14 @@
                                     @enderror
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group col-6">
                                     <label for="speed">Speed</label>
                                     <input type="text" class="form-control @error('speed') is-invalid @enderror" id="speed" name="speed" value="{{$loom->speed}}" placeholder="speed">
                                     @error('speed')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-6">
                                     <label for="year">Year</label>
                                     <input type="text" class="form-control @error('year') is-invalid @enderror" id="year" name="year" value="{{$loom->year}}" placeholder="Year">
                                     @error('year')
@@ -78,7 +78,7 @@
                                     @enderror
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group col-6">
                                     <label for="notes">Notes</label>
                                     <textarea class="form-control @error('notes') is-invalid @enderror" id="notes" name="notes" value="{{$loom->notes}}">{{$loom->notes}}</textarea>
                                     
@@ -87,7 +87,7 @@
                                     @enderror
                                 </div>
                                 
-                                </div>
+                               
                                 
                             </div>
                             <!-- /.card-body -->

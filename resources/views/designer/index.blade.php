@@ -8,7 +8,7 @@
             <h1>{{ __('Designers') }}</h1>
         </div>
         <div class="col-sm-6">
-            <a href="{{ route('designers.create') }}" class="btn bg-gradient-primary float-right">Add Designers</a>
+            <a href="{{ route('staffs.create') }}" class="btn bg-gradient-primary float-right">Add Designers</a>
         </div>
     </div>
 @stop
@@ -51,12 +51,12 @@
                                     <td>{{ $designer->name }}</td>
                                     <td>{{ $designer->email }}</td>
                                     <td>{{ $designer->phone }}</td>
-                                    <td>{{date("d-m-Y", strtotime($designer->created_at) )  }}</td>
-                                    <td>@if($designer->deleted_at){{ date("d-m-Y", strtotime($designer->deleted_at) ) }}@endif</td>
+                                    <td>{{$designer->joined_on}}</td>
+                                    <td>{{$designer->left_on}}</td>
                                     <td>
                                         <a href="{{ route('designers.show',$designer->id) }}" class="btn btn-sm btn-warning">View</a>
                                         @if(!$designer->deleted_at)
-                                        <a href="{{ route('designers.edit',$designer->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                        <a href="{{ route('staffs.edit',$designer->id) }}" class="btn btn-sm btn-info">Edit</a>
                                         <form method="POST" action="{{ route('designers.destroy', $designer->id) }}"
                                               accept-charset="UTF-8"
                                               style="display: inline-block;"

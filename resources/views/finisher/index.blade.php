@@ -8,7 +8,7 @@
             <h1>{{ __('Finishers') }}</h1>
         </div>
         <div class="col-sm-6">
-            <a href="{{ route('finishers.create') }}" class="btn bg-gradient-primary float-right">Add Finishers</a>
+            <a href="{{ route('staffs.create') }}" class="btn bg-gradient-primary float-right">Add Finishers</a>
         </div>
     </div>
 @stop
@@ -51,12 +51,12 @@
                                     <td>{{ $finisher->name }}</td>
                                     <td>{{ $finisher->email }}</td>
                                     <td>{{ $finisher->phone }}</td>
-                                    <td>{{date("d-m-Y", strtotime($finisher->created_at) )  }}</td>
-                                    <td>@if($finisher->deleted_at){{ date("d-m-Y", strtotime($finisher->deleted_at) ) }}@endif</td>
+                                    <td>{{$finisher->joined_on}}</td>
+                                    <td>{{$finisher->left_on}}</td>
                                     <td>
                                         <a href="{{ route('finishers.show',$finisher->id) }}" class="btn btn-sm btn-warning">View</a>
                                         @if(!$finisher->deleted_at)
-                                        <a href="{{ route('finishers.edit',$finisher->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                        <a href="{{ route('staffs.edit',$finisher->id) }}" class="btn btn-sm btn-info">Edit</a>
                                         <form method="POST" action="{{ route('finishers.destroy', $finisher->id) }}"
                                               accept-charset="UTF-8"
                                               style="display: inline-block;"

@@ -8,7 +8,7 @@
             <h1>{{ __('Sales Reps') }}</h1>
         </div>
         <div class="col-sm-6">
-            <a href="{{ route('salesreps.create') }}" class="btn bg-gradient-primary float-right">Add Sales Rep</a>
+            <a href="{{ route('staffs.create') }}" class="btn bg-gradient-primary float-right">Add Sales Rep</a>
         </div>
     </div>
 @stop
@@ -51,12 +51,12 @@
                                     <td>{{ $salesrep->name }}</td>
                                     <td>{{ $salesrep->email }}</td>
                                     <td>{{ $salesrep->phone }}</td>
-                                    <td>{{date("d-m-Y", strtotime($salesrep->created_at) )  }}</td>
-                                    <td>@if($salesrep->deleted_at){{ date("d-m-Y", strtotime($salesrep->deleted_at) ) }}@endif</td>
+                                    <td>{{$salesrep->joined_on}}</td>
+                                    <td>{{$salesrep->left_on}}</td>
                                     <td>
                                         <a href="{{ route('salesreps.show',$salesrep->id) }}" class="btn btn-sm btn-warning">View</a>
                                         @if(!$salesrep->deleted_at)
-                                        <a href="{{ route('salesreps.edit',$salesrep->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                        <a href="{{ route('staffs.edit',$salesrep->id) }}" class="btn btn-sm btn-info">Edit</a>
                                         <form method="POST" action="{{ route('salesreps.destroy', $salesrep->id) }}"
                                               accept-charset="UTF-8"
                                               style="display: inline-block;"

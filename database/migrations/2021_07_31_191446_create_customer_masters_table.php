@@ -15,6 +15,8 @@ class CreateCustomerMastersTable extends Migration
     {
         Schema::create('customer_masters', function (Blueprint $table) {
             $table->id();
+            $table->string("company_name");
+            $table->string("company_phone");
             $table->string("first_name");
             $table->string("last_name");
             $table->string("mobile_number");
@@ -27,6 +29,8 @@ class CreateCustomerMastersTable extends Migration
             $table->string("IFSCCode");
             $table->string("opening_balance");
             $table->string("credit_period");
+            $table->text("billing_address");
+            $table->text("shipping_address");
             $table->string("grade");
             $table->string("CGST");
             $table->string("SGST");

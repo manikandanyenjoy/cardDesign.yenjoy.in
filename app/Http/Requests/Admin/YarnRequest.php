@@ -39,6 +39,7 @@ class YarnRequest extends FormRequest
                 "supplier" => "required",
             "yarn_denier" => "required",
             "shade_No" => "required",
+            "shade_No_suffix" => "required",
             "yarn_color" => "required",
             "color_shade" => "required",
             "notes" => "required",

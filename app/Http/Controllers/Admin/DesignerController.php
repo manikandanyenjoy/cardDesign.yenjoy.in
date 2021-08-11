@@ -47,20 +47,7 @@ class DesignerController extends Controller
     public function store(DesignerRequest $request)
     {
         $user = Staf_master::create($request->all());
-        $result = Staf_address::Insert(array(
-            'staf_id' => $user->id,
-            'fullname' => $request->name,
-            'flatno' => $request->flatno,
-            'apartment' => $request->apartment,
-            'landmark' => $request->landmark,
-            'area' => $request->area,
-            'city' => $request->city,
-            'state' => $request->state,
-            'country' => $request->country,
-            'zipcode' => $request->zipcode,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ));
+        
        
         return redirect()
             ->route("designers.index")
@@ -88,8 +75,8 @@ class DesignerController extends Controller
      */
     public function edit(Staf_master $designer)
     { 
-        $address = Staf_address::where('staf_id',$designer->id)->first();
-        return view("designer.edit", compact("designer","address"));
+       
+        return view("designer.edit", compact("designer"));
     }
 
     /**

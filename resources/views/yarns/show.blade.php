@@ -38,7 +38,7 @@
                                     
                                     <tr>
                                         <td><strong>{{ __('Shade No') }}</strong></td>
-                                        <td>{{ $yarn->shade_No }}</td>
+                                        <td>{{ $yarn->shade_No }}{{ $yarn->shade_No_suffix }}</td>
                                     </tr>
                                     
                                     <tr>

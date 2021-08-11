@@ -1,15 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Edit Designer')
+@section('title', 'Create Staff')
 
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1>{{ __('Edit Designer - ') . $designer->name }}</h1>
+            <h1>{{ __('Create Staff') }}</h1>
         </div>
-        <div class="col-sm-6">
-            <a href="{{ route('designers.index') }}" class="btn bg-gradient-primary float-right">Back</a>
-        </div>
+       
     </div>
 @stop
 
@@ -29,34 +27,44 @@
                 @endforeach
 
                 <!-- general form elements -->
-                    <div class="card card-primary" style="width: 850px;">
+                    <div class="card card-primary" style="width: 850px;" >
                         <div class="card-header">
-                            <h3 class="card-title">Edit Designer</h3>
+                            <h3 class="card-title">Create Staff</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form method="POST" action="{{ route('designers.update', $designer->id) }}" enctype="multipart/form-data" novalidate>
+                        <form method="POST" action="{{ route('staffs.store') }}" enctype="multipart/form-data" novalidate>
                             @csrf
-                            @method('PUT')
                             <div class="card-body row">
                                 <div class="form-group col-6">
                                     <label for="name">Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{$designer->name}}" placeholder="Name">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{old('name')}}" placeholder="Name">
                                     @error('name')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{$designer->email}}" placeholder="Email">
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{old('email')}}" placeholder="Email">
                                     @error('email')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <div class="form-group col-6">
+                                    <label for="role_id">Role</label>
+                                    <select class="form-control @error('role_id') is-invalid @enderror" id="role_id" name="role_id">
+                                    @foreach($roles as $role)
+                                    <option value="{{$role->id}}">{{$role->name}}</option>
+                                   @endforeach
+                                    </select>
                                 
+                                    @error('status')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
                                 <div class="form-group col-6">
                                     <label for="phone">Phone Number</label>
-                                    <input type="tel" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{$designer->phone}}" placeholder="Phone Number">
+                                    <input type="tel" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{old('phone')}}" placeholder="Phone Number">
                                     @error('phone')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -78,42 +86,42 @@
                                 
                                 <div class="form-group col-6">
                                     <label for="qualification">Qualification</label>
-                                    <input type="text" class="form-control @error('qualification') is-invalid @enderror" id="qualification" value="{{$designer->qualification}}" name="qualification" placeholder="Qualification">
+                                    <input type="text" class="form-control @error('qualification') is-invalid @enderror" id="qualification" value="{{old('qualification')}}" name="qualification" placeholder="Qualification">
                                     @error('qualification')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="b_group">Blood Group</label>
-                                    <input type="text" class="form-control @error('b_group') is-invalid @enderror" id="b_group" value="{{$designer->blood_group}}" name="blood_group" placeholder="Blood group">
+                                    <input type="text" class="form-control @error('b_group') is-invalid @enderror" id="b_group" value="{{old('blood_group')}}" name="blood_group" placeholder="Blood group">
                                     @error('b_group')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="documentID">Document ID</label>
-                                    <input type="text" class="form-control @error('documentID') is-invalid @enderror" id="documentID" value="{{$designer->documentID}}" name="documentID" placeholder="Document ID">
+                                    <input type="text" class="form-control @error('documentID') is-invalid @enderror" id="documentID" value="{{old('documentID')}}" name="documentID" placeholder="Document ID">
                                     @error('documentID')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="document_name">Document File</label>
-                                    <input type="file" class="form-control @error('document_name') is-invalid @enderror" id="document_name" name="document_name" value="{{ $designer->document_name }}">
+                                    <input type="file" class="form-control @error('document_name') is-invalid @enderror" id="document_name" name="document_name" value="{{ old('document_name') }}">
                                     @error('document_name')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="joined_on">Joined On</label>
-                                    <input type="date" class="form-control @error('joined_on') is-invalid @enderror" id="joined_on" value="{{$designer->joined_on}}" name="joined_on" placeholder="Joined On">
+                                    <input type="date" class="form-control @error('joined_on') is-invalid @enderror" id="joined_on" value="{{old('joined_on')}}" name="joined_on" placeholder="Joined On">
                                     @error('joined_on')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="left_on">Left On</label>
-                                    <input type="date" class="form-control @error('left_on') is-invalid @enderror" id="left_on" value="{{$designer->left_on}}" name="left_on" placeholder="Left On">
+                                    <input type="date" class="form-control @error('left_on') is-invalid @enderror" id="left_on" value="{{old('left_on')}}" name="left_on" placeholder="Left On">
                                     @error('left_on')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -131,7 +139,7 @@
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="address">Address</label>
-                                    <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" >{{$designer->address}}</textarea>
+                                    <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{old('address')}}"></textarea>
                                     
                                     @error('address')
                                     <span class="error invalid-feedback">{{ $message }}</span>

@@ -263,40 +263,53 @@ return [
             'icon'        => 'fas fa-fw fa-user',
         ],
         [
-            'text'        => ['Designers'],
-            'url'         => 'designers',
+            'text'        => ['Staffs'],
             'icon'        => 'fas fa-fw fa-user',
+            'submenu' => [
+                [
+                    'text'        => ['Add Staff'],
+                    'url'         => 'staffs/create',
+                    
+                ],
+                [
+                    'text'        => ['Designers'],
+                    'url'         => 'designers',
+                    
+                ],
+                [
+                    'text'        => ['Sales Rep'],
+                    'url'         => 'salesreps',
+                   
+                ],
+                [
+                    'text'        => ['Printers'],
+                    'url'         => 'printers',
+                    
+                ],
+                [
+                    'text'        => ['Finishers'],
+                    'url'         => 'finishers',
+                    
+                ],
+                [
+                    'text'        => ['Loom Operators'],
+                    'url'         => 'loomoperators',
+                    
+                ],
+                [
+                    'text'        => ['Finishing Operators'],
+                    'url'         => 'finishingoperators',
+                   
+                ],
+                [
+                    'text'        => ['Quality Checkers'],
+                    'url'         => 'qualitycheckers',
+                   
+                ],
+
+            ],       
         ],
-        [
-            'text'        => ['Sales Rep'],
-            'url'         => 'salesreps',
-            'icon'        => 'fas fa-fw fa-user',
-        ],
-        [
-            'text'        => ['Printers'],
-            'url'         => 'printers',
-            'icon'        => 'fas fa-fw fa-user',
-        ],
-        [
-            'text'        => ['Finishers'],
-            'url'         => 'finishers',
-            'icon'        => 'fas fa-fw fa-user',
-        ],
-        [
-            'text'        => ['Loom Operators'],
-            'url'         => 'loomoperators',
-            'icon'        => 'fas fa-fw fa-user',
-        ],
-        [
-            'text'        => ['Finishing Operators'],
-            'url'         => 'finishingoperators',
-            'icon'        => 'fas fa-fw fa-user',
-        ],
-        [
-            'text'        => ['Quality Checkers'],
-            'url'         => 'qualitycheckers',
-            'icon'        => 'fas fa-fw fa-user',
-        ],
+        
         [
             'text'        => ['Warps'],
             'url'         => 'warps',

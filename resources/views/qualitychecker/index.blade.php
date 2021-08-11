@@ -8,7 +8,7 @@
             <h1>{{ __('Quality Checker') }}</h1>
         </div>
         <div class="col-sm-6">
-            <a href="{{ route('qualitycheckers.create') }}" class="btn bg-gradient-primary float-right">Add Quality Checker</a>
+            <a href="{{ route('staffs.create') }}" class="btn bg-gradient-primary float-right">Add Quality Checker</a>
         </div>
     </div>
 @stop
@@ -51,12 +51,12 @@
                                     <td>{{ $qualitychecker->name }}</td>
                                     <td>{{ $qualitychecker->email }}</td>
                                     <td>{{ $qualitychecker->phone }}</td>
-                                    <td>{{date("d-m-Y", strtotime($qualitychecker->created_at) )  }}</td>
-                                    <td>@if($qualitychecker->deleted_at){{ date("d-m-Y", strtotime($qualitychecker->deleted_at) ) }}@endif</td>
+                                    <td>{{$qualitychecker->joined_on}}</td>
+                                    <td>{{$qualitychecker->left_on}}</td>
                                     <td>
                                         <a href="{{ route('qualitycheckers.show',$qualitychecker->id) }}" class="btn btn-sm btn-warning">View</a>
                                         @if(!$qualitychecker->deleted_at)
-                                        <a href="{{ route('qualitycheckers.edit',$qualitychecker->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                        <a href="{{ route('staffs.edit',$qualitychecker->id) }}" class="btn btn-sm btn-info">Edit</a>
                                         <form method="POST" action="{{ route('qualitycheckers.destroy', $qualitychecker->id) }}"
                                               accept-charset="UTF-8"
                                               style="display: inline-block;"

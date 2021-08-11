@@ -51,7 +51,7 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $yarn->supplier }}</td>
                                     <td>{{ $yarn->yarn_denier }}</td>
-                                    <td>{{ $yarn->shade_No }}</td>
+                                    <td>{{ $yarn->shade_No }}{{ $yarn->shade_No_suffix }}</td>
                                     <td>{{ $yarn->yarn_color }}</td>
                                     <td style="background-color: {{ $yarn->color_shade }};"></td>
                                     <td>{{ $yarn->notes }}</td>

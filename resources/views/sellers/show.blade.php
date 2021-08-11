@@ -24,8 +24,9 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-bordered table-sm">
+                        <table class="table table-bordered table-sm">
                                 <tbody>
+                                
                                     <tr>
                                         <td><strong>{{ __('First Name') }}</strong></td>
                                         <td>{{ $seller->first_name }}</td>
@@ -68,12 +69,12 @@
                                         <td>{{ $seller->grade }}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>{{ __('Shipping Address') }}</strong></td>
-                                        <td>{{ $shippingAddress->flatno }},{{ $shippingAddress->apartment }},{{ $shippingAddress->area }},{{ $shippingAddress->landmark }},{{ $shippingAddress->city }},{{ $shippingAddress->state }},{{ $shippingAddress->country }}-{{ $shippingAddress->zipcode }}</td>
+                                        <td><strong>{{ __('Billing Address') }}</strong></td>
+                                        <td>{{ $seller->billing_address }}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>{{ __('Billing Address') }}</strong></td>
-                                        <td>{{ $billingAddress->flatno }},{{ $billingAddress->apartment }},{{ $billingAddress->area }},{{ $billingAddress->landmark }},{{ $billingAddress->city }},{{ $billingAddress->state }},{{ $billingAddress->country }}-{{ $billingAddress->zipcode }}</td>
+                                        <td><strong>{{ __('Shipping Address') }}</strong></td>
+                                        <td>{{ $seller->shipping_address }}</td>
                                     </tr>
                                 </tbody>
                             </table>

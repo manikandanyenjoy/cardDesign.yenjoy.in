@@ -39,37 +39,44 @@
                             @csrf
                             <div class="card-body row">
 
-                               <div class="col-md-6" style=""> 
-                                <div class="form-group">
+                              
+                                <div class="form-group col-6">
                                     <label for="supplier">supplier Name</label>
                                     <input type="text" class="form-control @error('supplier') is-invalid @enderror" id="supplier" name="supplier" value="{{old('supplier')}}" placeholder="Supplier Name">
                                     @error('supplier')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-6">
                                     <label for="yarn_denier">Yarn Denier</label>
                                     <input type="text" class="form-control @error('yarn_denier') is-invalid @enderror" id="yarn_denier" name="yarn_denier" value="{{old('yarn_denier')}}" placeholder="Yarn Denier">
                                     @error('yarn_denier')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-3">
                                     <label for="shade_No">Shade No</label>
                                     <input type="text" class="form-control @error('shade_No') is-invalid @enderror" id="shade_No" name="shade_No" value="{{old('shade_No')}}" placeholder="Shade No">
                                     @error('shade_No')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <div class="form-group col-3">
+                                    <label for="shade_No_suffix"></label>
+                                    <input type="text" class="form-control @error('shade_No_suffix') is-invalid @enderror" id="shade_No_suffix" name="shade_No_suffix" value="{{old('shade_No_suffix')}}" placeholder="Shade No">
+                                    @error('shade_No_suffix')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group col-6">
                                     <label for="yarn_color">Yarn Color</label>
-                                    <input type="text" class="form-control @error('yarn_color') is-invalid @enderror" id="yarn_color" name="yarn_color" value="{{old('yarn_color')}}" placeholder="Yarn Color">
+                                    <input type="color" class="form-control @error('yarn_color') is-invalid @enderror" id="yarn_color" name="yarn_color" value="#ff0000" placeholder="Yarn Color">
                                     @error('yarn_color')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-6">
                                     <label for="color_shade">Color Shade</label>
                                     <input type="text" class="form-control @error('color_shade') is-invalid @enderror" id="color_shade" name="color_shade" value="{{old('color_shade')}}" placeholder="Color Shade">
                                     @error('color_shade')
@@ -77,7 +84,7 @@
                                     @enderror
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group col-6">
                                     <label for="notes">Notes</label>
                                     <textarea class="form-control @error('notes') is-invalid @enderror" id="notes" name="notes" value="{{old('notes')}}"></textarea>
                                     
@@ -86,7 +93,7 @@
                                     @enderror
                                 </div>
                                 
-                                </div>
+                                
                             </div>
                             <!-- /.card-body -->
 

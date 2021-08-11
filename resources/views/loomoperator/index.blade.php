@@ -8,7 +8,7 @@
             <h1>{{ __('Loom Operators') }}</h1>
         </div>
         <div class="col-sm-6">
-            <a href="{{ route('loomoperators.create') }}" class="btn bg-gradient-primary float-right">Add Loom Operators</a>
+            <a href="{{ route('staffs.create') }}" class="btn bg-gradient-primary float-right">Add Loom Operators</a>
         </div>
     </div>
 @stop
@@ -51,12 +51,12 @@
                                     <td>{{ $loomoperator->name }}</td>
                                     <td>{{ $loomoperator->email }}</td>
                                     <td>{{ $loomoperator->phone }}</td>
-                                    <td>{{date("d-m-Y", strtotime($loomoperator->created_at) )  }}</td>
-                                    <td>@if($loomoperator->deleted_at){{ date("d-m-Y", strtotime($loomoperator->deleted_at) ) }}@endif</td>
+                                    <td>{{$loomoperator->joined_on}}</td>
+                                    <td>{{$loomoperator->left_on}}</td>
                                     <td>
                                         <a href="{{ route('loomoperators.show',$loomoperator->id) }}" class="btn btn-sm btn-warning">View</a>
                                         @if(!$loomoperator->deleted_at)
-                                        <a href="{{ route('loomoperators.edit',$loomoperator->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                        <a href="{{ route('staffs.edit',$loomoperator->id) }}" class="btn btn-sm btn-info">Edit</a>
                                         <form method="POST" action="{{ route('loomoperators.destroy', $loomoperator->id) }}"
                                               accept-charset="UTF-8"
                                               style="display: inline-block;"

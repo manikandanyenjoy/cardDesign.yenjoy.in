@@ -36,6 +36,11 @@ class BuyerRequest extends FormRequest
             "opening_balance" => 'required',
             "credit_period" => 'required',
             "grade" => 'required',
+            "company_name"=>'required',
+            "company_phone"=> 'required|min:10|numeric',
+            "billing_address"=>'required',
+            "shipping_address"=>'required',
+
             
         ];
 
@@ -52,6 +57,10 @@ class BuyerRequest extends FormRequest
             "opening_balance" => 'required',
             "credit_period" => 'required',
             "grade" => 'required',
+            "company_name"=>'required',
+            "company_phone"=> 'required|min:10|numeric',
+            "billing_address"=>'required',
+            "shipping_address"=>'required',
             
         ];
           }

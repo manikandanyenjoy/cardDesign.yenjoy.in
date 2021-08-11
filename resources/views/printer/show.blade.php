@@ -24,7 +24,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-bordered table-sm">
+                        <table class="table table-bordered table-sm">
                                 <tbody>
                                     <tr>
                                         <td><strong>{{ __('First Name') }}</strong></td>
@@ -48,15 +48,27 @@
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('Joined On') }}</strong></td>
-                                        <td>{{date("d-m-Y", strtotime($printer->created_at) )  }}</td>
+                                        <td>{{ $printer->joined_on }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('Left On') }}</strong></td>
-                                        <td>@if($printer->deleted_at){{ date("d-m-Y", strtotime($printer->deleted_at) ) }}@endif</td>
+                                        <td>{{ $printer->left_on }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Document Number') }}</strong></td>
+                                        <td>{{ $printer->documentID }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Document') }}</strong></td>
+                                        <td><a target="_blank" href="{{env('APP_URL')}}/storage/staffs_document/{{ $printer->document_name }}">View Document</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Left On') }}</strong></td>
+                                        <td>{{ $printer->left_on }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('Address') }}</strong></td>
-                                        <td>{{ $address->flatno }},{{ $address->apartment }},{{ $address->landmark }},{{ $address->area }},{{ $address->city }},{{ $address->state }},{{ $address->country }}-{{ $address->zipcode }}</td>
+                                        <td>{{ $printer->address }}</td>
                                     </tr>
                                 </tbody>
                             </table>

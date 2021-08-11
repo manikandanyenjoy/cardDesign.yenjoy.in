@@ -18,6 +18,7 @@ class CreateYarnMastersTable extends Migration
             $table->string("supplier");
             $table->string("yarn_denier");
             $table->string("shade_No");
+            $table->string("shade_No_suffix");
             $table->string("yarn_color");
             $table->string("color_shade");
             $table->string("notes");

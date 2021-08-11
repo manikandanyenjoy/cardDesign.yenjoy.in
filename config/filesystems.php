@@ -54,7 +54,14 @@ return [
 
         'folds' => [
             'driver' => 'local',
-            'root' => storage_path('app/folds'),
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'private',
+        ],
+
+        'staffs' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/staffs_document'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'private',
         ],

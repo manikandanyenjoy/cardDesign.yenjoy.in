@@ -11,7 +11,7 @@ class Staf_master extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ["name", "email", "password","phone","status","qualification","blood_group","role_id"];
+    protected $fillable = ["name", "email", "password","phone","status","qualification","blood_group","role_id","address","documentID","document_name","joined_on","left_on"];
 
 
     public function setPasswordAttribute($value)

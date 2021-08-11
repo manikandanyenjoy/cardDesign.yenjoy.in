@@ -28,6 +28,8 @@ class CreateVendorMastersTable extends Migration
             $table->string("opening_balance");
             $table->string("credit_period");
             $table->string("grade");
+            $table->text("billing_address");
+            $table->text("shipping_address");
             $table->string("CGST");
             $table->string("SGST");
             $table->string("IGST");

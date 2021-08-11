@@ -17,7 +17,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="offset-md-3 col-md-6">
+                <div class="offset-md-1 col-md-10">
 
                 @include('shared.errors')
 
@@ -30,30 +30,46 @@
                             @method('PUT')
                             @csrf
                             <div class="card-body row">
+                            <h5 class="mt-4 mb-2 col-12">{{ _('Company Details') }}</h5>
+                                <div class="form-group col-6">
+                                    <label for="company_name">Company Name</label>
+                                    <input type="text" class="form-control @error('company_name') is-invalid @enderror" id="company_name" name="company_name" value="{{ $buyer->company_name}}" placeholder="Company Name">
+                                    @error('company_name')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="company_phone">Company Phone Number</label>
+                                    <input type="text" class="form-control @error('company_phone') is-invalid @enderror" id="company_phone" name="company_phone" value="{{ $buyer->company_phone }}" placeholder="Company Phone Number">
+                                    @error('company_phone')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            <h5 class="mt-4 mb-2 col-12">{{ _('Representative Details') }}</h5>
                                 <div class="form-group col-6">
                                     <label for="first_name">First Name</label>
-                                    <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="first_name" name="first_name" value="{{$buyer->first_name}}" placeholder="First Name">
+                                    <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="first_name" name="first_name" value="{{ $buyer->first_name }}" placeholder="First Name">
                                     @error('first_name')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="last_name">Last Name</label>
-                                    <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="last_name" name="last_name" value="{{$buyer->last_name}}" placeholder="Last Name">
+                                    <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="last_name" name="last_name" value="{{ $buyer->last_name }}" placeholder="Last Name">
                                     @error('last_name')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ $buyer->email}}" placeholder="Email">
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ $buyer->email }}" placeholder="Email">
                                     @error('email')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="mobile_number">Phone</label>
-                                    <input type="text" class="form-control @error('mobile_number') is-invalid @enderror" id="mobile_number" name="mobile_number" value="{{ $buyer->mobile_number}}" placeholder="Phone Number">
+                                    <input type="text" class="form-control @error('mobile_number') is-invalid @enderror" id="mobile_number" name="mobile_number" value="{{ $buyer->mobile_number }}" placeholder="Phone Number">
                                     @error('mobile_number')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -72,10 +88,47 @@
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <div class="form-group col-6">
+                                    <label for="status">Status</label>
+                                    <select class="form-control @error('qualification') is-invalid @enderror" id="status" name="status">
+                                    <option value=1>Active </option>
+                                    <option value=0>InActive </option>
+                                    </select>
+                                
+                                    @error('status')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                
+                                <h5 class="mt-4 mb-2 col-12">{{ _('Billing Address') }}</h5>
+                                <div class="form-group col-12">
+                                    <label for="billing_address">Billing Address</label>
+                                    <textarea class="form-control @error('billing_address') is-invalid @enderror" id="billing_address" name="billing_address" >{{$buyer->billing_address}}</textarea>
+                                    
+                                    @error('billing_address')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <h5 class="mt-4 mb-2 col-12">{{ _('Shipping Address') }}</h5>
+                                <div class="form-group">
+                                    <label for="same_as">Same as Billing Address</label>
+                                    <input style="width:10%;margin-left: 45px;" type="checkbox" class="form-control @error('same_as') is-invalid @enderror" id="same_as" name="same_as" value="1">
+                                    @error('same_as')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="shipping_address">Address</label>
+                                    <textarea class="form-control @error('shipping_address') is-invalid @enderror" id="shipping_address" name="shipping_address" >{{$buyer->shipping_address}}</textarea>
+                                    
+                                    @error('shipping_address')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
                                 <h5 class="mt-4 mb-2 col-12">{{ _('Other Details') }}</h5>
                                 <div class="form-group col-12">
                                     <label for="bank_name">Bank Name</label>
-                                    <input type="text" class="form-control @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name" value="{{$buyer->bank_name}}" placeholder="Bank Name">
+                                    <input type="text" class="form-control @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name" value="{{ $buyer->bank_name }}" placeholder="Bank Name">
                                     @error('bank_name')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -112,122 +165,6 @@
                                     <label for="grade">Grade</label>
                                     <input type="text" class="form-control @error('grade') is-invalid @enderror" id="grade" name="grade" value="{{ $buyer->grade }}" placeholder="Grade">
                                     @error('grade')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <h5 class="mt-4 mb-2 col-12">{{ _('Shipping Address') }}</h5>
-                                <div class="form-group col-6">
-                                    <label for="flatno">flat No</label>
-                                    <input type="text" class="form-control @error('flatno') is-invalid @enderror" id="flatno" value="{{$shippingAddress->flatno}}" name="flatno" placeholder="Flatno">
-                                    @error('flatno')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="apartment">Apartment</label>
-                                    <input type="text" class="form-control @error('apartment') is-invalid @enderror" id="apartment" value="{{$shippingAddress->apartment}}" name="apartment" placeholder="Apartment">
-                                    @error('apartment')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="landmark">Landmark</label>
-                                    <input type="text" class="form-control @error('landmark') is-invalid @enderror" id="landmark" value="{{$shippingAddress->landmark}}" name="landmark" placeholder="Landmark">
-                                    @error('landmark')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="area">Area</label>
-                                    <input type="text" class="form-control @error('area') is-invalid @enderror" id="area" value="{{$shippingAddress->area}}" name="area" placeholder="Area">
-                                    @error('area')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                
-                                <div class="form-group col-6">
-                                    <label for="city">City</label>
-                                    <input type="text" class="form-control @error('city') is-invalid @enderror" id="city" value="{{$shippingAddress->city}}" name="city" placeholder="City">
-                                    @error('city')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="state">State</label>
-                                    <input type="text" class="form-control @error('state') is-invalid @enderror" id="state" value="{{$shippingAddress->state}}" name="state" placeholder="State">
-                                    @error('state')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="country">Country</label>
-                                    <input type="text" class="form-control @error('country') is-invalid @enderror" id="country" value="{{$shippingAddress->country}}" name="country" placeholder="Country">
-                                    @error('country')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="zipcode">Zipcode</label>
-                                    <input type="text" class="form-control @error('zipcode') is-invalid @enderror" id="zipcode" value="{{$shippingAddress->zipcode}}" name="zipcode" placeholder="zipcode">
-                                    @error('zipcode')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <h5 class="mt-4 mb-2 col-12">{{ _('Billing Address') }}</h5>
-                                <div class="form-group col-6">
-                                    <label for="billing_flatno">flat No</label>
-                                    <input type="text" class="form-control @error('billing_flatno') is-invalid @enderror" id="billing_flatno" value="{{$billingAddress->flatno}}" name="billing_flatno" placeholder="Flatno">
-                                    @error('billing_flatno')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="billing_apartment">Apartment</label>
-                                    <input type="text" class="form-control @error('billing_apartment') is-invalid @enderror" id="billing_apartment" value="{{$billingAddress->apartment}}" name="billing_apartment" placeholder="Apartment">
-                                    @error('billing_apartment')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="billing_landmark">Landmark</label>
-                                    <input type="text" class="form-control @error('billing_landmark') is-invalid @enderror" id="billing_landmark" value="{{$billingAddress->landmark}}" name="billing_landmark" placeholder="Landmark">
-                                    @error('billing_landmark')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="billing_area">Area</label>
-                                    <input type="text" class="form-control @error('billing_area') is-invalid @enderror" id="billing_area" value="{{$billingAddress->area}}" name="billing_area" placeholder="Area">
-                                    @error('billing_area')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                
-                                <div class="form-group col-6">
-                                    <label for="billing_city">City</label>
-                                    <input type="text" class="form-control @error('billing_city') is-invalid @enderror" id="billing_city" value="{{$billingAddress->city}}" name="billing_city" placeholder="City">
-                                    @error('billing_city')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="billing_state">State</label>
-                                    <input type="text" class="form-control @error('billing_state') is-invalid @enderror" id="billing_state" value="{{$billingAddress->state}}" name="billing_state" placeholder="State">
-                                    @error('billing_state')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="billing_country">Country</label>
-                                    <input type="text" class="form-control @error('billing_country') is-invalid @enderror" id="billing_country" value="{{$billingAddress->country}}" name="billing_country" placeholder="Country">
-                                    @error('billing_country')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="billing_zipcode">Zipcode</label>
-                                    <input type="text" class="form-control @error('billing_zipcode') is-invalid @enderror" id="billing_zipcode" value="{{$billingAddress->zipcode}}" name="billing_zipcode" placeholder="zipcode">
-                                    @error('billing_zipcode')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>

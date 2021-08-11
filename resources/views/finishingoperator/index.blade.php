@@ -8,7 +8,7 @@
             <h1>{{ __('Finishing Operator') }}</h1>
         </div>
         <div class="col-sm-6">
-            <a href="{{ route('finishingoperators.create') }}" class="btn bg-gradient-primary float-right">Add finishingoperator</a>
+            <a href="{{ route('staffs.create') }}" class="btn bg-gradient-primary float-right">Add finishingoperator</a>
         </div>
     </div>
 @stop
@@ -51,12 +51,12 @@
                                     <td>{{ $finishingoperator->name }}</td>
                                     <td>{{ $finishingoperator->email }}</td>
                                     <td>{{ $finishingoperator->phone }}</td>
-                                    <td>{{date("d-m-Y", strtotime($finishingoperator->created_at) )  }}</td>
-                                    <td>@if($finishingoperator->deleted_at){{ date("d-m-Y", strtotime($finishingoperator->deleted_at) ) }}@endif</td>
+                                    <td>{{$finishingoperator->joined_on}}</td>
+                                    <td>{{$finishingoperator->left_on}}</td>
                                     <td>
                                         <a href="{{ route('finishingoperators.show',$finishingoperator->id) }}" class="btn btn-sm btn-warning">View</a>
                                         @if(!$finishingoperator->deleted_at)
-                                        <a href="{{ route('finishingoperators.edit',$finishingoperator->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                        <a href="{{ route('staffs.edit',$finishingoperator->id) }}" class="btn btn-sm btn-info">Edit</a>
                                         <form method="POST" action="{{ route('finishingoperators.destroy', $finishingoperator->id) }}"
                                               accept-charset="UTF-8"
                                               style="display: inline-block;"

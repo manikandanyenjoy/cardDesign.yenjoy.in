@@ -8,7 +8,7 @@
             <h1>{{ __('Printers') }}</h1>
         </div>
         <div class="col-sm-6">
-            <a href="{{ route('printers.create') }}" class="btn bg-gradient-primary float-right">Add Printers</a>
+            <a href="{{ route('staffs.create') }}" class="btn bg-gradient-primary float-right">Add Printers</a>
         </div>
     </div>
 @stop
@@ -51,12 +51,12 @@
                                     <td>{{ $printer->name }}</td>
                                     <td>{{ $printer->email }}</td>
                                     <td>{{ $printer->phone }}</td>
-                                    <td>{{date("d-m-Y", strtotime($printer->created_at) )  }}</td>
-                                    <td>@if($printer->deleted_at){{ date("d-m-Y", strtotime($printer->deleted_at) ) }}@endif</td>
+                                    <td>{{$printer->joined_on}}</td>
+                                    <td>{{$printer->left_on}}</td>
                                     <td>
                                         <a href="{{ route('printers.show',$printer->id) }}" class="btn btn-sm btn-warning">View</a>
                                         @if(!$printer->deleted_at)
-                                        <a href="{{ route('printers.edit',$printer->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                        <a href="{{ route('staffs.edit',$printer->id) }}" class="btn btn-sm btn-info">Edit</a>
                                         <form method="POST" action="{{ route('printers.destroy', $printer->id) }}"
                                               accept-charset="UTF-8"
                                               style="display: inline-block;"

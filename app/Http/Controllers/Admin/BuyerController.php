@@ -7,6 +7,8 @@ use App\Http\Requests\Admin\BuyerRequest;
 use App\Models\CustomerMaster;
 use App\Models\CustomerShippingAddress;
 use App\Models\CustomerBillingAddress;
+use Illuminate\Support\Facades\Hash;
+
 
 
 class BuyerController extends Controller
@@ -25,35 +27,27 @@ class BuyerController extends Controller
 
     public function store(BuyerRequest $request)
     {
-        $user = CustomerMaster::create($request->all());
-
-        $result = CustomerShippingAddress::Insert(array(
-            'customer_id' => $user->id,
-            'fullname' => $request->first_name." ".$request->last_name,
-            'flatno' => $request->flatno,
-            'apartment' => $request->apartment,
-            'landmark' => $request->landmark,
-            'area' => $request->area,
-            'city' => $request->city,
-            'state' => $request->state,
-            'country' => $request->country,
-            'zipcode' => $request->zipcode,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ));
-        $result_billing = CustomerBillingAddress::Insert(array(
-            'customer_id' => $user->id,
-            'fullname' => $request->first_name." ".$request->last_name,
-            'flatno' => $request->billing_flatno,
-            'apartment' => $request->billing_apartment,
-            'landmark' => $request->billing_landmark,
-            'area' => $request->billing_area,
-            'city' => $request->billing_city,
-            'state' => $request->billing_state,
-            'country' => $request->billing_country,
-            'zipcode' => $request->billing_zipcode,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
+        
+          
+        if($request->same_as){ $shipping = $request->billing_address;}else{ $shipping = $request->shipping_address;}
+        $result = CustomerMaster::Insert(array(
+            'company_name' => $request->company_name,
+            'company_phone'=> $request->company_phone,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'mobile_number' => $request->mobile_number,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'status' => $request->status,
+            'bank_name' => $request->bank_name,
+            'account_no' => $request->account_no,
+            'status' => $request->status,
+            'IFSCCode' => $request->IFSCCode,
+            'opening_balance' => $request->opening_balance,
+            'credit_period' => $request->credit_period,
+            'billing_address' => $request->billing_address,
+            'shipping_address' => $shipping,
+            'grade' => $request->grade,
         ));
 
         return redirect()
@@ -64,44 +58,35 @@ class BuyerController extends Controller
     public function edit(CustomerMaster $buyer)
     {
         
-         $shippingAddress = CustomerShippingAddress::where('customer_id',$buyer->id)->first();
-         $billingAddress = CustomerBillingAddress::where('customer_id',$buyer->id)->first();
-        return view("buyers.edit", compact("buyer","shippingAddress","billingAddress"));
+    
+        return view("buyers.edit", compact("buyer"));
     }
 
     public function update(BuyerRequest $request, CustomerMaster $buyer)
     {
         
-        $buyer->update($request->all());
+        if($request->same_as){ $shipping = $request->billing_address;}else{ $shipping = $request->shipping_address;}
+        $result = CustomerMaster::where('id', $buyer->id)->update(array(
+            'company_name' => $request->company_name,
+            'company_phone'=> $request->company_phone,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'mobile_number' => $request->mobile_number,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'status' => $request->status,
+            'bank_name' => $request->bank_name,
+            'account_no' => $request->account_no,
+            'status' => $request->status,
+            'IFSCCode' => $request->IFSCCode,
+            'opening_balance' => $request->opening_balance,
+            'credit_period' => $request->credit_period,
+            'billing_address' => $request->billing_address,
+            'shipping_address' => $shipping,
+            'grade' => $request->grade,
+        ));
 
-        $result = CustomerShippingAddress::where('customer_id', $buyer->id)->update(array(
-            
-            'fullname' => $request->first_name." ".$request->last_name,
-            'flatno' => $request->flatno,
-            'apartment' => $request->apartment,
-            'landmark' => $request->landmark,
-            'area' => $request->area,
-            'city' => $request->city,
-            'state' => $request->state,
-            'country' => $request->country,
-            'zipcode' => $request->zipcode,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ));
-        $result_billing = CustomerBillingAddress::where('customer_id', $buyer->id)->update(array(
-    
-            'fullname' => $request->first_name." ".$request->last_name,
-            'flatno' => $request->billing_flatno,
-            'apartment' => $request->billing_apartment,
-            'landmark' => $request->billing_landmark,
-            'area' => $request->billing_area,
-            'city' => $request->billing_city,
-            'state' => $request->billing_state,
-            'country' => $request->billing_country,
-            'zipcode' => $request->billing_zipcode,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ));
+        
 
         return redirect()
             ->route("buyers.index")
@@ -112,10 +97,7 @@ class BuyerController extends Controller
     {
         $buyer = CustomerMaster::findOrFail($buyer);
 
-    
-        $shippingAddress = CustomerShippingAddress::where('customer_id',$buyer->id)->first();
-         $billingAddress = CustomerBillingAddress::where('customer_id',$buyer->id)->first();
-        return view("buyers.show", compact("buyer","shippingAddress","billingAddress"));
+        return view("buyers.show", compact("buyer"));
     }
 
     public function destroy(CustomerMaster $buyer)

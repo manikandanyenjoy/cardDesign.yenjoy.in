@@ -27,6 +27,10 @@ class CustomerMaster extends Model
         "opening_balance",
         "credit_period",
         "grade",
+        "company_name",
+        "company_phone",
+        "billing_address",
+        "shipping_address"
         
     ];
     protected $hidden = ["password", "remember_token"];
