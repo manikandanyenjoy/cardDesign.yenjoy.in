@@ -350,6 +350,12 @@ return [
 
 
         ],
+        [
+            'text'        => ['Design Cards'],
+            'icon'        => 'fas fa-fw fa-object-group',
+            'url'         => 'woven-design-cards',
+
+        ],
         
         ['header' => 'account_settings'],
         [

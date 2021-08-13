@@ -20,7 +20,7 @@
                     <!-- small box -->
                     <div class="small-box bg-gradient-info">
                         <div class="inner">
-                            <h3>{{ cache('seller_count') ?? 0 }}</h3>
+                            <h3>{{ $vendor_count ?? 0 }}</h3>
 
                             <p>{{ __('Vendors') }}</p>
                         </div>
@@ -34,7 +34,7 @@
                     <!-- small box -->
                     <div class="small-box bg-gradient-green">
                         <div class="inner">
-                            <h3>{{ cache('buyer_count') ?? 0 }}</h3>
+                            <h3>{{ $customer_count ?? 0 }}</h3>
 
                             <p>{{ __('Customers') }}</p>
                         </div>
