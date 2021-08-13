@@ -264,7 +264,7 @@ return [
         ],
         [
             'text'        => ['Staffs'],
-            'icon'        => 'fas fa-fw fa-user',
+            'icon'        => 'fas fa-fw fa-user-tie',
             'submenu' => [
                 [
                     'text'        => ['Add Staff'],
@@ -309,38 +309,48 @@ return [
 
             ],       
         ],
-        
         [
-            'text'        => ['Warps'],
-            'url'         => 'warps',
-            'icon'        => 'fas fa-fw fa-user',
-        ],
-        [
-            'text'        => ['FinishingMachines'],
-            'url'         => 'finishingmachines',
-            'icon'        => 'fas fa-fw fa-user',
-        ],
-        [
-            'text'        => ['Looms'],
-            'url'         => 'looms',
-            'icon'        => 'fas fa-fw fa-user',
-        ],
-        [
-            'text'        => ['Yarns'],
-            'url'         => 'yarns',
-            'icon'        => 'fas fa-fw fa-user',
-        ],
+            'text'        => ['Masters'],
+            'icon'        => 'fas fa-fw fa-dice-d6',
+            'submenu' => [
 
-        [
-            'text'        => ['WovenQualitys'],
-            'url'         => 'wovenqualitys',
-            'icon'        => 'fas fa-fw fa-user',
+                [
+                    'text'        => ['Warps'],
+                    'url'         => 'warps',
+                   
+                ],
+                [
+                    'text'        => ['FinishingMachines'],
+                    'url'         => 'finishingmachines',
+                    
+                ],
+                [
+                    'text'        => ['Looms'],
+                    'url'         => 'looms',
+                    
+                ],
+                [
+                    'text'        => ['Yarns'],
+                    'url'         => 'yarns',
+                    
+                ],
+        
+                [
+                    'text'        => ['WovenQualitys'],
+                    'url'         => 'wovenqualitys',
+                   
+                ],
+                [
+                    'text'        => ['Folds'],
+                    'url'         => 'folds',
+                    
+                ],
+
+            ],
+
+
         ],
-        [
-            'text'        => ['Folds'],
-            'url'         => 'folds',
-            'icon'        => 'fas fa-fw fa-user',
-        ],
+        
         ['header' => 'account_settings'],
         [
             'text' => ['Change Password'],
