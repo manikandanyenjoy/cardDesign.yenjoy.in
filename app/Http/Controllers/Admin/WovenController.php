@@ -17,8 +17,12 @@ class WovenController extends Controller
 {
     public function index()
     {
-        $wovens = DesignCard::orderBy('created_at', 'DESC')
+
+        $wovens = DB::table('design_cards')->select('design_cards.*','customer_masters.first_name','customer_masters.last_name')
+        ->join('customer_masters', 'customer_masters.id', '=', 'design_cards.customer_id')
+        ->orderBy('created_at', 'DESC')
         ->paginate(config("motorTraders.paginate.perPage"));
+      // echo "<pre>"; print_r($wovens);exit;
         return view("woven.index", compact("wovens"));
     }
 
@@ -36,52 +40,64 @@ class WovenController extends Controller
    
     public function store(WovenRequest $request)
     {
-      
+      //  print_r($request->all());exit;
 
         try {
             $validatedFields = $request->validated();
             unset($validatedFields["image"]);
 
-            $result = DesignCard::Insert(array(
-                'date' => $request->first_name,
-                'customer_id' => $request->last_name,
-                'lable' => $request->mobile_number,
-                'designer_id' => $request->email,
-                'design_number' => Hash::make($request->password),
-                'salesrep_id' => $request->status,
-                'weaver_id' => $request->bank_name,
-                'warps_id' => $request->account_no,
-                'picks' => $request->status,
-                'total_picks' => $request->IFSCCode,
-                'loom_id' => $request->opening_balance,
-                'total_repet' => $request->credit_period,
-                'wastage' => $request->billing_address,
-                'finishing_id' => $shipping,
-                'cost_in_roll' => $request->grade,
-                'loom_id' => $request->opening_balance,
-                'total_repet' => $request->credit_period,
-                'wastage' => $request->billing_address,
-                'finishing_id' => $shipping,
-                'cost_in_roll' => $request->grade,
-            ));
+            $result = DesignCard::create([
+                'date' => $request->date,
+                'customer_id' => $request->customer,
+                'lable' => $request->label,
+                'designer_id' => $request->designer,
+                'design_number' => $request->design_no,
+                'salesrep_id' => $request->sales_rep,
+                'weaver_id' => $request->warp,
+                'warps_id' => $request->warp,
+                'picks' => $request->pick,
+                'total_picks' => $request->total_pick,
+                'loom_id' => json_encode($request->looms),
+                'total_repet' => json_encode($request->total_repeat),
+                'wastage' => $request->wastage,
+                'finishing_id' => $request->finishings,
+                'cost_in_roll' => $request->cast_inch,
+                'total_cost' => $request->total_area,
+                'catagory' => $request->catagory,
+                'length' => $request->length,
+                'sq_inch'=> $request->sq_inch,
+                'customer_grade'=> $request->customer_grade,
+                'width' =>$request->width,
+                'add_on_cast'=>json_encode($request->add_on_cast),
+                'needle'=>json_encode($request->needle)
+            ]);
 
-            if ($request->hasFile("image")) {
-                $file = $request->file("image");
-                $filePath = $file->store("{$user->id}/business_document", [
-                    "disk" => "folds",
+            if ($request->hasFile("document_name")) {
+                $file = $request->file("document_name");
+                $filePath = $file->store("{$result->id}", [
+                    "disk" => "cardsDocuments",
                 ]);
             }
 
             if (isset($filePath)) {
-                $user->update([
-                    "image" => $filePath,
+                $result->update([
+                    "document_name" => $filePath,
+                ]);
+            }
+            if ($request->hasFile("crap_image")) {
+                $file = $request->file("crap_image");
+                $filePath = $file->store("{$result->id}", [
+                    "disk" => "cardsImage",
                 ]);
             }
 
-           
-
+            if (isset($filePath)) {
+                $result->update([
+                    "crap_image" => $filePath,
+                ]);
+            }
             return redirect()
-        ->route("folds.index")
+        ->route("woven.index")
         ->with("success", "Design card created successfully.");
         } catch (\Exception $exception) {
             DB::rollBack();

@@ -39,7 +39,7 @@
                             @csrf
                             <div class="card-body row">
 
-                               <div class="col-md-6" style=""> 
+                               <div class="col-md-6"> 
 
                                <div class="form-group">
                                     <label for="name">Name</label>

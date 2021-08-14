@@ -65,6 +65,18 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'private',
         ],
+        'cardsImage' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/designCards'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'private',
+        ],
+        'cardsDocuments' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/cardsDocuments'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'private',
+        ],
 
     ],
 

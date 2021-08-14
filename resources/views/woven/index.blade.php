@@ -36,20 +36,25 @@
                             <thead>
                             <tr>
                                 <th style="width: 50px">#</th>
-                                <th>name</th>
-                                
+                                <th>Customer</th>
+                                <th>Lable</th>
+                                <th>Date</th>
                                 <th style="width: 200px">Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($wovens as $index => $woven)
+
+                            <?php // echo "<pre>"; print_r($woven);exit; ?>
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $woven->name }}</td>
+                                    <td>{{ $woven->first_name }} {{" "}} {{$woven->last_name}}</td>
+                                    <td>{{ $woven->lable }}</td>
+                                    <td>{{ $woven->date }}</td>
                                     
                                     <td>
                                         <a href="{{ route('woven.show',$woven->id) }}" class="btn btn-sm btn-warning">View</a>
-                                        @if(!$woven->deleted_at)
+                                        
                                         <a href="{{ route('woven.edit',$woven->id) }}" class="btn btn-sm btn-info">Edit</a>
                                         <form method="POST" action="{{ route('woven.destroy', $woven->id) }}"
                                               accept-charset="UTF-8"
@@ -59,7 +64,7 @@
                                             @method('DELETE')
                                             <input class="btn btn-sm btn-danger" type="submit" value="Delete">
                                         </form>
-                                        @endif
+                                        
                                     </td>
                                 </tr>
                             @endforeach

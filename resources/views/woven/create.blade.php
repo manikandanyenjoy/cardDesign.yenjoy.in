@@ -38,10 +38,7 @@
                         <form method="POST" action="{{ route('woven.store') }}" enctype="multipart/form-data" novalidate>
                             @csrf
                             <div class="card-body row">
-
-                               <div class="col-md-4" > 
-                             
-                                <div class="form-group">
+                                <div class="form-group col-4">
                                     <label for="customer">Customer</label>
                                     <select class="form-control @error('customer') is-invalid @enderror" id="customer" name="customer">
                                     @foreach( $data['customer'] as $customer) 
@@ -53,14 +50,28 @@
                                     @enderror
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group col-4">
                                     <label for="label">Label</label>
                                     <input type="text" class="form-control @error('label') is-invalid @enderror" id="label" name="label" value="{{old('label')}}" placeholder="label">
                                     @error('label')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-4">
+                                    <label for="date">Date</label>
+                                    <input type="date" class="form-control @error('date') is-invalid @enderror" id="date" name="date" value="{{old('date')}}" placeholder="">
+                                    @error('date')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="design_no">Design No</label>
+                                    <input type="text" class="form-control @error('design_no') is-invalid @enderror" id="design_no" name="design_no" value="{{old('design_no')}}" placeholder="design_no">
+                                     @error('design_no')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                     @enderror
+                                </div>
+                                <div class="form-group col-4">
                                     <label for="designer">Designer</label>
                                     <select class="form-control @error('designer') is-invalid @enderror" id="designer" name="designer">
                                     @foreach( $data['designer'] as $designer) 
@@ -71,7 +82,16 @@
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                
+                                <div class="form-group col-4">
+                                <img  id="result" />
+                                    <label for="file">Upload Image</label>
+                                    <input type="file" class="form-control @error('crap_image') is-invalid @enderror" id="file" name="crap_image" value="{{ old('crap_image') }}">
+                                    @error('crap_image')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-4">
                                     <label for="sample_weaver">Sample Weaver</label>
                                     <select class="form-control @error('sample_weaver') is-invalid @enderror" id="sample_weaver" name="sample_weaver">
                                     @foreach( $data['designer'] as $designer) 
@@ -82,33 +102,57 @@
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-4">
                                     <label for="pick">Pickc /cm</label>
                                     <input type="text" class="form-control @error('pick') is-invalid @enderror" id="pick" name="pick" value="{{old('pick')}}" placeholder="Pick">
                                     @error('pick')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <div class="form-group col-4">
                                 
-                                <div class="form-group">
-                                    <label for="loom">Loom</label>
-                                    <select class="form-control @error('loom') is-invalid @enderror" id="loom" name="loom">
-                                    @foreach( $data['looms'] as $looms) 
-                                    <option value="{{$looms['id']}}">{{$looms['loom_name']}} </option>
-                                    @endforeach
-                                    </select>
-                                    @error('loom')
+                                    <label for="document_name">Upload Doument</label>
+                                    <input type="file" class="form-control @error('document_name') is-invalid @enderror" id="document_name" name="document_name" value="{{ old('document_name') }}">
+                                    @error('document_name')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="wastage">Wastage</label>
-                                    <input type="text" class="form-control @error('wastage') is-invalid @enderror" id="wastage" name="wastage" value="{{old('wastage')}}" placeholder="Wastage">
+                                <div class="form-group col-4">
+                                    <h6 style="font-size: 18px;font-weight: 600;">Wastage</h6>
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="radio" value="yes" name="wastage" >
+                                    <label class="form-check-label">YES</label>
+                                    
+                                    <input class="form-check-input" type="radio" value="no" name="wastage" style="margin-left:35px;">
+                                    <label class="form-check-label" style="margin-left:55px;">NO</label>
+                                    </div>
                                     @error('wastage')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
+                                    
+                                </div>
+                                
+                                <div class="col-md-1" > 
+                                 <div class="form-group">
+                                    <label for="name">Looms : </label>
                                 </div>
                                 <div class="form-group">
+                                    <label for="name">Total Repeats :</label>
+                                </div></div>
+                                @foreach( $data['looms'] as $looms) 
+                                <div class="col-md-1" > 
+                                 <div class="form-group">
+                                    <label >{{$looms['loom_name']}} </label>
+                                    <input type="hidden" value="{{$looms['loom_name']}}" name="looms[]">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="total_repeat[]" value="{{old('name')}}" placeholder="">
+                                    @error('name')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                </div>
+                                @endforeach
+
+                                <div class="form-group col-4">
                                     <label for="finishings">Finishings</label>
                                     <select class="form-control @error('finishings') is-invalid @enderror" id="finishings" name="finishings">
                                     @foreach( $data['finishing'] as $finishing) 
@@ -119,45 +163,33 @@
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-4">
                                     <label for="total_area">Total Area /sq mm</label>
                                     <input type="text" class="form-control @error('total_area') is-invalid @enderror" id="total_area" name="total_area" value="{{old('total_area')}}" placeholder="Total Area">
                                     @error('total_area')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-4">
                                     <label for="length">Length mm</label>
                                     <input type="text" class="form-control @error('length') is-invalid @enderror" id="length" name="length" value="{{old('length')}}" placeholder="Length">
                                     @error('length')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-4">
                                     <label for="sq_inch">Sq Inch </label>
                                     <input type="text" class="form-control @error('sq_inch') is-invalid @enderror" id="sq_inch" name="sq_inch" value="{{old('sq_inch')}}" placeholder="sq inch">
                                     @error('sq_inch')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>  
-                                </div>
+                                
 
-                                <div class="col-md-4" > 
-                                <div class="form-group">
-                                    <label for="date">Date</label>
-                                    <input type="date" class="form-control @error('date') is-invalid @enderror" id="date" name="date" value="{{old('date')}}" placeholder="">
-                                    @error('date')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="design_no">Design No</label>
-                                    <input type="text" class="form-control @error('design_no') is-invalid @enderror" id="design_no" name="design_no" value="{{old('design_no')}}" placeholder="design_no">
-                                     @error('design_no')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                     @enderror
-                                </div>
-                                <div class="form-group">
+                                
+                                
+                                
+                                <div class="form-group col-4">
                                     <label for="sales_rep">Sales Rep</label>
                                     <select class="form-control @error('sales_rep') is-invalid @enderror" id="sales_rep" name="sales_rep">
                                     @foreach( $data['salesrep'] as $salesrep) 
@@ -168,7 +200,7 @@
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-4">
                                     <label for="warp">Warp</label>
                                     <select class="form-control @error('warp') is-invalid @enderror" id="warp" name="warp">
                                     @foreach( $data['warp'] as $warp) 
@@ -179,37 +211,31 @@
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-4">
                                     <label for="total_pick">Total Pick</label>
                                     <input type="text" class="form-control @error('total_pick') is-invalid @enderror" id="total_pick" name="total_pick" value="{{old('total_pick')}}" placeholder="total_pick">
                                     @error('total_pick')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="total_repeats">Total Repeats</label>
-                                    <input type="text" class="form-control @error('total_repeats') is-invalid @enderror" id="total_repeats" name="total_repeats" value="{{old('total_repeats')}}" placeholder="total_repeats">
-                                    @error('total_repeats')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="name">Customer Grade</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="type_of_fold" value="{{old('name')}}" placeholder="Customer Grade">
-                                    @error('name')
+                                
+                                <div class="form-group col-4">
+                                    <label for="customer_grade">Customer Grade</label>
+                                    <input type="text" class="form-control @error('customer_grade') is-invalid @enderror" id="customer_grade" name="customer_grade" value="{{old('customer_grade')}}" placeholder="Customer Grade">
+                                    @error('customer_grade')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 
-                                <div class="form-group">
-                                    <label for="name">Catogery</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="type_of_fold" value="{{old('name')}}" placeholder="Catogery">
-                                    @error('name')
+                                <div class="form-group col-4">
+                                    <label for="catagory">Catogery</label>
+                                    <input type="text" class="form-control @error('catogery') is-invalid @enderror" id="catagory" name="catagory" value="{{old('catagory')}}" placeholder="catagory">
+                                    @error('catagory')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 
-                                 <div class="form-group">
+                                 <div class="form-group col-4">
                                     <label for="cast_inch">Cast /sq inch</label>
                                     <input type="text" class="form-control @error('cast_inch') is-invalid @enderror" id="cast_inch" name="cast_inch" value="{{old('cast_inch')}}" placeholder="Cast Sq inch">
                                     @error('cast_inch')
@@ -217,7 +243,7 @@
                                     @enderror
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group col-4">
                                     <label for="width">Width mm</label>
                                     <input type="text" class="form-control @error('width') is-invalid @enderror" id="width" name="width" value="{{old('width')}}" placeholder="width">
                                     @error('width')
@@ -227,21 +253,6 @@
                                 
                                                       
                                 </div>
-                                <div class="col-md-4" > 
-                                
-                                <img width="100%" src="https://pbs.twimg.com/media/Dv69AZUX0AE_WMr.jpg" />
-                                
-                                <div class="form-group col-6">
-                                    <label for="document_name">Upload Image</label>
-                                    <input type="file" class="form-control @error('document_name') is-invalid @enderror" id="document_name" name="document_name" value="{{ old('document_name') }}">
-                                    @error('document_name')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                </div>
-                                
-                            </div>
-                            
                             
                             <div class="card-body row">
                                 <div class="col-md-1" > 
@@ -254,72 +265,72 @@
                                 </div>
                                 <div class="col-md-1" > 
                                  <div class="form-group">
-                                    <label for="name">Basic </label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="type_of_fold" value="{{old('name')}}" placeholder="">
-                                    @error('name')
+                                    <label>Basic </label>
+                                    <input type="text" class="form-control @error('add_on_cast') is-invalid @enderror" name="add_on_cast[]" value="{{old('add_on_cast[]')}}">
+                                    @error('add_on_cast[]')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 </div>
                                 <div class="col-md-1" > 
                                  <div class="form-group">
-                                    <label for="name">Cut fold </label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="type_of_fold" value="{{old('name')}}" placeholder="">
-                                    @error('name')
+                                    <label >Cut fold </label>
+                                    <input type="text" class="form-control @error('add_on_cast') is-invalid @enderror" name="add_on_cast" value="{{old('add_on_cast')}}">
+                                    @error('add_on_cast[]')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 </div>
                                 <div class="col-md-1" > 
                                  <div class="form-group">
-                                    <label for="name">Diecut </label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="type_of_fold" value="{{old('name')}}" placeholder="">
-                                    @error('name')
+                                    <label >Diecut </label>
+                                    <input type="text" class="form-control @error('add_on_cast[]') is-invalid @enderror" id="name" name="add_on_cast[]" value="{{old('add_on_cast[]')}}">
+                                    @error('add_on_cast[]')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 </div>
                                 <div class="col-md-1" > 
                                  <div class="form-group">
-                                    <label for="name">Nonwoven </label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="type_of_fold" value="{{old('name')}}" placeholder="">
-                                    @error('name')
+                                    <label >Nonwoven </label>
+                                    <input type="text" class="form-control @error('add_on_cast[]') is-invalid @enderror" name="add_on_cast[]" value="{{old('add_on_cast[]')}}">
+                                    @error('add_on_cast[]')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 </div>
                                 <div class="col-md-2" > 
                                  <div class="form-group">
-                                    <label for="name">Iron on back </label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="type_of_fold" value="{{old('name')}}" placeholder="">
-                                    @error('name')
+                                    <label>Iron on back </label>
+                                    <input type="text" class="form-control @error('add_on_cast[]') is-invalid @enderror" name="add_on_cast[]" value="{{old('add_on_cast[]')}}" >
+                                    @error('add_on_cast[]')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 </div>
                                 <div class="col-md-1" > 
                                  <div class="form-group">
-                                    <label for="name">Extras </label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="type_of_fold" value="{{old('name')}}" placeholder="">
-                                    @error('name')
+                                    <label >Extras </label>
+                                    <input type="text" class="form-control @error('add_on_cast[]') is-invalid @enderror" name="add_on_cast[]" value="{{old('add_on_cast[]')}}" >
+                                    @error('add_on_cast[]')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 </div>
                                 <div class="col-md-1" > 
                                  <div class="form-group">
-                                    <label for="name">TOTAL </label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="type_of_fold" value="{{old('name')}}" placeholder="">
-                                    @error('name')
+                                    <label>TOTAL </label>
+                                    <input type="text" class="form-control @error('add_on_cast[]') is-invalid @enderror" name="add_on_cast[]" value="{{old('add_on_cast[]')}}" >
+                                    @error('add_on_cast[]')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 </div>
                                 <div class="col-md-1" > 
                                  <div class="form-group">
-                                    <label for="name">Offered  </label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="type_of_fold" value="{{old('name')}}" placeholder="">
-                                    @error('name')
+                                    <label>Offered  </label>
+                                    <input type="text" class="form-control @error('add_on_cast[]') is-invalid @enderror" name="add_on_cast[]" value="{{old('add_on_cast[]')}}">
+                                    @error('add_on_cast[]')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -389,7 +400,7 @@
                                 </div>
                                 <div class="col-md-1" > 
                                  <div class="form-group">
-                                    <input type="text" class="form-control @error('color') is-invalid @enderror"  name="color[]">
+                                    <input type="text" class="form-control @error('color') is-invalid @enderror"  name="needle[]">
                                     @error('color')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -397,7 +408,7 @@
                                 </div>
                                 <div class="col-md-2" > 
                                  <div class="form-group">
-                                    <input type="text" class="form-control @error('color_shade') is-invalid @enderror" name="color_shade[]">
+                                    <input type="color" class="form-control @error('color_shade') is-invalid @enderror" name="needle[]">
                                     @error('color_shade')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -405,7 +416,7 @@
                                 </div>
                                 <div class="col-md-1" > 
                                  <div class="form-group">
-                                    <input type="text" class="form-control @error('denier') is-invalid @enderror" name="denier[]">
+                                    <input type="text" class="form-control @error('denier') is-invalid @enderror" name="needle[]">
                                     @error('denier')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -413,7 +424,7 @@
                                 </div>
                                 <div class="col-md-1" > 
                                  <div class="form-group">
-                                    <input type="text" class="form-control @error('field_a') is-invalid @enderror" name="field_a[]">
+                                    <input type="text" class="form-control @error('field_a') is-invalid @enderror" name="needle[]">
                                     @error('field_a')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -421,7 +432,7 @@
                                 </div>
                                 <div class="col-md-1" > 
                                  <div class="form-group">
-                                    <input type="text" class="form-control @error('field_b') is-invalid @enderror" name="field_b[]">
+                                    <input type="text" class="form-control @error('field_b') is-invalid @enderror" name="needle[]">
                                     @error('field_b')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -429,7 +440,7 @@
                                 </div>
                                 <div class="col-md-1" > 
                                  <div class="form-group">
-                                    <input type="text" class="form-control @error('field_c') is-invalid @enderror" name="field_c[]">
+                                    <input type="text" class="form-control @error('field_c') is-invalid @enderror" name="needle[]">
                                     @error('name')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -437,7 +448,7 @@
                                 </div>
                                 <div class="col-md-1" > 
                                  <div class="form-group">
-                                    <input type="text" class="form-control @error('field_d') is-invalid @enderror" name="field_d[]">
+                                    <input type="text" class="form-control @error('field_d') is-invalid @enderror" name="needle[]">
                                     @error('field_d')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -445,17 +456,19 @@
                                 </div>
                                 <div class="col-md-1" > 
                                  <div class="form-group">
-                                    <input type="text" class="form-control @error('field_e') is-invalid @enderror" name="field_e[]">
+                                    <input type="text" class="form-control @error('field_e') is-invalid @enderror" name="needle[]">
                                     @error('field_e')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 </div>
-                                
+                                <button type="button" style="height:36px;" class="btn btn-warning float-right" id="addRow">Add Row</button>
                             </div>
-                                
-                           
                             
+                            <div id="newRow">
+
+                            </div> 
+                                
                             <!-- /.card-body -->
 
                             <div class="card-footer">
@@ -469,4 +482,115 @@
             </div>
         </div>
     </section>
+    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" type="text/css" href="{{asset('css/pixelarity.css')}}">
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="{{asset('js/pixelarity-face.js')}}"></script>
+		<script type="text/javascript" src="{{asset('js/script-face.js')}}"></script>
+    <style type="text/css">
+			#result{
+				display: block;
+				position: relative;
+				margin-top: 40px;
+			}
+			.face{
+				position: absolute;
+				height: 0px;
+				width: 0px;
+				background-color: transparent;;
+				border: 4px solid rgba(10,10,10,0.5);
+			}
+		</style>
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-2783044520727903";
+/* jQuery_demo */
+google_ad_slot = "2780937993";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script> 
+    <script type="text/javascript">
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-36251023-1']);
+_gaq.push(['_setDomainName', 'jqueryscript.net']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
+</script>
+<script>
+try {
+fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+  return true;
+}).catch(function(e) {
+  var carbonScript = document.createElement("script");
+  carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CK7DKKQU&placement=wwwjqueryscriptnet";
+  carbonScript.id = "_carbonads_js";
+  document.getElementById("carbon-block").appendChild(carbonScript);
+});
+} catch (error) {
+console.log(error);
+}
+</script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <script type="text/javascript">
+    // add row
+    $("#addRow").click(function () {
+        var html = '';
+        html += '<div class="card-body row" id="inputFormRow">';
+        html += '<div class="col-md-1" > ';
+        html += '<div class="form-group">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '</div></div>';
+        html += '<div class="col-md-1" > ';
+        html += '<div class="form-group">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '</div></div>';
+        html += '<div class="col-md-2" > ';
+        html += '<div class="form-group">';
+        html += '<input type="color" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '</div></div>';
+        html += '<div class="col-md-1" > ';
+        html += '<div class="form-group">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '</div></div>';
+        html += '<div class="col-md-1" > ';
+        html += '<div class="form-group">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '</div></div>';
+        html += '<div class="col-md-1" > ';
+        html += '<div class="form-group">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '</div></div>';
+        html += '<div class="col-md-1" > ';
+        html += '<div class="form-group">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '</div></div>';
+        html += '<div class="col-md-1" > ';
+        html += '<div class="form-group">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '</div></div>';
+        html += '<div class="col-md-1" > ';
+        html += '<div class="form-group">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '</div></div>';
+        html += '<button id="removeRow" style="height:36px;" class="btn btn-danger float-right" type="button">remove Row</button>';
+        html += '</div>';
+        
+        $('#newRow').append(html);
+    });
+
+    $(document).on('click', '#removeRow', function () {
+        $(this).closest('#inputFormRow').remove();
+    });
+</script> 
 @stop
