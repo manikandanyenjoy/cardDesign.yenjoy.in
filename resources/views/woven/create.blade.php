@@ -125,7 +125,7 @@
                                     <input class="form-check-input" type="radio" value="yes" name="wastage" >
                                     <label class="form-check-label">YES</label>
                                     
-                                    <input class="form-check-input" type="radio" value="no" name="wastage" style="margin-left:35px;">
+                                    <input class="form-check-input" type="radio" value="no" checked name="wastage" style="margin-left:35px;">
                                     <label class="form-check-label" style="margin-left:55px;">NO</label>
                                     </div>
                                     @error('wastage')
@@ -186,11 +186,6 @@
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>  
-                                
-
-                                
-                                
-                                
                                 <div class="form-group col-4">
                                     <label for="sales_rep">Sales Rep</label>
                                     <select class="form-control @error('sales_rep') is-invalid @enderror" id="sales_rep" name="sales_rep">
@@ -281,7 +276,7 @@
                                  <div class="form-group">
                                     <label>Basic </label>
                                     <input type="text" class="form-control @error('add_on_cast') is-invalid @enderror" name="add_on_cast[]" value="{{old('add_on_cast[]')}}">
-                                    @error('add_on_cast[]')
+                                    @error('add_on_cast')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -289,8 +284,8 @@
                                 <div class="col-md-1" > 
                                  <div class="form-group">
                                     <label >Cut fold </label>
-                                    <input type="text" class="form-control @error('add_on_cast') is-invalid @enderror" name="add_on_cast" value="{{old('add_on_cast')}}">
-                                    @error('add_on_cast[]')
+                                    <input type="text" class="form-control @error('add_on_cast') is-invalid @enderror" name="add_on_cast[]" value="{{old('add_on_cast[]')}}">
+                                    @error('add_on_cast')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -299,7 +294,7 @@
                                  <div class="form-group">
                                     <label >Diecut </label>
                                     <input type="text" class="form-control @error('add_on_cast[]') is-invalid @enderror" id="name" name="add_on_cast[]" value="{{old('add_on_cast[]')}}">
-                                    @error('add_on_cast[]')
+                                    @error('add_on_cast')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -308,7 +303,7 @@
                                  <div class="form-group">
                                     <label >Nonwoven </label>
                                     <input type="text" class="form-control @error('add_on_cast[]') is-invalid @enderror" name="add_on_cast[]" value="{{old('add_on_cast[]')}}">
-                                    @error('add_on_cast[]')
+                                    @error('add_on_cast')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -317,7 +312,7 @@
                                  <div class="form-group">
                                     <label>Iron on back </label>
                                     <input type="text" class="form-control @error('add_on_cast[]') is-invalid @enderror" name="add_on_cast[]" value="{{old('add_on_cast[]')}}" >
-                                    @error('add_on_cast[]')
+                                    @error('add_on_cast')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -326,7 +321,7 @@
                                  <div class="form-group">
                                     <label >Extras </label>
                                     <input type="text" class="form-control @error('add_on_cast[]') is-invalid @enderror" name="add_on_cast[]" value="{{old('add_on_cast[]')}}" >
-                                    @error('add_on_cast[]')
+                                    @error('add_on_cast')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -335,7 +330,7 @@
                                  <div class="form-group">
                                     <label>TOTAL </label>
                                     <input type="text" class="form-control @error('add_on_cast[]') is-invalid @enderror" name="add_on_cast[]" value="{{old('add_on_cast[]')}}" >
-                                    @error('add_on_cast[]')
+                                    @error('add_on_cast')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -344,7 +339,7 @@
                                  <div class="form-group">
                                     <label>Offered  </label>
                                     <input type="text" class="form-control @error('add_on_cast[]') is-invalid @enderror" name="add_on_cast[]" value="{{old('add_on_cast[]')}}">
-                                    @error('add_on_cast[]')
+                                    @error('add_on_cast')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -406,7 +401,7 @@
                              <div class="card-body row">
                                 <div class="col-md-1" > 
                                  <div class="form-group">
-                                    <input type="text" class="form-control @error('needle') is-invalid @enderror"  name="needle[]" value="{{old('needle')}}" placeholder="">
+                                    <input type="text" class="form-control @error('needle') is-invalid @enderror"  name="needle[]">
                                     @error('needle')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -415,7 +410,7 @@
                                 <div class="col-md-1" > 
                                  <div class="form-group">
                                     <input type="text" class="form-control @error('color') is-invalid @enderror"  name="needle[]">
-                                    @error('color')
+                                    @error('needle')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -423,7 +418,7 @@
                                 <div class="col-md-2" > 
                                  <div class="form-group">
                                     <input type="color" class="form-control @error('color_shade') is-invalid @enderror" name="needle[]">
-                                    @error('color_shade')
+                                    @error('needle')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -431,7 +426,7 @@
                                 <div class="col-md-1" > 
                                  <div class="form-group">
                                     <input type="text" class="form-control @error('denier') is-invalid @enderror" name="needle[]">
-                                    @error('denier')
+                                    @error('needle')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -439,7 +434,7 @@
                                 <div class="col-md-1" > 
                                  <div class="form-group">
                                     <input type="text" class="form-control @error('field_a') is-invalid @enderror" name="needle[]">
-                                    @error('field_a')
+                                    @error('needle')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -447,7 +442,7 @@
                                 <div class="col-md-1" > 
                                  <div class="form-group">
                                     <input type="text" class="form-control @error('field_b') is-invalid @enderror" name="needle[]">
-                                    @error('field_b')
+                                    @error('needle')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -455,7 +450,7 @@
                                 <div class="col-md-1" > 
                                  <div class="form-group">
                                     <input type="text" class="form-control @error('field_c') is-invalid @enderror" name="needle[]">
-                                    @error('name')
+                                    @error('needle')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -463,7 +458,7 @@
                                 <div class="col-md-1" > 
                                  <div class="form-group">
                                     <input type="text" class="form-control @error('field_d') is-invalid @enderror" name="needle[]">
-                                    @error('field_d')
+                                    @error('needle')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -471,7 +466,7 @@
                                 <div class="col-md-1" > 
                                  <div class="form-group">
                                     <input type="text" class="form-control @error('field_e') is-invalid @enderror" name="needle[]">
-                                    @error('field_e')
+                                    @error('needle')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -532,39 +527,39 @@
         html += '<div class="card-body row" id="inputFormRow">';
         html += '<div class="col-md-1" > ';
         html += '<div class="form-group">';
-        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" >';
         html += '</div></div>';
         html += '<div class="col-md-1" > ';
         html += '<div class="form-group">';
-        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" >';
         html += '</div></div>';
         html += '<div class="col-md-2" > ';
         html += '<div class="form-group">';
-        html += '<input type="color" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '<input type="color" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" >';
         html += '</div></div>';
         html += '<div class="col-md-1" > ';
         html += '<div class="form-group">';
-        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]">';
         html += '</div></div>';
         html += '<div class="col-md-1" > ';
         html += '<div class="form-group">';
-        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]">';
         html += '</div></div>';
         html += '<div class="col-md-1" > ';
         html += '<div class="form-group">';
-        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]">';
         html += '</div></div>';
         html += '<div class="col-md-1" > ';
         html += '<div class="form-group">';
-        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]">';
         html += '</div></div>';
         html += '<div class="col-md-1" > ';
         html += '<div class="form-group">';
-        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]">';
         html += '</div></div>';
         html += '<div class="col-md-1" > ';
         html += '<div class="form-group">';
-        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]" value="{{old("needle")}}">';
+        html += '<input type="text" class="form-control @error("needle") is-invalid @enderror"  name="needle[]">';
         html += '</div></div>';
         html += '<button id="removeRow" style="height:36px;" class="btn btn-danger float-right" type="button">remove Row</button>';
         html += '</div>';

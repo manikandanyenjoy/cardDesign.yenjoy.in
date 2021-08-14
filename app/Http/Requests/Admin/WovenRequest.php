@@ -23,8 +23,61 @@ class WovenRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+        $validation = [
+            "date" => "required",
+            "customer_id" => "required",
+            "lable" => "required",
+            "designer_id" => "required",
+            "design_number" => "required",
+            "salesrep_id" => "required",
+            "weaver_id" => "required",
+            "warps_id" => "required",
+            "picks" => "required",
+            "total_picks" => "required",
+            "loom_id.*" => "required",
+            "total_repet.*" => "required",
+            "wastage" => "required",
+            "finishing_id" => "required",
+            "cost_in_roll" => "required",
+            "total_cost" => "required",
+            "catagory" => "required",
+            "length" => "required",
+            "sq_inch" => "required",
+            "customer_grade" => "required",
+            "width" => "required",
+            "add_on_cast.*" => "required",
+            "needle.*" => "required",
+            
         ];
+
+        if ($this->isMethod("put")) {
+            $validation = [
+                "date" => "required",
+                "customer_id" => "required",
+                "lable" => "required",
+                "designer_id" => "required",
+                "design_number" => "required",
+                "salesrep_id" => "required",
+                "weaver_id" => "required",
+                "warps_id" => "required",
+                "picks" => "required",
+                "total_picks" => "required",
+                "loom_id.*" => "required",
+                "total_repet.*" => "required",
+                "wastage" => "required",
+                "finishing_id" => "required",
+                "cost_in_roll" => "required",
+                "total_cost" => "required",
+                "catagory" => "required",
+                "length" => "required",
+                "sq_inch" => "required",
+                "customer_grade" => "required",
+                "width" => "required",
+                "add_on_cast.*" => "required",
+                "needle.*" => "required",
+            ];
+        }
+
+        return $validation;
     }
 }
