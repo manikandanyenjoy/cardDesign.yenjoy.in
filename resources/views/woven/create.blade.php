@@ -243,7 +243,7 @@
                                     <option value="B">2 </option>
                                     <option value="C">3 </option>
                                     </select>
-                                    <input type="text" >
+                                    
                                     @error('catagory')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -498,7 +498,7 @@
     </section>
         <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" type="text/css" href="{{asset('css/pixelarity.css')}}">
-		
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" crossorigin="anonymous"></script>
     <style type="text/css">
 			.face{
 				position: absolute;
