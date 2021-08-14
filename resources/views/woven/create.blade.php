@@ -84,8 +84,22 @@
                                 </div>
                                 
                                 <div class="form-group col-4">
+                                <div id="carbon-block" style="margin:30px auto"></div>
+                                    <div style="margin:30px auto">
+                                    <script type="text/javascript">
+                                    google_ad_client = "ca-pub-2783044520727903";
+                                    /* jQuery_demo */
+                                    google_ad_slot = "2780937993";
+                                    google_ad_width = 728;
+                                    google_ad_height = 90;
+                                   
+                                    </script>
+                                    <script type="text/javascript"
+                                    src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
+                                    </script>
+                                    </div>
                                 <img  id="result" />
-                                    <label for="file">Upload Image</label>
+                                    <label for="file">Upload Scrap Image</label>
                                     <input type="file" class="form-control @error('crap_image') is-invalid @enderror" id="file" name="crap_image" value="{{ old('crap_image') }}">
                                     @error('crap_image')
                                     <span class="error invalid-feedback">{{ $message }}</span>
@@ -132,7 +146,7 @@
                                     
                                 </div>
                                 
-                                <div class="col-md-1" > 
+                                <div class="col-md-2" > 
                                  <div class="form-group">
                                     <label for="name">Looms : </label>
                                 </div>
@@ -140,7 +154,7 @@
                                     <label for="name">Total Repeats :</label>
                                 </div></div>
                                 @foreach( $data['looms'] as $looms) 
-                                <div class="col-md-1" > 
+                                <div class="col-md-2" > 
                                  <div class="form-group">
                                     <label >{{$looms['loom_name']}} </label>
                                     <input type="hidden" value="{{$looms['loom_name']}}" name="looms[]">
@@ -255,7 +269,7 @@
                                 </div>
                             
                             <div class="card-body row">
-                                <div class="col-md-1" > 
+                                <div class="col-md-2" > 
                                  <div class="form-group">
                                     <label for="name">Add ons </label>
                                 </div>
@@ -263,7 +277,7 @@
                                     <label for="name">Cost</label>
                                 </div>
                                 </div>
-                                <div class="col-md-1" > 
+                                <div class="col-md-2" > 
                                  <div class="form-group">
                                     <label>Basic </label>
                                     <input type="text" class="form-control @error('add_on_cast') is-invalid @enderror" name="add_on_cast[]" value="{{old('add_on_cast[]')}}">
@@ -501,17 +515,7 @@
 				border: 4px solid rgba(10,10,10,0.5);
 			}
 		</style>
-    <script type="text/javascript"><!--
-google_ad_client = "ca-pub-2783044520727903";
-/* jQuery_demo */
-google_ad_slot = "2780937993";
-google_ad_width = 728;
-google_ad_height = 90;
-//-->
-</script>
-<script type="text/javascript"
-src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script> 
+
     <script type="text/javascript">
 
 var _gaq = _gaq || [];
