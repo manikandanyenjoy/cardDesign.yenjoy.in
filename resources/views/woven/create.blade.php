@@ -84,22 +84,10 @@
                                 </div>
                                 
                                 <div class="form-group col-4">
-                                <div id="carbon-block" style="margin:30px auto"></div>
-                                    <div style="margin:30px auto">
-                                    <script type="text/javascript">
-                                    google_ad_client = "ca-pub-2783044520727903";
-                                    /* jQuery_demo */
-                                    google_ad_slot = "2780937993";
-                                    google_ad_width = 728;
-                                    google_ad_height = 90;
-                                   
-                                    </script>
-                                    <script type="text/javascript"
-                                    src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
-                                    </script>
-                                    </div>
-                                <img  id="result" />
-                                    <label for="file">Upload Scrap Image</label>
+                                 <div class="object-fit-container">   
+                                <img class="object-fit-cover"  id="result" />
+                                 </div>
+                                    <label for="file">Design Image</label>
                                     <input type="file" class="form-control @error('crap_image') is-invalid @enderror" id="file" name="crap_image" value="{{ old('crap_image') }}">
                                     @error('crap_image')
                                     <span class="error invalid-feedback">{{ $message }}</span>
@@ -125,7 +113,7 @@
                                 </div>
                                 <div class="form-group col-4">
                                 
-                                    <label for="document_name">Upload Doument</label>
+                                    <label for="document_name">Design File</label>
                                     <input type="file" class="form-control @error('document_name') is-invalid @enderror" id="document_name" name="document_name" value="{{ old('document_name') }}">
                                     @error('document_name')
                                     <span class="error invalid-feedback">{{ $message }}</span>
@@ -235,7 +223,14 @@
                                 
                                 <div class="form-group col-4">
                                     <label for="customer_grade">Customer Grade</label>
-                                    <input type="text" class="form-control @error('customer_grade') is-invalid @enderror" id="customer_grade" name="customer_grade" value="{{old('customer_grade')}}" placeholder="Customer Grade">
+                                    <select class="form-control @error('customer_grade') is-invalid @enderror" id="customer_grade" name="customer_grade">
+                                   
+                                    <option value="A">A </option>
+                                    <option value="B">B </option>
+                                    <option value="C">C </option>
+                                   
+                                    </select>
+                                    
                                     @error('customer_grade')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -243,7 +238,12 @@
                                 
                                 <div class="form-group col-4">
                                     <label for="catagory">Catogery</label>
-                                    <input type="text" class="form-control @error('catogery') is-invalid @enderror" id="catagory" name="catagory" value="{{old('catagory')}}" placeholder="catagory">
+                                    <select class="form-control @error('catogery') is-invalid @enderror" id="catagory" name="catagory">
+                                    <option value="A">1 </option>
+                                    <option value="B">2 </option>
+                                    <option value="C">3 </option>
+                                    </select>
+                                    <input type="text" >
                                     @error('catagory')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -496,17 +496,10 @@
             </div>
         </div>
     </section>
-    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+        <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" type="text/css" href="{{asset('css/pixelarity.css')}}">
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" crossorigin="anonymous"></script>
-		<script type="text/javascript" src="{{asset('js/pixelarity-face.js')}}"></script>
-		<script type="text/javascript" src="{{asset('js/script-face.js')}}"></script>
+		
     <style type="text/css">
-			#result{
-				display: block;
-				position: relative;
-				margin-top: 40px;
-			}
 			.face{
 				position: absolute;
 				height: 0px;
@@ -514,36 +507,22 @@
 				background-color: transparent;;
 				border: 4px solid rgba(10,10,10,0.5);
 			}
+            .object-fit-container {
+                border: 2px solid;
+                padding: 10px;
+           
+            height: 230px; /*any size*/
+            }
+
+            .object-fit-cover {
+            width: auto;
+            height: 100%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            object-fit: cover; /*magic*/
+            }
 		</style>
-
-    <script type="text/javascript">
-
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-36251023-1']);
-_gaq.push(['_setDomainName', 'jqueryscript.net']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-
-</script>
-<script>
-try {
-fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
-  return true;
-}).catch(function(e) {
-  var carbonScript = document.createElement("script");
-  carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CK7DKKQU&placement=wwwjqueryscriptnet";
-  carbonScript.id = "_carbonads_js";
-  document.getElementById("carbon-block").appendChild(carbonScript);
-});
-} catch (error) {
-console.log(error);
-}
-</script>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
     <script type="text/javascript">
