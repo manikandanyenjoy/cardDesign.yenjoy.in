@@ -116,11 +116,11 @@ class WovenController extends Controller
     {   
         
         $colour = DesignCard::where('id',$woven->id)->first();
-        return view("woven.edit", compact("fold"));
+        return view("woven.edit", compact("woven"));
     }
 
 
-    public function update(WovenRequest $request, DesignCard $fold)
+    public function update(WovenRequest $request, DesignCard $woven)
     {
 
         try {
@@ -161,7 +161,7 @@ class WovenController extends Controller
     public function show($woven)
     {
         $woven = DesignCard::findOrFail($woven);
-        return view("woven.show", compact("$woven"));
+        return view("woven.show", compact("woven"));
     }
 
 
