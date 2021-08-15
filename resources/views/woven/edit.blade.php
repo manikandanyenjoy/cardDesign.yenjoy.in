@@ -49,26 +49,72 @@
                                                             <table width="100%">
                                                                 <tr>
                                                                     <td width="150px"><strong>Customer</strong></td>
-                                                                    <td width=400px><input type="text" placeholder="Enter the value"></td>
-                                                                    <td><strong>Date</strong></td>
+                                                                    <td width=300px>
+                                                                        <select class=" @error('customer') is-invalid @enderror" id="customer" name="customer">
+                                                                            @foreach( $data['customer'] as $customer) 
+                                                                            <option value="{{$customer['id']}}">{{$customer['first_name']}} </option>
+                                                                            @endforeach
+                                                                            </select>
+                                                                          @error('customer')
+                                                                            <span class="error invalid-feedback">{{ $message }}</span>
+                                                                            @enderror
+                                                                    </td>
+                                                                    <td width="150px" ><strong>Date</strong></td>
+                                                                     <td width="150px" >
+                                                                        <input type="date" class=" @error('date') is-invalid @enderror" id="date" name="date" value="{{$woven->date}}" placeholder="">
+                                                                        @error('date')
+                                                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td width="150px"><strong>Label </strong></td>
-                                                                    <td width=400px><input type="text" placeholder="Enter the value"></td>
-                                                                    <td><input type="text" placeholder="Enter the value" value="28/06/2021"></td>
+                                                                    <td width=300px>
+                                                                        <input type="text" class=" @error('label') is-invalid @enderror" id="label" name="label" value="{{$woven->lable}}" placeholder="label">
+                                                                            @error('label')
+                                                                            <span class="error invalid-feedback">{{ $message }}</span>
+                                                                            @enderror
+                                                                    </td>
+                                                                    <td colspan="2">
+                                                                        
+                                                                    </td>
                                                                 </tr>
                                                             </table>
                                                             <!-- design details  -->
                                                             <table width="100%">
                                                                 <tr>
                                                                     <td width="150px"><strong>Designer</strong></td>
-                                                                    <td><input type="text" placeholder="Enter the value"></td>
+                                                                    <td>
+                                                                        
+                                                                        <select class=" @error('designer') is-invalid @enderror" id="designer" name="designer">
+                                                                        @foreach( $data['designer'] as $designer) 
+                                                                        <option value="{{$designer['id']}}">{{$designer['name']}} </option>
+                                                                        @endforeach
+                                                                        </select>
+                                                                        @error('designer')
+                                                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </td>
                                                                     <td><strong>Design No</strong></td>
-                                                                    <td><input type="text" placeholder="Enter the value"></td>
+                                                                    <td>
+                                                                     <input type="text" class=" @error('design_no') is-invalid @enderror" id="design_no" name="design_no" value="{{old('design_no')}}" placeholder="DH546">
+                                                                         @error('design_no')
+                                                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                                                         @enderror
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td width="150px"><strong>Sales Rep</strong></td>
-                                                                    <td><input type="text" placeholder="Enter the value"></td>
+                                                                    <td>
+                                                                        <select class=" @error('sales_rep') is-invalid @enderror" id="sales_rep" name="sales_rep">
+                                                                        @foreach( $data['salesrep'] as $salesrep) 
+                                                                        <option value="{{$salesrep['id']}}">{{$salesrep['name']}} </option>
+                                                                        @endforeach
+                                                                        </select>
+                                                                        @error('sales_rep')
+                                                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </td>
                                                                     <td><strong>Quality</strong></td>
                                                                     <td><input type="text" placeholder="Enter the value"></td>
                                                                 </tr>
@@ -85,13 +131,27 @@
                                                                                 type="text"></div>
                                                                     </td>
                                                                     <td width="150px"><strong>Warp</strong></td>
-                                                                    <td>White</td>
+                                                                    <td>
+                                                                        <select class=" @error('warp') is-invalid @enderror" id="warp" name="warp">
+                                                                        @foreach( $data['warp'] as $warp) 
+                                                                        <option value="{{$warp['id']}}">{{$warp['name']}} </option>
+                                                                        @endforeach
+                                                                        </select>
+                                                                        @error('warp')
+                                                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td><strong>Picks/cm</strong></td>
                                                                     <td>
-                                                                        <div> <input type="text" placeholder="Enter the value"
-                                                                                class="input_hlf"><span>/cm</span>
+                                                                        <div> 
+                                                                        
+                                                                          <input type="text" class="@error('pick') is-invalid @enderror" id="pick" name="pick" value="{{old('pick')}}" placeholder="Pick"> <span>/cm</span>
+                                                                            @error('pick')
+                                                                            <span class="error invalid-feedback">{{ $message }}</span>
+                                                                            @enderror
+                                                                       
                                                                         </div>
                                                                     </td>
                                                                     <td><strong>Total Pick</strong></td>
@@ -145,6 +205,17 @@
                                                             </table>
                                                         </td>
                                                         <td style="padding:0;" width="300px">
+                                                            
+                                                            <div class="form-group ">
+                                                             <div class="object-fit-container">   
+                                                            <img class="object-fit-cover"  id="result" />
+                                                             </div>
+                                                                <label for="file">Design Image</label>
+                                                                <input type="file" class=" @error('crap_image') is-invalid @enderror" id="file" name="crap_image" value="{{ old('crap_image') }}">
+                                                                @error('crap_image')
+                                                                <span class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div> 
                                                             <div><img width="100%" src="./img.jpg" alt=""></div>
                                                         </td>
                                                     </tr>
@@ -242,6 +313,31 @@
                                 
                             </div>
                             <!-- /.card-body -->
+                            
+                            <style type="text/css">
+                    			.face{
+                    				position: absolute;
+                    				height: 0px;
+                    				width: 0px;
+                    				background-color: transparent;;
+                    				border: 4px solid rgba(10,10,10,0.5);
+                    			}
+                                .object-fit-container {
+                                    border: 2px solid;
+                                    padding: 10px;
+                               
+                                height: 230px; /*any size*/
+                                }
+                    
+                                .object-fit-cover {
+                                width: auto;
+                                height: 100%;
+                                display: block;
+                                margin-left: auto;
+                                margin-right: auto;
+                                object-fit: cover; /*magic*/
+                                }
+                    		</style>
 
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary float-right">Save</button>

@@ -114,9 +114,14 @@ class WovenController extends Controller
     
     public function edit(DesignCard $woven)
     {   
-        
+        $data['customer'] = CustomerMaster::orderBy('created_at', 'DESC')->get()->toArray();
+        $data['looms'] = LoomMaster::orderBy('created_at', 'DESC')->get()->toArray();
+        $data['designer'] = Staf_master::where('role_id',1)->orderBy('created_at', 'DESC')->get()->toArray();
+        $data['salesrep'] = Staf_master::where('role_id',2)->orderBy('created_at', 'DESC')->get()->toArray();
+        $data['warp'] = WarpMaster::orderBy('created_at', 'DESC')->get()->toArray();
+        $data['finishing'] = FinishingMachineMaster::orderBy('created_at', 'DESC')->get()->toArray();
         $colour = DesignCard::where('id',$woven->id)->first();
-        return view("woven.edit", compact("woven"));
+        return view("woven.edit", compact("woven","data"));
     }
 
 
