@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\BuyerRequest;
 use App\Models\CustomerMaster;
 use App\Models\CustomerShippingAddress;
 use App\Models\CustomerBillingAddress;
+use App\Models\Staf_master;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -21,8 +22,8 @@ class BuyerController extends Controller
     }
 
     public function create()
-    {
-        return view("buyers.create");
+    {     $data['salesrep'] = Staf_master::where('role_id',2)->orderBy('created_at', 'DESC')->get()->toArray();
+        return view("buyers.create",compact('data'));
     }
 
     public function store(BuyerRequest $request)
@@ -37,11 +38,12 @@ class BuyerController extends Controller
             'last_name' => $request->last_name,
             'mobile_number' => $request->mobile_number,
             'email' => $request->email,
+            'secondary_email' => $request->secondary_email,
+            'sales_rep'=>$request->sales_rep,
             'password' => Hash::make($request->password),
             'status' => $request->status,
             'bank_name' => $request->bank_name,
             'account_no' => $request->account_no,
-            'status' => $request->status,
             'IFSCCode' => $request->IFSCCode,
             'opening_balance' => $request->opening_balance,
             'credit_period' => $request->credit_period,
@@ -58,8 +60,8 @@ class BuyerController extends Controller
     public function edit(CustomerMaster $buyer)
     {
         
-    
-        return view("buyers.edit", compact("buyer"));
+        $data['salesrep'] = Staf_master::where('role_id',2)->orderBy('created_at', 'DESC')->get()->toArray();
+        return view("buyers.edit", compact("buyer","data"));
     }
 
     public function update(BuyerRequest $request, CustomerMaster $buyer)
@@ -73,11 +75,12 @@ class BuyerController extends Controller
             'last_name' => $request->last_name,
             'mobile_number' => $request->mobile_number,
             'email' => $request->email,
+            'secondary_email' => $request->secondary_email,
+            'sales_rep'=>$request->sales_rep,
             'password' => Hash::make($request->password),
             'status' => $request->status,
             'bank_name' => $request->bank_name,
             'account_no' => $request->account_no,
-            'status' => $request->status,
             'IFSCCode' => $request->IFSCCode,
             'opening_balance' => $request->opening_balance,
             'credit_period' => $request->credit_period,
@@ -96,8 +99,8 @@ class BuyerController extends Controller
     public function show($buyer)
     {
         $buyer = CustomerMaster::findOrFail($buyer);
-
-        return view("buyers.show", compact("buyer"));
+        $salesrep = Staf_master::where('id',$buyer->sales_rep)->first();
+        return view("buyers.show", compact("buyer","salesrep"));
     }
 
     public function destroy(CustomerMaster $buyer)

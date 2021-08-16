@@ -15,6 +15,8 @@ class Buyer extends Model
         "first_name",
         "last_name",
         "email",
+        "secondary_email",
+        "sales_rep",
         "business_name",
         "business_phone",
         "business_email",

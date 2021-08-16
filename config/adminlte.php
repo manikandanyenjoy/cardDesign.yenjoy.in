@@ -313,16 +313,20 @@ return [
             'text'        => ['Masters'],
             'icon'        => 'fas fa-fw fa-dice-d6',
             'submenu' => [
-
+                [
+                    'text'        => ['Raw Materials'],
+                    'url'         => 'yarns',
+                    
+                ],
                 [
                     'text'        => ['Warps'],
                     'url'         => 'warps',
                    
                 ],
                 [
-                    'text'        => ['FinishingMachines'],
-                    'url'         => 'finishingmachines',
-                    
+                    'text'        => ['WovenQualitys'],
+                    'url'         => 'wovenqualitys',
+                   
                 ],
                 [
                     'text'        => ['Looms'],
@@ -330,16 +334,11 @@ return [
                     
                 ],
                 [
-                    'text'        => ['Yarns'],
-                    'url'         => 'yarns',
+                    'text'        => ['FinishingMachines'],
+                    'url'         => 'finishingmachines',
                     
                 ],
-        
-                [
-                    'text'        => ['WovenQualitys'],
-                    'url'         => 'wovenqualitys',
-                   
-                ],
+                
                 [
                     'text'        => ['Folds'],
                     'url'         => 'folds',

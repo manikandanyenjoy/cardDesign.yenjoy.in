@@ -20,6 +20,8 @@ class CustomerMaster extends Model
         "last_name",
         "email",
         "mobile_number",
+        "secondary_email",
+        "sales_rep",
         "password",
         "bank_name",
         "account_no",

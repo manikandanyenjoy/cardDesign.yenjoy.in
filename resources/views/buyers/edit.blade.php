@@ -61,9 +61,28 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-6">
-                                    <label for="email">Email</label>
+                                    <label for="email">Primary Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ $buyer->email }}" placeholder="Email">
                                     @error('email')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="secondary_email">Secondary Email's</label>
+                                    <textarea class="form-control @error('secondary_email') is-invalid @enderror" id="secondary_email" name="secondary_email" >{{ $buyer->secondary_email }}</textarea>
+                                    
+                                    @error('secondary_email')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="sales_rep">Sales Rep</label>
+                                    <select class="form-control @error('sales_rep') is-invalid @enderror" id="sales_rep" name="sales_rep">
+                                    @foreach( $data['salesrep'] as $salesrep) 
+                                    <option value="{{$salesrep['id']}}" <?php if($salesrep['id'] == $buyer->sales_rep) echo "selected"; ?>>{{$salesrep['name']}} </option>
+                                    @endforeach
+                                    </select>
+                                    @error('sales_rep')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>

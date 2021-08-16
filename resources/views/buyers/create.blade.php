@@ -60,9 +60,28 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-6">
-                                    <label for="email">Email</label>
+                                    <label for="email">Primary Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Email">
                                     @error('email')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="secondary_email">Secondary Email's</label>
+                                    <textarea class="form-control @error('secondary_email') is-invalid @enderror" id="secondary_email" name="secondary_email" value="{{old('secondary_email')}}" placeholder="abc@gmail.com,xyz@gmail.com"></textarea>
+                                    
+                                    @error('secondary_email')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="sales_rep">Sales Rep</label>
+                                    <select class="form-control @error('sales_rep') is-invalid @enderror" id="sales_rep" name="sales_rep">
+                                    @foreach( $data['salesrep'] as $salesrep) 
+                                    <option value="{{$salesrep['id']}}">{{$salesrep['name']}} </option>
+                                    @endforeach
+                                    </select>
+                                    @error('sales_rep')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -87,7 +106,17 @@
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <div class="form-group col-6">
+                                    <label for="status">Status</label>
+                                    <select class="form-control @error('qualification') is-invalid @enderror" id="status" name="status">
+                                    <option value=1>Active </option>
+                                    <option value=0>InActive </option>
+                                    </select>
                                 
+                                    @error('status')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
                                 <h5 class="mt-4 mb-2 col-12">{{ _('Billing Address') }}</h5>
                                 <div class="form-group col-12">
                                     <label for="billing_address">Billing Address</label>

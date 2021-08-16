@@ -46,7 +46,18 @@
                                         <td><strong>{{ __('Email') }}</strong></td>
                                         <td>{{ $buyer->email }}</td>
                                     </tr>
-                                   
+                                    <tr>
+                                        <td><strong>{{ __('Secondary Email') }}</strong></td>
+                                        <td><?php $s_email= explode(",",$buyer->secondary_email);
+                                        foreach($s_email as $email){
+                                         echo $email."<br>";
+                                        } ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Sales Rep') }}</strong></td>
+                                        <td>{{ $salesrep->name }}</td>
+                                    </tr>
+                                    
                                     <tr>
                                         <td><strong>{{ __('Phone') }}</strong></td>
                                         <td>{{ $buyer->mobile_number }}</td>

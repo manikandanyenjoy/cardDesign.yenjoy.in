@@ -30,6 +30,8 @@ class BuyerRequest extends FormRequest
             "password" =>
                 'required|confirmed|min:8',
             "mobile_number" => 'required|min:10|numeric',
+            "sales_rep" =>'required',
+            "secondary_email"=>'required',
             "bank_name" => 'required',
             "account_no" => 'required',
             "IFSCCode" => 'required',
@@ -51,6 +53,8 @@ class BuyerRequest extends FormRequest
             "password" =>
                 'required|confirmed|min:8',
             "mobile_number" => 'required|min:10|numeric',
+            "sales_rep" =>'required',
+            "secondary_email"=>'required',
             "bank_name" => 'required',
             "account_no" => 'required',
             "IFSCCode" => 'required',
