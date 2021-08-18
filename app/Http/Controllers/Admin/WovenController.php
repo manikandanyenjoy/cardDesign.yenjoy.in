@@ -43,8 +43,16 @@ class WovenController extends Controller
     {
         try {
 
-           $validatedFields = $this->addOrEditRequest($request);
-            
+        //    $validatedFields = $this->addOrEditRequest($request);
+             $validatedFields                        = $request->all();
+        $validatedFields['weaver']              = json_encode($request->weaver);
+        $validatedFields['main_label']          = json_encode($request->main_label);
+        $validatedFields['tab_label']           = json_encode($request->tab_label);
+        $validatedFields['size_label']          = json_encode($request->size_label);
+        $validatedFields['add_on_main_cost']    = json_encode($request->main_cost);
+        $validatedFields['add_on_tab_cost']     = json_encode($request->tab_cost);
+        $validatedFields['add_on_size_cost']    = json_encode($request->size_cost);
+        $validatedFields['needle']              = json_encode($request->needle);
             $result = DesignCard::create($validatedFields);
 
           
@@ -183,7 +191,7 @@ class WovenController extends Controller
     {
         $validatedFields                        = $request->all();
         $validatedFields['weaver']              = json_encode($request->weaver);
-        $validatedFields['main_label']          = json_encode($request->main_lable);
+        $validatedFields['main_label']          = json_encode($request->main_label);
         $validatedFields['tab_label']           = json_encode($request->tab_label);
         $validatedFields['size_label']          = json_encode($request->size_label);
         $validatedFields['add_on_main_cost']    = json_encode($request->main_cost);
