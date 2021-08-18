@@ -47,10 +47,10 @@
                             @foreach ($wovens as $index => $woven)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ ucwords($woven->customerDetail->full_name) }}</td>
-                                    <td>{{ ucwords($woven->salesRepDetail->name) }}</td>
-                                    <td>{{ ucwords($woven->label) }}</td>
-                                    <td>{{ $woven->date }}</td>
+                                    <td>{{ $woven->customerDetail ? ucwords($woven->customerDetail->full_name) : '-'}}</td>
+                                    <td>{{ $woven->salesRepDetail ? ucwords($woven->salesRepDetail->name) : '-'}}</td>
+                                    <td>{{ $woven->label ? ucwords($woven->label) : '-'}}</td>
+                                    <td>{{ $woven->date ? $woven->date : '-' }}</td>
                                     
                                     <td>
                                         <a href="{{ route('woven.show',$woven->id) }}" class="btn btn-sm btn-warning">View</a>

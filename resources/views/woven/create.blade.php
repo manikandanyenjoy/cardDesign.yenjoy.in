@@ -540,10 +540,7 @@
                                             </div>
                                             <div class="mt-4">
                                                 <label for="file">Front Image</label>
-                                                <input type="file" class=" @error('crap_image') is-invalid @enderror" id="file" accept="image/*" name="front_crop_image">
-                                                @error('crap_image')
-                                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
+                                                <input type="file" id="file" accept="image/*" name="front_crop_image">
                                             </div>
                                         </div> 
                                         <hr>
@@ -553,10 +550,7 @@
                                             </div>
                                             <div class="mt-4">
                                                 <label for="file">Back Image</label>
-                                                <input type="file" class=" @error('crap_image') is-invalid @enderror" id="file" accept="image/*" name="back_crop_image">
-                                                @error('crap_image')
-                                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
+                                                <input type="file" id="file" accept="image/*" name="back_crop_image">
                                             </div>
                                         </div> 
                                         <hr>
@@ -566,20 +560,14 @@
                                             </div>
                                             <div class="mt-4">
                                                 <label for="file">All View Image</label>
-                                                <input type="file" class=" @error('crap_image') is-invalid @enderror" id="file" accept="image/*" name="all_view_crop_image">
-                                                @error('crap_image')
-                                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
+                                                <input type="file" id="file" accept="image/*" name="all_view_crop_image">                                               
                                             </div>
                                         </div> 
                                         <hr>
                                         <div class="form-group">
                                             <div class="mt-4">
                                                 <label for="document_name">Design File</label>
-                                                <input type="file" class="@error('document_name') is-invalid @enderror" multiple id="document_name" name="design_file" value="{{ old('document_name') }}">
-                                                @error('document_name')
-                                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
+                                                <input type="file" id="document_name" multiple name="design_file[]">
                                             </div>
                                         </div> 
                                     </div>
@@ -647,7 +635,6 @@
         var index = 0;
         $("#addRow").click(function () {
             index++;
-        alert(index);
             var html = '';
             html +='<tr id="inputFormRow">';
             html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][needle_no]" value="" placeholder="Enter the value"></td>';

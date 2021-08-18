@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class DesignCard extends Model
 {
@@ -106,6 +107,20 @@ class DesignCard extends Model
         return is_array($needle) && count($needle) > 0
             ? $needle
             : [];
+    }
+
+    // public function getDesignFileAttribute($value)
+    // {
+    //     $designFile = json_decode($value, true);
+
+    //     return is_array($designFile) && count($designFile) > 0
+    //         ? $designFile
+    //         : [];
+    // }
+
+    public function getFrontImageAttribute($value)
+    {
+        return $value ? Storage::disk("cardsImage")->url('/') : '';
     }
 
     public function customerDetail()
