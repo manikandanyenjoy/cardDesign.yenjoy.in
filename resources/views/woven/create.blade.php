@@ -25,6 +25,13 @@
     margin-right: auto;
     object-fit: cover; /*magic*/
     }
+
+    /* .label_names
+    {
+        border:none !important;
+        color:#000;
+        font-weight:bold;
+    } */
 </style>
 
 @section('content_header')
@@ -35,7 +42,7 @@
 
         <div class="col-sm-6 pr-4 d-flex justify-content-end">
             @if($editdesignCard)
-                <a href="{{ route('woven.edit',$editdesignCard->id) }}" class="btn col-2 bg-gradient-primary mr-3">Edit</a>
+                <a href="{{ route('woven.show',$editdesignCard->id) }}" class="btn col-2 bg-gradient-primary mr-3">View</a>
             @endif
             <a href="{{ route('woven.index') }}" class="btn col-2 bg-gradient-danger">Back</a>
         </div>
@@ -67,438 +74,445 @@
                         <form method="POST" action="{{ $editdesignCard ? route('woven.update', $editdesignCard->id) : route('woven.store')  }}" novalidate>
                             @csrf
                             @if($editdesignCard) @method('PUT') @endif
-                            <div class="card-body row"  style=" overflow: scroll;margin: 15px;" >
-                                <div class="table_forms">
-                                    <div class="table_wrp table-responsive">
-                                        <table style="width: 1000px; margin: auto;" class="table table-bordered">
-                                            <tbody>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered text-nowrap">
                                                 <tr>
-                                                    <td style="padding:0;">
-                                                        <table width="100%">
-                                                            <tr>
-                                                                <th width="150px">Customer <span>*</span></th>
-                                                                <td width="300px">
-                                                                    <select class="form-control col-6 @error('customer_id') is-invalid @enderror" id="customer" name="customer_id">
-                                                                        <option value="">Please Select Customer</option>
-                                                                        @foreach( $data['customerMaster'] as $customer) 
-                                                                            @if($editdesignCard)
-                                                                                <option value="{{$customer['id']}}" {{ old('customer_id') == $customer['id'] ? 'selected' : ($customer['id'] == $editdesignCard->customer_id ? 'selected' : '') }}>{{ucfirst($customer['first_name'])}} </option>
-                                                                            @else
-                                                                                <option value="{{$customer['id']}}" {{ old('customer_id') == $customer['id'] ? 'selected' : '' }}>{{ucfirst($customer['first_name'])}} </option>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('customer_id')
-                                                                        <span class="error invalid-feedback">{{ $message }}</span>
-                                                                    @enderror
-                                                                </td>
-                                                               
-                                                                <th width="150px">Label <span>*</span></th>
-                                                                <td width="300px">
-                                                                    <input type="text" class="form-control col-6 @error('label') is-invalid @enderror" id="label" name="label" value="{{ $editdesignCard ? old('label',$editdesignCard->label) : old('label') }}" placeholder="label">
-                                                                    @error('label')
-                                                                        <span class="error invalid-feedback">{{ $message }}</span>
-                                                                    @enderror
-                                                                </td>
-                                                              
-                                                                <th width="150px" >Date <span>*</span></th>
-                                                                <td width="150px" >
-                                                                    <input type="date" class="form-control col-9 @error('date') is-invalid @enderror" id="date" name="date" value="{{ $editdesignCard ? old('date',$editdesignCard->date) : old('date') }}" placeholder="">
-                                                                    @error('date')
-                                                                        <span class="error invalid-feedback">{{ $message }}</span>
-                                                                    @enderror
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th width="150px">Designer <span>*</span></th>
-                                                                <td>
-                                                                    <select class="form-control col-9 @error('designer_id') is-invalid @enderror" id="designer" name="designer_id">
-                                                                        <option value="">Please Select Designer</option>
-                                                                        @foreach( $data['designerMaster'] as $designer) 
-                                                                            @if($editdesignCard)
-                                                                                <option value="{{$designer['id']}}" {{ old('designer_id') == $designer['id'] ? 'selected' : ($designer['id'] == $editdesignCard->designer_id ? 'selected' : '') }}>{{ucfirst($designer['name'])}} </option>
-                                                                            @else
-                                                                                <option value="{{$designer['id']}}" {{ old('designer_id') == $designer['id'] ? 'selected' : '' }}>{{ucfirst($designer['name'])}} </option>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('designer_id')
-                                                                        <span class="error invalid-feedback">{{ $message }}</span>
-                                                                    @enderror
-                                                                </td>
-
-                                                                <th width="150px">Sales Rep <span>*</span></th>
-                                                                <td>
-                                                                    <select class="form-control col-5 @error('salesrep_id') is-invalid @enderror" id="sales_rep" name="salesrep_id">
-                                                                        <option value="">Please Select Sales Rep</option>
-                                                                        @foreach( $data['salesrepMaster'] as $salesrep) 
-                                                                            @if($editdesignCard)
-                                                                                <option value="{{$salesrep['id']}}" {{ old('salesrep_id') == $salesrep['id'] ? 'selected' : ($salesrep['id'] == $editdesignCard->salesrep_id ? 'selected' : '') }}>{{ucfirst($salesrep['name'])}} </option>
-                                                                                @else
-                                                                                <option value="{{$salesrep['id']}}" {{ old('salesrep_id') == $salesrep['id'] ? 'selected' : '' }}>{{ucfirst($salesrep['name'])}} </option>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('salesrep_id')
-                                                                        <span class="error invalid-feedback">{{ $message }}</span>
-                                                                    @enderror
-                                                                </td> 
-                                                                
-                                                                  <th width="150px">Weaver <span>*</span></th>
-                                                                <td>
-                                                                    <div class="form-group row">
-
-                                                                        <select class="form-control col-5 @error('weaver_id') is-invalid @enderror" id="sample_weaver" name="weaver[]">
-                                                                            <option value="">Please Weaver</option>
-                                                                            @foreach( $data['designerMaster'] as $designer) 
-                                                                                @if($editdesignCard)
-                                                                                    <option value="{{$designer['id']}}" {{ in_array($designer['id'], $editdesignCard->weaver_id) ? 'selected' : '' }}>{{$designer['name']}} </option>
-                                                                                    @else
-                                                                                    <option value="{{$designer['id']}}">{{$designer['name']}} </option>
-                                                                                @endif
-                                                                            @endforeach
-                                                                        </select>
-                                                                        @error('weaver')
-                                                                            <span class="error invalid-feedback">{{ $message }}</span>
-                                                                        @enderror
-
-                                                                        <select class="form-control col-5 @error('weaver_id') is-invalid @enderror" id="sample_weaver" name="weaver[]">
-                                                                            <option value="">Please Weaver</option>
-                                                                            @foreach( $data['designerMaster'] as $designer) 
-                                                                                @if($editdesignCard)
-                                                                                    <option value="{{$designer['id']}}" {{ in_array($designer['id'], $editdesignCard->weaver_id) ? 'selected' : '' }}>{{$designer['name']}} </option>
-                                                                                    @else
-                                                                                    <option value="{{$designer['id']}}">{{$designer['name']}} </option>
-                                                                                @endif
-                                                                            @endforeach
-                                                                        </select>
-                                                                        @error('weaver')
-                                                                            <span class="error invalid-feedback">{{ $message }}</span>
-                                                                        @enderror
-                                                                        <select class="form-control col-5 @error('weaver_id') is-invalid @enderror" id="sample_weaver" name="weaver[]">
-                                                                            <option value="">Please Weaver</option>
-                                                                            @foreach( $data['designerMaster'] as $designer) 
-                                                                                @if($editdesignCard)
-                                                                                    <option value="{{$designer['id']}}" {{ in_array($designer['id'], $editdesignCard->weaver_id) ? 'selected' : '' }}>{{$designer['name']}} </option>
-                                                                                    @else
-                                                                                    <option value="{{$designer['id']}}">{{$designer['name']}} </option>
-                                                                                @endif
-                                                                            @endforeach
-                                                                        </select>
-                                                                        @error('weaver')
-                                                                            <span class="error invalid-feedback">{{ $message }}</span>
-                                                                        @enderror
-                                                                    </div>
-                                                                </td>
-                                                               
-                                                              
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Warp</th>
-                                                                <td><input type="text" class="form-control"></td>
-                                                                <th>Finishing</th>
-                                                                <td><input type="text" class="form-control"></td>
-                                                                <th>Note</th>
-                                                                <td><textarea name="" id="" cols="30" rows="3" class="form-control"></textarea></td>
-                                                            </tr>
-                                                        </table>
-                                                        <!-- design details  -->
-                                                        <table width="100%">
-                                                          
-                                                            <tr>
-                                                                                                                            
-                                                            </tr>
-                                                            <tr>
-                                                              
-                                                            </tr>
-                                                        </table>
-                                                        <!-- design details  -->
-                                                        <table width="100%">
-                                                            <tr>
-                                                                <!-- <th>Label Name</th> -->
-                                                                <th width="150px"></th>
-                                                                <th>Main Label</th>
-                                                                <th>Tab Label</th>
-                                                                <th>Size Label</th>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th>Design No</th>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th>Quality</th>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th>Picks/Cm</th>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th>Total Picks</th>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th>Total Repeat</th>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th>Wastage</th>
-                                                                <td>
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input ml-3" type="radio" value="0" name="main_label">
-                                                                        <label class="form-check-label ml-5">Yes</label>
-                                                                        <input class="form-check-input ml-3" type="radio" value="0" name="main_label" checked>
-                                                                        <label class="form-check-label ml-5">NO</label>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input ml-3" type="radio" value="0" name="tab_lable">
-                                                                        <label class="form-check-label ml-5">Yes</label>
-                                                                        <input class="form-check-input ml-3" type="radio" value="0" name="tab_lable" checked>
-                                                                        <label class="form-check-label ml-5">NO</label>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input ml-3" type="radio" value="0" name="size_label">
-                                                                        <label class="form-check-label ml-5">Yes</label>
-                                                                        <input class="form-check-input ml-3" type="radio" value="0" name="size_label" checked>
-                                                                        <label class="form-check-label ml-5">NO</label>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th>Width</th>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th>Length</th>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                            </tr>
-                                                          
-                                                            <tr>
-                                                                <th>Sq mm</th>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <th>Sq inch</th>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                                <td><input type="text" class="form-control col-6"></td>
-                                                            </tr>
-                                                        </table>
+                                                    <th>Customer</th>
+                                                    <td>
+                                                        <select class="form-control" name="customer_id">
+                                                            <option value="">Select Customer</option>
+                                                            @foreach( $data['customerMaster'] as $customer) 
+                                                                @if($editdesignCard)
+                                                                    <option value="{{$customer['id']}}" {{ old('customer_id') == $customer['id'] ? 'selected' : ($customer['id'] == $editdesignCard->customer_id ? 'selected' : '') }}>{{ucfirst($customer['first_name'])}} </option>
+                                                                @else
+                                                                    <option value="{{$customer['id']}}" {{ old('customer_id') == $customer['id'] ? 'selected' : '' }}>{{ucfirst($customer['first_name'])}} </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
                                                     </td>
+                                                    <th>Label</th>
+                                                    <td><input type="text" name="label" value="{{ $editdesignCard ? old('label',$editdesignCard->label) : old('label') }}" class="form-control"></td>
+                                                    <th>Date</th>
+                                                    <td><input type="date" name="date" value="{{ $editdesignCard ? old('date',$editdesignCard->date) : old('date') }}" class="form-control"></td>
+                                                </tr>
 
-                                                    <td style="padding:0;" width="300px">
-                                                        <div class="form-group">
-                                                            <div class="object-fit-container">   
-                                                                <img class="object-fit-cover"  id="result" />
-                                                            </div>
-                                                            <div class="mt-4 ml-4">
-                                                                <label for="file">Design Image</label>
-                                                                <input type="file" class=" @error('crap_image') is-invalid @enderror" id="file" name="crap_image">
-                                                                @error('crap_image')
-                                                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                        </div> 
+                                                <tr>
+                                                    <th>Designer</th>
+                                                    <td>
+                                                        <select class="form-control" name="designer_id">
+                                                            <option value="">Select Designer</option>
+                                                            @foreach( $data['designerMaster'] as $designer) 
+                                                                @if($editdesignCard)
+                                                                    <option value="{{$designer['id']}}" {{ old('designer_id') == $designer['id'] ? 'selected' : ($designer['id'] == $editdesignCard->designer_id ? 'selected' : '') }}>{{ucfirst($designer['name'])}} </option>
+                                                                @else
+                                                                    <option value="{{$designer['id']}}" {{ old('designer_id') == $designer['id'] ? 'selected' : '' }}>{{ucfirst($designer['name'])}} </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <th>Sales Rep</th>
+                                                    <td>
+                                                        <select class="form-control" name="salesrep_id">
+                                                            <option value="">Select Sales Rep</option>
+                                                            @foreach( $data['salesrepMaster'] as $salesrep) 
+                                                                @if($editdesignCard)
+                                                                    <option value="{{$salesrep['id']}}" {{ old('salesrep_id') == $salesrep['id'] ? 'selected' : ($salesrep['id'] == $editdesignCard->salesrep_id ? 'selected' : '') }}>{{ucfirst($salesrep['name'])}} </option>
+                                                                    @else
+                                                                    <option value="{{$salesrep['id']}}" {{ old('salesrep_id') == $salesrep['id'] ? 'selected' : '' }}>{{ucfirst($salesrep['name'])}} </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <th>Weaver</th>
+                                                    <td width="150px">
+                                                        <div class="form-group row mx-2">
+                                                            @if($editdesignCard)
+                                                                <input type="text" name="weaver[]" value="{{ isset($editdesignCard->weaver[0]) ? $editdesignCard->weaver[0] : '' }}" class="form-control col">
+                                                                <input type="text" name="weaver[]" value="{{ isset($editdesignCard->weaver[1]) ? $editdesignCard->weaver[1] : '' }}" class="form-control col">
+                                                                <input type="text" name="weaver[]" value="{{ isset($editdesignCard->weaver[2]) ? $editdesignCard->weaver[2] : '' }}" class="form-control col">
+                                                            @else
+                                                                <input type="text" name="weaver[]" class="form-control col">
+                                                                <input type="text" name="weaver[]" class="form-control col">
+                                                                <input type="text" name="weaver[]" class="form-control col">
+                                                            @endif
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th>Warp</th>
+                                                    <td>
+                                                        <select name="warps_id" class="form-control">
+                                                            <option value="">Select Warp</option>
+                                                            @foreach( $data['warpMaster'] as $warp) 
+                                                                @if($editdesignCard)
+                                                                    <option value="{{$warp['id']}}" {{ old('warps_id') == $warp['id'] ? 'selected' : ($warp['id'] == $editdesignCard->warps_id ? 'selected' : '') }}>{{ucfirst($warp['name'])}} </option>
+                                                                @else
+                                                                    <option value="{{$warp['id']}}" {{ old('warps_id') == $warp['id'] ? 'selected' : '' }}>{{ucfirst($warp['name'])}} </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <th>Finishing</th>
+                                                    <td>
+                                                       <input type="text" name="finishing" value="{{ $editdesignCard ? old('finishing',$editdesignCard->finishing) : old('finishing') }}" class="form-control">
+                                                    </td>
+                                                    <th>Notes</th>
+                                                    <td>
+                                                       <textarea name="description" cols="30" rows="3" class="form-control">
+                                                           {{ $editdesignCard ? old('finishing',$editdesignCard->finishing) : old('finishing') }}
+                                                       </textarea>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                                 
+                                            <div class="row">
+                                                <div class="col">
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" id="main_label" checked readonly>
+                                                                    <label class="custom-control-label" for="main_label">Main Label</label>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <th width="200px">Design No</th>
+                                                            <td width="200px"><input type="text" name="main_lable[]" value="{{ $editdesignCard && isset($editdesignCard->main_label[0]) ? $editdesignCard->main_label[0] : '' }}" class="form-control"></td>
+                                                        </tr>
                                                         
-                                                        @if($editdesignCard)
-                                                            <div><img width="100%" src="./img.jpg" alt=""></div>
-                                                        @endif
+                                                        <tr class="main_label_input">
+                                                            <th width="200px">Quality</th>
+                                                            <td width="200px"><input type="text" name="main_lable[]" value="{{ $editdesignCard && isset($editdesignCard->main_label[1]) ? $editdesignCard->main_label[1] : '' }}" class="form-control"></td>
+                                                        </tr>
+                                                        
+                                                        <tr class="main_label_input">
+                                                            <th width="200px">Picks/Cm</th>
+                                                            <td width="200px"><input type="text" name="main_lable[]" value="{{ $editdesignCard && isset($editdesignCard->main_label[2]) ? $editdesignCard->main_label[2] : '' }}" class="form-control"></td>
+                                                        </tr>
 
-                                                        <div class="form-group">
-                                                            <div class="mt-4 ml-4">
-                                                                <label for="document_name">Design File</label>
-                                                                <input type="file" class="@error('document_name') is-invalid @enderror" id="document_name" name="document_name" value="{{ old('document_name') }}">
-                                                                @error('document_name')
-                                                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                        </div> 
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="padding:0;" colspan="2">
-                                                        <table width="100%">
-                                                            <tr>
-                                                                <th>Add ons</th>
-                                                                <th>Basic</th>
-                                                                <th>Cut fold</th>
-                                                                <th>Diecut</th>
-                                                                <th>Nonwoven</th>
-                                                                <th>Iron on back</th>
-                                                                <th>Extras</th>
-                                                                <th>Offered </th>
-                                                                <th>TOTAL</th>
+                                                        <tr class="main_label_input">
+                                                            <th width="200px">Total Picks</th>
+                                                            <td width="200px"><input type="text" name="main_lable[]" value="{{ $editdesignCard && isset($editdesignCard->main_label[3]) ? $editdesignCard->main_label[3] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <th width="200px">Total Repeat</th>
+                                                            <td width="200px"><input type="text" name="main_lable[]" value="{{ $editdesignCard && isset($editdesignCard->main_label[4]) ? $editdesignCard->main_label[4] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <th width="200px">Wastage</th>
+                                                            <td width="200px"><input type="text" name="main_lable[]" value="{{ $editdesignCard && isset($editdesignCard->main_label[5]) ? $editdesignCard->main_label[5] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <th width="200px">Width</th>
+                                                            <td width="200px"><input type="text" name="main_lable[]" value="{{ $editdesignCard && isset($editdesignCard->main_label[6]) ? $editdesignCard->main_label[6] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <th width="200px">Length</th>
+                                                            <td width="200px"><input type="text" name="main_lable[]" value="{{ $editdesignCard && isset($editdesignCard->main_label[7]) ? $editdesignCard->main_label[7] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <th width="200px">Sq mm</th>
+                                                            <td width="200px"><input type="text" name="main_lable[]" value="{{ $editdesignCard && isset($editdesignCard->main_label[8]) ? $editdesignCard->main_label[8] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <th width="200px">Sq inch</th>
+                                                            <td width="200px"><input type="text" name="main_lable[]" value="{{ $editdesignCard && isset($editdesignCard->main_label[9]) ? $editdesignCard->main_label[9] : '' }}" class="form-control"></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div class="col">
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" id="main_label" checked readonly>
+                                                                    <label class="custom-control-label" for="main_label">Tab Label</label>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="tab_label[]" value="{{ $editdesignCard && isset($editdesignCard->tab_label[0]) ? $editdesignCard->tab_label[0] : '' }}" class="form-control"></td>
+                                                        </tr>
+                                                        
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="tab_label[]" value="{{ $editdesignCard && isset($editdesignCard->tab_label[1]) ? $editdesignCard->tab_label[1] : '' }}" class="form-control"></td>
+                                                        </tr>
+                                                        
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="tab_label[]" value="{{ $editdesignCard && isset($editdesignCard->tab_label[2]) ? $editdesignCard->tab_label[2] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="tab_label[]" value="{{ $editdesignCard && isset($editdesignCard->tab_label[3]) ? $editdesignCard->tab_label[3] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="tab_label[]" value="{{ $editdesignCard && isset($editdesignCard->tab_label[4]) ? $editdesignCard->tab_label[4] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="tab_label[]" value="{{ $editdesignCard && isset($editdesignCard->tab_label[5]) ? $editdesignCard->tab_label[5] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="tab_label[]" value="{{ $editdesignCard && isset($editdesignCard->tab_label[6]) ? $editdesignCard->tab_label[6] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="tab_label[]" value="{{ $editdesignCard && isset($editdesignCard->tab_label[7]) ? $editdesignCard->tab_label[7] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="tab_label[]" value="{{ $editdesignCard && isset($editdesignCard->tab_label[8]) ? $editdesignCard->tab_label[8] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="tab_label[]" value="{{ $editdesignCard && isset($editdesignCard->tab_label[9]) ? $editdesignCard->tab_label[9] : '' }}" class="form-control"></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="col">
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" id="main_label" checked readonly>
+                                                                    <label class="custom-control-label" for="main_label">Size Label</label>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="size_label[]" value="{{ $editdesignCard && isset($editdesignCard->size_label[0]) ? $editdesignCard->size_label[0] : '' }}" class="form-control"></td>
+                                                        </tr>
+                                                        
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="size_label[]" value="{{ $editdesignCard && isset($editdesignCard->size_label[1]) ? $editdesignCard->size_label[1] : '' }}" class="form-control"></td>
+                                                        </tr>
+                                                        
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="size_label[]" value="{{ $editdesignCard && isset($editdesignCard->size_label[2]) ? $editdesignCard->size_label[2] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="size_label[]" value="{{ $editdesignCard && isset($editdesignCard->size_label[3]) ? $editdesignCard->size_label[3] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="size_label[]" value="{{ $editdesignCard && isset($editdesignCard->size_label[4]) ? $editdesignCard->size_label[4] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="size_label[]" value="{{ $editdesignCard && isset($editdesignCard->size_label[5]) ? $editdesignCard->size_label[5] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="size_label[]" value="{{ $editdesignCard && isset($editdesignCard->size_label[6]) ? $editdesignCard->size_label[6] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="size_label[]" value="{{ $editdesignCard && isset($editdesignCard->size_label[7]) ? $editdesignCard->size_label[7] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="size_label[]" value="{{ $editdesignCard && isset($editdesignCard->size_label[8]) ? $editdesignCard->size_label[8] : '' }}" class="form-control"></td>
+                                                        </tr>
+
+                                                        <tr class="main_label_input">
+                                                            <td width="200px"><input type="text" name="size_label[]" value="{{ $editdesignCard && isset($editdesignCard->size_label[9]) ? $editdesignCard->size_label[9] : '' }}" class="form-control"></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        
+                                            <table class="table table-bordered text-nowrap">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Add on</th>
+                                                        <th>Basic</th>
+                                                        <th>Cut fold</th>	
+                                                        <th>Diecut</th>	
+                                                        <th>Nonwoven</th>		
+                                                        <th>Iron on back</th>
+                                                        <th>Extras</th>
+                                                        <th>Offered</th>
+                                                        <th>TOTAL</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Main</th>
+                                                        <td><input type="text" name="main_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_main_cost[0]) ? $editdesignCard->add_on_main_cost[0] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="main_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_main_cost[1]) ? $editdesignCard->add_on_main_cost[1] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="main_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_main_cost[2]) ? $editdesignCard->add_on_main_cost[2] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="main_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_main_cost[3]) ? $editdesignCard->add_on_main_cost[3] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="main_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_main_cost[4]) ? $editdesignCard->add_on_main_cost[4] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="main_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_main_cost[5]) ? $editdesignCard->add_on_main_cost[5] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="main_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_main_cost[6]) ? $editdesignCard->add_on_main_cost[6] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="main_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_main_cost[7]) ? $editdesignCard->add_on_main_cost[7] : '' }}" class="form-controls"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th>Tab</th>
+                                                        <td><input type="text" name="tab_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_tab_cost[0]) ? $editdesignCard->add_on_tab_cost[0] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="tab_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_tab_cost[1]) ? $editdesignCard->add_on_tab_cost[1] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="tab_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_tab_cost[2]) ? $editdesignCard->add_on_tab_cost[2] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="tab_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_tab_cost[3]) ? $editdesignCard->add_on_tab_cost[3] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="tab_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_tab_cost[4]) ? $editdesignCard->add_on_tab_cost[4] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="tab_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_tab_cost[5]) ? $editdesignCard->add_on_tab_cost[5] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="tab_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_tab_cost[6]) ? $editdesignCard->add_on_tab_cost[6] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="tab_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_tab_cost[7]) ? $editdesignCard->add_on_tab_cost[7] : '' }}" class="form-controls"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th>Size</th>
+                                                        <td><input type="text" name="size_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_size_cost[0]) ? $editdesignCard->add_on_size_cost[0] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="size_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_size_cost[1]) ? $editdesignCard->add_on_size_cost[1] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="size_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_size_cost[2]) ? $editdesignCard->add_on_size_cost[2] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="size_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_size_cost[3]) ? $editdesignCard->add_on_size_cost[3] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="size_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_size_cost[4]) ? $editdesignCard->add_on_size_cost[4] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="size_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_size_cost[5]) ? $editdesignCard->add_on_size_cost[5] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="size_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_size_cost[6]) ? $editdesignCard->add_on_size_cost[6] : '' }}" class="form-controls"></td>
+                                                        <td><input type="text" name="size_cost[]" value="{{ $editdesignCard && isset($editdesignCard->add_on_size_cost[7]) ? $editdesignCard->add_on_size_cost[7] : '' }}" class="form-controls"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <button type="button" class="btn btn-success font-weight-bold m-2 text-white" id="addRow">Add Row</button>
+                                            <table class="table table-bordered text-nowrap">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Needle No/Pantone</th>
+                                                        <th>Coulmn</th>
+                                                        <th>Color</th>
+                                                        <th>Color Shade</th>
+                                                        <th>Denier</th>
+                                                        <th>A</th>
+                                                        <th>B</th>
+                                                        <th>C</th>
+                                                        <th>D</th>
+                                                        <th>E</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="add_new_row">
+                                                    @if($editdesignCard)
+                                                        <input type="text" id="form_row_count" value="{{ count($editdesignCard->needle) }}">
+                                                        @forelse($editdesignCard->needle as $index => $needle)
+                                                            <tr id="inputFormRow">
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][needle_no_pantone]" value="{{ $needle['needle_no_pantone'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][column]" value="{{ $needle['column'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][color]" value="{{ $needle['color'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][color_shade]" value="{{ $needle['color_shade'] }}"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][denier]"  value="{{ $needle['denier'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][a]" value="{{ $needle['a'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][b]" value="{{ $needle['b'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][c]" value="{{ $needle['c'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][d]" value="{{ $needle['d'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][e]" value="{{ $needle['e'] }}" placeholder="Enter the value"></td>
+                                                                <td><button id="removeRow" class="btn btn-danger" type="button">remove</button></td>
                                                             </tr>
-                                                            <tr id="table_row">
-                                                                <th style="width:150px;">Main</th>
-                                                                @if($editdesignCard)
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['0']) ?  $editdesignCard->add_on_cast['0'] : '' }}" placeholder="Enter the basic value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['1']) ?  $editdesignCard->add_on_cast['1'] : '' }}" placeholder="Enter the cut fold value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['2']) ?  $editdesignCard->add_on_cast['2'] : '' }}" placeholder="Enter the deicut value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['3']) ?  $editdesignCard->add_on_cast['3'] : '' }}" placeholder="Enter the nonwoven value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['4']) ?  $editdesignCard->add_on_cast['4'] : '' }}" placeholder="Enter the iron on back value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['5']) ?  $editdesignCard->add_on_cast['5'] : '' }}" placeholder="Enter the extras value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['6']) ?  $editdesignCard->add_on_cast['6'] : '' }}" placeholder="Enter the offered value"></td>
-                                                                    <td><input type="text" class="form-control" id="total_value" readonly name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['7']) ?  $editdesignCard->add_on_cast['7'] : '' }}" placeholder="Enter the total value"></td>
-                                                                @else
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter basic value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter cut fold value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter deicut value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter nonwoven value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter iron on back value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter extras value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter offered value"></td>
-                                                                    <td><input type="text" class="form-control" id="total_value" name="add_on_cast[]" readonly value="" placeholder="Enter total value"></td>
-                                                                @endif
+                                                        @empty
+                                                            <tr id="inputFormRow">
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][needle_no_pantone]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][column]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][color]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][color_shade]" value=""></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][denier]"  value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][a]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][b]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][c]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][d]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][e]" value="" placeholder="Enter the value"></td>
+                                                                <td><button id="removeRow" class="btn btn-danger" type="button">remove</button></td>
                                                             </tr>
-                                                            <tr id="table_row">
-                                                                <th style="width:150px;">Tab</th>
-                                                                @if($editdesignCard)
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['0']) ?  $editdesignCard->add_on_cast['0'] : '' }}" placeholder="Enter the basic value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['1']) ?  $editdesignCard->add_on_cast['1'] : '' }}" placeholder="Enter the cut fold value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['2']) ?  $editdesignCard->add_on_cast['2'] : '' }}" placeholder="Enter the deicut value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['3']) ?  $editdesignCard->add_on_cast['3'] : '' }}" placeholder="Enter the nonwoven value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['4']) ?  $editdesignCard->add_on_cast['4'] : '' }}" placeholder="Enter the iron on back value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['5']) ?  $editdesignCard->add_on_cast['5'] : '' }}" placeholder="Enter the extras value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['6']) ?  $editdesignCard->add_on_cast['6'] : '' }}" placeholder="Enter the offered value"></td>
-                                                                    <td><input type="text" class="form-control" id="total_value" readonly name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['7']) ?  $editdesignCard->add_on_cast['7'] : '' }}" placeholder="Enter the total value"></td>
-                                                                @else
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter basic value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter cut fold value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter deicut value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter nonwoven value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter iron on back value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter extras value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter offered value"></td>
-                                                                    <td><input type="text" class="form-control" id="total_value" name="add_on_cast[]" readonly value="" placeholder="Enter total value"></td>
-                                                                @endif
-                                                            </tr>
-                                                            <tr id="table_row">
-                                                                <th style="width:150px;">Size</th>
-                                                                @if($editdesignCard)
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['0']) ?  $editdesignCard->add_on_cast['0'] : '' }}" placeholder="Enter the basic value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['1']) ?  $editdesignCard->add_on_cast['1'] : '' }}" placeholder="Enter the cut fold value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['2']) ?  $editdesignCard->add_on_cast['2'] : '' }}" placeholder="Enter the deicut value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['3']) ?  $editdesignCard->add_on_cast['3'] : '' }}" placeholder="Enter the nonwoven value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['4']) ?  $editdesignCard->add_on_cast['4'] : '' }}" placeholder="Enter the iron on back value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['5']) ?  $editdesignCard->add_on_cast['5'] : '' }}" placeholder="Enter the extras value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['6']) ?  $editdesignCard->add_on_cast['6'] : '' }}" placeholder="Enter the offered value"></td>
-                                                                    <td><input type="text" class="form-control" id="total_value" readonly name="add_on_cast[]" value="{{ isset($editdesignCard->add_on_cast['7']) ?  $editdesignCard->add_on_cast['7'] : '' }}" placeholder="Enter the total value"></td>
-                                                                @else
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter basic value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter cut fold value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter deicut value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter nonwoven value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter iron on back value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter extras value"></td>
-                                                                    <td><input type="text" class="form-control txtCal" name="add_on_cast[]" value="" placeholder="Enter offered value"></td>
-                                                                    <td><input type="text" class="form-control" id="total_value" name="add_on_cast[]" readonly value="" placeholder="Enter total value"></td>
-                                                                @endif
-                                                            </tr>
-                                                        </table>
-                                                        <!-- needle table  -->
-                                                        <button type="button" class="btn btn-success font-weight-bold m-2 text-white float-right" id="addRow">Add Row</button>
-                                                        <table width="100%">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Needle No/Pantone</th>
-                                                                    <th>Coulmn</th>
-                                                                    <th>Color</th>
-                                                                    <th>Color Shade</th>
-                                                                    <th>Denier</th>
-                                                                    <th>A</th>
-                                                                    <th>B</th>
-                                                                    <th>C</th>
-                                                                    <th>D</th>
-                                                                    <th>E</th>
-                                                                    <th>Action</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="add_new_row">
-                                                                @if($editdesignCard)
-                                                                    @forelse($editdesignCard->needle as $needle)
-                                                                        <tr id="inputFormRow">
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[needle_no_pantone]" value="{{ $needle['needle_no_pantone'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[needle_no_pantone]" value="{{ $needle['needle_no_pantone'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[color]" value="{{ $needle['color'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[color_shade]" value="{{ $needle['color_shade'] }}"></td>
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[denier]"  value="{{ $needle['denier'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[a]" value="{{ $needle['a'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[b]" value="{{ $needle['b'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[c]" value="{{ $needle['c'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[d]" value="{{ $needle['d'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[e]" value="{{ $needle['e'] }}" placeholder="Enter the value"></td>
-                                                                            <td><button id="removeRow" class="btn btn-danger" type="button">remove</button></td>
-                                                                        </tr>
-                                                                    @empty
-                                                                        <tr id="inputFormRow">
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[needle_no_pantone]" value="{{ $needle['needle_no_pantone'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[needle_no_pantone]" value="{{ $needle['needle_no_pantone'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[color]" value="{{ $needle['color'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[color_shade]" value="{{ $needle['color_shade'] }}"></td>
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[denier]"  value="{{ $needle['denier'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[a]" value="{{ $needle['a'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[b]" value="{{ $needle['b'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[c]" value="{{ $needle['c'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[d]" value="{{ $needle['d'] }}" placeholder="Enter the value"></td>
-                                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[e]" value="{{ $needle['e'] }}" placeholder="Enter the value"></td>
-                                                                            <td><button id="removeRow" class="btn btn-danger" type="button">remove</button></td>
-                                                                        </tr>
-                                                                    @endforelse
-                                                                @else
-                                                                    <tr id="inputFormRow">
-                                                                        <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[needle_no_pantone]" value="" placeholder="Enter the value"></td>
-                                                                        <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[needle_no_pantone]" value="" placeholder="Enter the value"></td>
-                                                                        <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[color]" value="" placeholder="Enter the value"></td>
-                                                                        <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[color_shade]" value=""></td>
-                                                                        <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[denier]"  value="" placeholder="Enter the value"></td>
-                                                                        <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[a]" value="" placeholder="Enter the value"></td>
-                                                                        <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[b]" value="" placeholder="Enter the value"></td>
-                                                                        <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[c]" value="" placeholder="Enter the value"></td>
-                                                                        <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[d]" value="" placeholder="Enter the value"></td>
-                                                                        <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[e]" value="" placeholder="Enter the value"></td>
-                                                                        <td><button id="removeRow" class="btn btn-danger" type="button">remove</button></td>
-                                                                    </tr>
-                                                                @endif
-                                                            </tbody>
-                                                            
-                                                        </table>
-                                                        <!-- needle table  -->
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                                        @endforelse
+                                                    @else
+                                                        <tr id="inputFormRow">
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][needle_no_pantone]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][column]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][color]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][color_shade]" value=""></td>
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][denier]"  value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][a]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][b]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][c]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][d]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][e]" value="" placeholder="Enter the value"></td>
+                                                            <td><button id="removeRow" class="btn btn-danger" type="button">remove</button></td>
+                                                        </tr>
+                                                    @endif
+                                                </tbody>
+                                                
+                                            </table>
+                                        </div>
                                     </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <div class="object-fit-container">   
+                                                <img class="object-fit-cover"  id="result" />
+                                            </div>
+                                            <div class="mt-4">
+                                                <label for="file">Front Image</label>
+                                                <input type="file" class=" @error('crap_image') is-invalid @enderror" id="file" name="front_crop_image">
+                                                @error('crap_image')
+                                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div> 
+                                        <hr>
+                                        <div class="form-group">
+                                            <div class="object-fit-container">   
+                                                <img class="object-fit-cover"  id="result" />
+                                            </div>
+                                            <div class="mt-4">
+                                                <label for="file">Back Image</label>
+                                                <input type="file" class=" @error('crap_image') is-invalid @enderror" id="file" name="back_crop_image">
+                                                @error('crap_image')
+                                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div> 
+                                        <hr>
+                                        <div class="form-group">
+                                            <div class="object-fit-container">   
+                                                <img class="object-fit-cover"  id="result" />
+                                            </div>
+                                            <div class="mt-4">
+                                                <label for="file">All View Image</label>
+                                                <input type="file" class=" @error('crap_image') is-invalid @enderror" id="file" name="all_view_crop_image">
+                                                @error('crap_image')
+                                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div> 
+                                        <hr>
+                                        <div class="form-group">
+                                            <div class="mt-4">
+                                                <label for="document_name">Design File</label>
+                                                <input type="file" class="@error('document_name') is-invalid @enderror" id="document_name" name="design_file" value="{{ old('document_name') }}">
+                                                @error('document_name')
+                                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div> 
+                                    </div>
+                                   
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -528,19 +542,23 @@
                 console.log(calculated_total_sum);
             });
         });
-
+        // var index = $("#form_row_count").val() || 0;
+        var index = 0;
         $("#addRow").click(function () {
+            index++;
+        alert(index);
             var html = '';
             html +='<tr id="inputFormRow">';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[needle_no_pantone]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[color]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[color_shade]" value=""></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[denier]"  value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[a]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[b]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[c]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[d]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[e]" value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][needle_no_pantone]" value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][column]" value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][color]" value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][color_shade]" value=""></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][denier]"  value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][a]" value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][b]" value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][c]" value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][d]" value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][e]" value="" placeholder="Enter the value"></td>';
             html +='<td><button id="removeRow" class="btn btn-danger" type="button">remove</button></td>';
             html +='</tr>';
         
@@ -556,8 +574,18 @@
             }
             else
             {
+                index--;
+
                $(this).closest('#inputFormRow').remove();
             }
+        });
+
+
+        $("#tab_label").on("change",function(){
+            $(".tab_label_input").toggleClass("d-none");
+        });
+        $("#size_label").on("change",function(){
+            $(".size_label_input").toggleClass("d-none");
         });
     </script>
 @stop

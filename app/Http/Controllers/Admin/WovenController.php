@@ -19,11 +19,14 @@ class WovenController extends Controller
     public function index()
     {
 
-        $wovens = DB::table('design_cards')->select('design_cards.*','customer_masters.first_name','customer_masters.last_name')
-        ->join('customer_masters', 'customer_masters.id', '=', 'design_cards.customer_id')
-        ->orderBy('created_at', 'DESC')
-        ->paginate(config("motorTraders.paginate.perPage"));
+        // $wovens = DB::table('design_cards')->select('design_cards.*','customer_masters.first_name','customer_masters.last_name')
+        // ->join('customer_masters', 'customer_masters.id', '=', 'design_cards.customer_id')
+        // ->orderBy('created_at', 'DESC')
+        // ->paginate(config("motorTraders.paginate.perPage"));
+
       // echo "<pre>"; print_r($wovens);exit;
+
+        $wovens = DesignCard::with(['salesRepDetail','customerDetail'])->paginate(5);
         return view("woven.index", compact("wovens"));
     }
 
@@ -36,20 +39,11 @@ class WovenController extends Controller
     }
 
 //    WovenRequest
-    public function store(WovenRequest $request)
+    public function store(Request $request)
     {
-      //  print_r($request->all());exit;
-
         try {
 
-            $validatedFields                    = $request->validated();
-            $validatedFields['loom_id']         = json_encode($request->looms);
-            $validatedFields['total_repet']     = json_encode($request->total_repeat);
-            $validatedFields['add_on_cast']     = json_encode($request->add_on_cast);
-            $validatedFields['needle']          = json_encode($request->needle);
-            
-            // dd($validatedFields);
-        //    Sample Weaver mutliple sotre json format
+           $validatedFields = $this->addOrEditRequest($request);
             
             $result = DesignCard::create($validatedFields);
 
@@ -127,28 +121,15 @@ class WovenController extends Controller
     {   
         $data           = $this->mastersDatas();
         $editdesignCard = DesignCard::where('id',$woven->id)->first();
-        // dd($editdesignCard->needle);
-        return view("woven.edit", compact("woven","data","editdesignCard"));
+        return view("woven.create", compact("data","editdesignCard"));
     }
 
-// WovenRequest
     public function update(Request $request, DesignCard $woven)
     {
-        // $validatedFields                    = $request->validated();
-        // $validatedFields                    = $request->all();
-        // $validatedFields['loom_id']         = json_encode($request->looms);
-        // $validatedFields['total_repet']     = json_encode($request->total_repeat);
-        // $validatedFields['add_on_cast']     = json_encode($request->add_on_cast);
-        // $validatedFields['needle']          = json_encode([$request->needle]);
-        // dd($validatedFields);
         try {
-              $validatedFields                    = $request->all();
-        $validatedFields['weaver_id']         = json_encode($request->weaver);
-        $validatedFields['loom_id']         = json_encode($request->looms);
-        $validatedFields['total_repet']     = json_encode($request->total_repeat);
-        $validatedFields['add_on_cast']     = json_encode($request->add_on_cast);
-        $validatedFields['needle']          = json_encode([$request->needle]);
-         $woven->update($validatedFields);
+            $validatedFields = $this->addOrEditRequest($request);
+            // dd($validatedFields['needle'] );
+            $woven->update($validatedFields);
             // $validatedFields = $request->validated();
             // unset($validatedFields["image"]);
 
@@ -171,7 +152,7 @@ class WovenController extends Controller
 
             return redirect()
         ->route("woven.index")
-        ->with("success", "fold created successfully.");
+        ->with("success", "Desgin card updated successfully.");
         } catch (\Exception $exception) {
             DB::rollBack();
             return redirect()
@@ -185,9 +166,8 @@ class WovenController extends Controller
     
     public function show($woven)
     {
-        $woven = DesignCard::with(['customerDetail','designerDetail','salesRepDetail','warpDetail','finishingDetail'])->findOrFail($woven);
-        // dd($woven);
-        return view("woven.show", compact("woven"));
+        $viewDesignCard = DesignCard::with(['customerDetail','designerDetail','salesRepDetail','warpDetail','finishingDetail'])->findOrFail($woven);
+        return view("woven.show", compact("viewDesignCard"));
     }
 
 
@@ -197,6 +177,21 @@ class WovenController extends Controller
         return redirect()
         ->route("woven.index")
         ->with("success", "Design card deleted successfully.");
+    }
+
+    public function addOrEditRequest($request)
+    {
+        $validatedFields                        = $request->all();
+        $validatedFields['weaver']              = json_encode($request->weaver);
+        $validatedFields['main_label']          = json_encode($request->main_lable);
+        $validatedFields['tab_label']           = json_encode($request->tab_label);
+        $validatedFields['size_label']          = json_encode($request->size_label);
+        $validatedFields['add_on_main_cost']    = json_encode($request->main_cost);
+        $validatedFields['add_on_tab_cost']     = json_encode($request->tab_cost);
+        $validatedFields['add_on_size_cost']    = json_encode($request->size_cost);
+        $validatedFields['needle']              = json_encode($request->needle);
+        
+        return $validatedFields;
     }
 
     public function mastersDatas()

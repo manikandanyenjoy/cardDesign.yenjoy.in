@@ -35,6 +35,7 @@ class CustomerMaster extends Model
         "shipping_address"
         
     ];
+
     protected $hidden = ["password", "remember_token"];
 
     protected $casts = [
@@ -44,5 +45,10 @@ class CustomerMaster extends Model
     public function setPasswordAttribute($value)
     {
         $this->attributes["password"] = bcrypt($value);
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
     }
 }

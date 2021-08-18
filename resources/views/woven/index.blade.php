@@ -35,21 +35,21 @@
                         <table class="table table-bordered table-sm">
                             <thead>
                             <tr>
-                                <th style="width: 50px">#</th>
+                                <th style="width: 50px">S.No</th>
                                 <th>Customer</th>
-                                <th>Lable</th>
+                                <th>Sales Representative</th>
+                                <th>Label</th>
                                 <th>Date</th>
                                 <th style="width: 200px">Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($wovens as $index => $woven)
-
-                            <?php // echo "<pre>"; print_r($woven);exit; ?>
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $woven->first_name }} {{" "}} {{$woven->last_name}}</td>
-                                    <td>{{ $woven->lable }}</td>
+                                    <td>{{ ucwords($woven->customerDetail->full_name) }}</td>
+                                    <td>{{ ucwords($woven->salesRepDetail->name) }}</td>
+                                    <td>{{ ucwords($woven->label) }}</td>
                                     <td>{{ $woven->date }}</td>
                                     
                                     <td>
