@@ -44,7 +44,7 @@
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                            <h5 class="mt-4 mb-2 col-12">{{ _('Representative Details') }}</h5>
+                           
                                 <div class="form-group col-6">
                                     <label for="first_name">First Name</label>
                                     <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="first_name" name="first_name" value="{{ old('first_name') }}" placeholder="First Name">
@@ -74,17 +74,7 @@
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-6">
-                                    <label for="sales_rep">Sales Rep</label>
-                                    <select class="form-control @error('sales_rep') is-invalid @enderror" id="sales_rep" name="sales_rep">
-                                    @foreach( $data['salesrep'] as $salesrep) 
-                                    <option value="{{$salesrep['id']}}">{{$salesrep['name']}} </option>
-                                    @endforeach
-                                    </select>
-                                    @error('sales_rep')
-                                    <span class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                
                                 <div class="form-group col-6">
                                     <label for="mobile_number">Phone</label>
                                     <input type="text" class="form-control @error('mobile_number') is-invalid @enderror" id="mobile_number" name="mobile_number" value="{{ old('mobile_number') }}" placeholder="Phone Number">
@@ -114,6 +104,18 @@
                                     </select>
                                 
                                     @error('status')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                 <h5 class="mt-4 mb-2 col-12">{{ _('Representative Details') }}</h5>
+                                <div class="form-group col-6">
+                                    <label for="sales_rep">Sales Rep</label>
+                                    <select class="form-control @error('sales_rep') is-invalid @enderror" id="sales_rep" name="sales_rep">
+                                    @foreach( $data['salesrep'] as $salesrep) 
+                                    <option value="{{$salesrep['id']}}">{{$salesrep['name']}} </option>
+                                    @endforeach
+                                    </select>
+                                    @error('sales_rep')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
