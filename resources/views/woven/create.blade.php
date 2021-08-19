@@ -129,15 +129,29 @@
                                                     <th>Weaver</th>
                                                     <td width="150px">
                                                         <div class="form-group row mx-2">
-                                                            @if($editdesignCard)
-                                                                <input type="text" name="weaver[]" value="{{ isset($editdesignCard->weaver[0]) ? $editdesignCard->weaver[0] : '' }}" class="form-control col">
-                                                                <input type="text" name="weaver[]" value="{{ isset($editdesignCard->weaver[1]) ? $editdesignCard->weaver[1] : '' }}" class="form-control col">
-                                                                <input type="text" name="weaver[]" value="{{ isset($editdesignCard->weaver[2]) ? $editdesignCard->weaver[2] : '' }}" class="form-control col">
-                                                            @else
-                                                                <input type="text" name="weaver[]" class="form-control col">
-                                                                <input type="text" name="weaver[]" class="form-control col">
-                                                                <input type="text" name="weaver[]" class="form-control col">
-                                                            @endif
+                                                           
+                                                            
+                                                                <select style="width: 50%;"  name="weaver[]">
+                                                            <option value="">Select Wever</option>
+                                                            @foreach( $data['loomMaster'] as $loom) 
+                                                                @if($editdesignCard)
+                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[0]) ? $editdesignCard->weaver[0] : '')? 'selected' : '') }}>{{ucfirst($loom['loom_name'])}} </option>
+                                                                    @else
+                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($salesrep['loom_name'])}} </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                         <select style="width: 50%;" name="weaver[]">
+                                                            <option value="">Select Wever</option>
+                                                            @foreach( $data['loomMaster'] as $loom) 
+                                                                @if($editdesignCard)
+                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[1]) ? $editdesignCard->weaver[1] : '')? 'selected' : '') }}>{{ucfirst($loom['loom_name'])}} </option>
+                                                                    @else
+                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($salesrep['loom_name'])}} </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                         
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -158,7 +172,16 @@
                                                     </td>
                                                     <th>Finishing</th>
                                                     <td>
-                                                       <input type="text" name="finishing" value="{{ $editdesignCard ? old('finishing',$editdesignCard->finishing) : old('finishing') }}" class="form-control">
+                                                         <select name="finishing" class="form-control">
+                                                            <option value="">Select finishing</option>
+                                                            @foreach( $data['finishingMaster'] as $finishing) 
+                                                                @if($editdesignCard)
+                                                                    <option value="{{$finishing['id']}}" {{ old('finishing') == $finishing['id'] ? 'selected' : ($warp['id'] == $editdesignCard->finishing ? 'selected' : '') }}>{{ucfirst($finishing['machine'])}} </option>
+                                                                @else
+                                                                    <option value="{{$finishing['id']}}" {{ old('finishing') == $finishing['id'] ? 'selected' : '' }}>{{ucfirst($finishing['machine'])}} </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
                                                     </td>
                                                     <th>Notes</th>
                                                     <td>
@@ -189,7 +212,18 @@
                                                         
                                                         <tr>
                                                             <th width="200px">Quality</th>
-                                                            <td width="200px"><input type="text" name="main_label[quality]" value="{{ $editdesignCard && isset($editdesignCard->main_label['quality']) ? $editdesignCard->main_label['quality'] : '' }}" class="form-control"></td>
+                                                            <td width="200px">
+                                                         <select name="main_label[quality]" class="form-control">
+                                                            <option value="">Select Quality</option>
+                                                            @foreach( $data['wovenQuality'] as $quality) 
+                                                                @if($editdesignCard)
+                                                                    <option value="{{$quality['id']}}" {{ old('finishing') == $quality['id'] ? 'selected' : ($quality['id'] == ($editdesignCard && isset($editdesignCard->main_label['quality']) ? $editdesignCard->main_label['quality'] : '')? 'selected' : '') }}>{{ucfirst($quality['quality'])}} </option>
+                                                                @else
+                                                                    <option value="{{$quality['id']}}" {{ old('finishing') == $quality['id'] ? 'selected' : '' }}>{{ucfirst($quality['quality'])}} </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                                </td>
                                                         </tr>
                                                         
                                                         <tr>
@@ -273,7 +307,18 @@
                                                         </tr>
                                                         
                                                         <tr class="tab_label_input d-none">
-                                                            <td width="200px"><input type="text" name="tab_label[quality]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['quality']) ? $editdesignCard->tab_label['quality'] : '' }}" class="form-control"></td>
+                                                            <td width="200px">
+                                                         <select name="tab_label[quality]" class="form-control">
+                                                            <option value="">Select Quality</option>
+                                                            @foreach( $data['wovenQuality'] as $quality) 
+                                                                @if($editdesignCard)
+                                                                    <option value="{{$quality['id']}}" {{ old('finishing') == $quality['id'] ? 'selected' : ($quality['id'] == ($editdesignCard && isset($editdesignCard->tab_label['quality']) ? $editdesignCard->tab_label['quality'] : '')? 'selected' : '') }}>{{ucfirst($quality['quality'])}} </option>
+                                                                @else
+                                                                    <option value="{{$quality['id']}}" {{ old('finishing') == $quality['id'] ? 'selected' : '' }}>{{ucfirst($quality['quality'])}} </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                                </td>
                                                         </tr>
                                                         
                                                         <tr class="tab_label_input d-none">
@@ -350,7 +395,19 @@
                                                         </tr>
                                                         
                                                         <tr class="size_label_input d-none">
-                                                            <td width="200px"><input type="text" name="size_label[quality]" value="{{ $editdesignCard && isset($editdesignCard->size_label['quality']) ? $editdesignCard->size_label['quality'] : '' }}" class="form-control"></td>
+                                                            <td width="200px">
+                                                                
+                                                         <select name="size_label[quality]" class="form-control">
+                                                            <option value="">Select Quality</option>
+                                                            @foreach( $data['wovenQuality'] as $quality) 
+                                                                @if($editdesignCard)
+                                                                    <option value="{{$quality['id']}}" {{ old('finishing') == $quality['id'] ? 'selected' : ($quality['id'] == ($editdesignCard && isset($editdesignCard->size_label['quality']) ? $editdesignCard->size_label['quality'] : '')? 'selected' : '') }}>{{ucfirst($quality['quality'])}} </option>
+                                                                @else
+                                                                    <option value="{{$quality['id']}}" {{ old('finishing') == $quality['id'] ? 'selected' : '' }}>{{ucfirst($quality['quality'])}} </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                                </td>
                                                         </tr>
                                                         
                                                         <tr class="size_label_input d-none">
@@ -546,21 +603,21 @@
                                         <hr>
                                         <div class="form-group">
                                             <div class="object-fit-container">   
-                                                <img class="object-fit-cover"  id="result" />
+                                                <img class="object-fit-cover"  id="result1" />
                                             </div>
                                             <div class="mt-4">
                                                 <label for="file">Back Image</label>
-                                                <input type="file" id="file" accept="image/*" name="back_crop_image">
+                                                <input type="file" id="file1" accept="image/*" name="back_crop_image">
                                             </div>
                                         </div> 
                                         <hr>
                                         <div class="form-group">
                                             <div class="object-fit-container">   
-                                                <img class="object-fit-cover"  id="result" />
+                                                <img class="object-fit-cover"  id="result2" />
                                             </div>
                                             <div class="mt-4">
                                                 <label for="file">All View Image</label>
-                                                <input type="file" id="file" accept="image/*" name="all_view_crop_image">                                               
+                                                <input type="file" id="file2" accept="image/*" name="all_view_crop_image">                                               
                                             </div>
                                         </div> 
                                         <hr>
