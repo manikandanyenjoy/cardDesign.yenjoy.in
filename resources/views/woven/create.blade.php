@@ -137,7 +137,7 @@
                                                                 @if($editdesignCard)
                                                                     <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[0]) ? $editdesignCard->weaver[0] : '')? 'selected' : '') }}>{{ucfirst($loom['loom_name'])}} </option>
                                                                     @else
-                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($salesrep['loom_name'])}} </option>
+                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['loom_name'])}} </option>
                                                                 @endif
                                                             @endforeach
                                                         </select>
@@ -147,7 +147,7 @@
                                                                 @if($editdesignCard)
                                                                     <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[1]) ? $editdesignCard->weaver[1] : '')? 'selected' : '') }}>{{ucfirst($loom['loom_name'])}} </option>
                                                                     @else
-                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($salesrep['loom_name'])}} </option>
+                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['loom_name'])}} </option>
                                                                 @endif
                                                             @endforeach
                                                         </select>
