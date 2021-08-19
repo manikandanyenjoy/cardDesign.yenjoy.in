@@ -132,29 +132,26 @@
                                                     <th>Weaver</th>
                                                     <td width="150px">
                                                         <div class="form-group row mx-2">
-                                                           
-                                                            
-                                                                <select style="width: 50%;"  name="weaver[]">
-                                                            <option value="">Select Wever</option>
-                                                            @foreach( $data['loomMasteruser'] as $loom) 
-                                                                @if($editdesignCard)
-                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[0]) ? $editdesignCard->weaver[0] : '')? 'selected' : '') }}>{{ucfirst($loom['name'])}} </option>
-                                                                    @else
-                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['name'])}} </option>
-                                                                @endif
-                                                            @endforeach
-                                                        </select>
-                                                         <select style="width: 50%;" name="weaver[]">
-                                                            <option value="">Select Wever</option>
-                                                            @foreach( $data['loomMasteruser'] as $loom) 
-                                                                @if($editdesignCard)
-                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[1]) ? $editdesignCard->weaver[1] : '')? 'selected' : '') }}>{{ucfirst($loom['name'])}} </option>
-                                                                    @else
-                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['name'])}} </option>
-                                                                @endif
-                                                            @endforeach
-                                                        </select>
-                                                         
+                                                            <select style="width: 50%;"  class="form-control" name="weaver[]">
+                                                                <option value="">Select</option>
+                                                                @foreach( $data['loomMaster'] as $loom) 
+                                                                    @if($editdesignCard)
+                                                                        <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[0]) ? $editdesignCard->weaver[0] : '')? 'selected' : '') }}>{{ucfirst($loom['loom_name'])}} </option>
+                                                                        @else
+                                                                        <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['loom_name'])}} </option>
+                                                                    @endif
+                                                                @endforeach
+                                                            </select>
+                                                            <select style="width: 50%;" class="form-control" name="weaver[]">
+                                                                <option value="">Select</option>
+                                                                @foreach( $data['loomMaster'] as $loom) 
+                                                                    @if($editdesignCard)
+                                                                        <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[1]) ? $editdesignCard->weaver[1] : '')? 'selected' : '') }}>{{ucfirst($loom['loom_name'])}} </option>
+                                                                        @else
+                                                                        <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['loom_name'])}} </option>
+                                                                    @endif
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -596,17 +593,35 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <div class="object-fit-container">   
-                                                <img class="object-fit-cover"  id="result" />
+                                                @if($editdesignCard)
+                                                    @if($editdesignCard->front_image)
+                                                        <img class="object-fit-cover" src="{{ $editdesignCard ? $editdesignCard->front_image : '' }}" id="result" />
+                                                    @else
+                                                        <img class="object-fit-cover" id="result" />
+                                                    @endif
+                                                @else
+                                                    <img class="object-fit-cover" id="result" />
+                                                @endif
                                             </div>
                                             <div class="mt-4">
                                                 <label for="file">Front Image</label>
+                                                <input type="hidden" id="front_image_height">
+                                                <input type="hidden" id="front_image_width">
                                                 <input type="file" id="file" accept="image/*" name="front_crop_image">
                                             </div>
                                         </div> 
                                         <hr>
                                         <div class="form-group">
-                                            <div class="object-fit-container">   
-                                                <img class="object-fit-cover"  id="result1" />
+                                            <div class="object-fit-container">  
+                                                @if($editdesignCard)
+                                                    @if($editdesignCard->back_image)
+                                                        <img class="object-fit-cover" src="{{ $editdesignCard ? $editdesignCard->back_image : '' }}" id="result1" />
+                                                    @else
+                                                        <img class="object-fit-cover" id="result1" />
+                                                    @endif
+                                                @else
+                                                    <img class="object-fit-cover" id="result1" />
+                                                @endif 
                                             </div>
                                             <div class="mt-4">
                                                 <label for="file">Back Image</label>
@@ -616,7 +631,15 @@
                                         <hr>
                                         <div class="form-group">
                                             <div class="object-fit-container">   
-                                                <img class="object-fit-cover"  id="result2" />
+                                                @if($editdesignCard)
+                                                    @if($editdesignCard->all_view_image)
+                                                        <img class="object-fit-cover" src="{{ $editdesignCard ? $editdesignCard->all_view_image : '' }}" id="result2" />
+                                                    @else
+                                                        <img class="object-fit-cover" id="result2" />
+                                                    @endif
+                                                @else
+                                                    <img class="object-fit-cover" id="result2" />
+                                                @endif 
                                             </div>
                                             <div class="mt-4">
                                                 <label for="file">All View Image</label>

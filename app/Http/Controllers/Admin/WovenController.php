@@ -197,7 +197,7 @@ class WovenController extends Controller
     {   
         $data           = $this->mastersDatas();
         $editdesignCard = DesignCard::where('id',$woven->id)->first();
-        
+        // dd($editdesignCard->front_image,$editdesignCard->back_image);
         return view("woven.create", compact("data","editdesignCard"));
     }
 
@@ -205,40 +205,37 @@ class WovenController extends Controller
     {
         try {
             $mulitpleDesignFile = [];
-            $validatedFields = $this->addOrEditRequest($request);
-            if ($request->hasFile("front_crop_image")) {
-                $frontImage = $request->file("front_crop_image");
+            
+            $validatedFields    = $this->addOrEditRequest($request);
 
-                $frontFilename   = md5($frontImage->getClientOriginalName() . time()) ."." .$frontImage->getClientOriginalExtension();
+            if ($request->hasFile("front_crop_image")) {
+                $frontImage      = $request->file("front_crop_image");
+
+                $frontFilename = $frontImage->store("{$woven->id}", [
+                    "disk" => "cardsImage",
+                ]);
 
                 $validatedFields["front_image"] = $frontFilename;
+            }
+
+            if ($request->hasFile("back_crop_image")) {
+                $backImage      = $request->file("back_crop_image");
                 
-                $filePath = $frontImage->store("{$woven->id}", [
+                $backFilename = $backImage->store("{$woven->id}", [
                     "disk" => "cardsImage",
                 ]);
-            }
-            if ($request->hasFile("back_crop_image")) {
-                $backImage = $request->file("back_crop_image");
-
-                $backFilename   = md5($backImage->getClientOriginalName() . time()) ."." .$backImage->getClientOriginalExtension();
 
                 $validatedFields["back_image"] = $backFilename;
-                
-                $filePath = $backImage->store("{$woven->id}", [
-                    "disk" => "cardsImage",
-                ]);
             }
 
             if ($request->hasFile("all_view_crop_image")) {
                 $viewAllImage = $request->file("all_view_crop_image");
-
-                $viewAllFilename   = md5($viewAllImage->getClientOriginalName() . time()) ."." .$viewAllImage->getClientOriginalExtension();
-
-                $validatedFields["all_view_image"] = $viewAllFilename;
                 
-                $filePath = $viewAllImage->store("{$woven->id}", [
+                $viewAllFilename = $viewAllImage->store("{$woven->id}", [
                     "disk" => "cardsImage",
                 ]);
+
+                $validatedFields["all_view_image"] = $viewAllFilename;
             }
 
             if(request()->hasFile('design_file'))

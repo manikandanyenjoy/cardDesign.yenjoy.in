@@ -335,21 +335,21 @@
                                     <div class="form-group">
                                         <label>Front Image</label>
                                         <div class="object-fit-container">   
-                                            <img class="object-fit-cover"  id="result" />
+                                            <img class="object-fit-cover"  src="{{ $viewDesignCard->front_image }}"/>
                                         </div>
                                     </div> 
                                     <hr>
                                     <div class="form-group">
                                         <label>Back Image</label>
                                         <div class="object-fit-container">   
-                                            <img class="object-fit-cover"  id="result" />
+                                            <img class="object-fit-cover"  src="{{ $viewDesignCard->back_image }}"/>
                                         </div>
                                     </div> 
                                     <hr>
                                     <div class="form-group">
                                         <label>All View Image</label>
                                         <div class="object-fit-container">   
-                                            <img class="object-fit-cover"  id="result" />
+                                            <img class="object-fit-cover" src="{{ $viewDesignCard->all_view_image }}" />
                                         </div>
                                     </div> 
                                     <hr>

@@ -120,7 +120,20 @@ class DesignCard extends Model
 
     public function getFrontImageAttribute($value)
     {
-        return $value ? Storage::disk("cardsImage")->url('/') : '';
+        $existsFile = Storage::disk("cardsImage")->exists("{$value}");
+        return $value && $existsFile ? Storage::disk("cardsImage")->url('/')."{$value}" : "";
+    }
+
+    public function getBackImageAttribute($value)
+    {
+        $existsFile = Storage::disk("cardsImage")->exists("{$value}");
+        return $value && $existsFile ? Storage::disk("cardsImage")->url('/')."{$value}" : "";
+    }
+
+    public function getAllViewImageAttribute($value)
+    {
+        $existsFile = Storage::disk("cardsImage")->exists("{$value}");
+        return $value && $existsFile ? Storage::disk("cardsImage")->url('/')."{$value}" : "";
     }
 
     public function customerDetail()
