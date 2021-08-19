@@ -25,7 +25,10 @@
     margin-right: auto;
     object-fit: cover; /*magic*/
     }
+    tr input {
 
+        width:70px
+    }
     /* .label_names
     {
         border:none !important;
@@ -133,21 +136,21 @@
                                                             
                                                                 <select style="width: 50%;"  name="weaver[]">
                                                             <option value="">Select Wever</option>
-                                                            @foreach( $data['loomMaster'] as $loom) 
+                                                            @foreach( $data['loomMasteruser'] as $loom) 
                                                                 @if($editdesignCard)
-                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[0]) ? $editdesignCard->weaver[0] : '')? 'selected' : '') }}>{{ucfirst($loom['loom_name'])}} </option>
+                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[0]) ? $editdesignCard->weaver[0] : '')? 'selected' : '') }}>{{ucfirst($loom['name'])}} </option>
                                                                     @else
-                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['loom_name'])}} </option>
+                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['name'])}} </option>
                                                                 @endif
                                                             @endforeach
                                                         </select>
                                                          <select style="width: 50%;" name="weaver[]">
                                                             <option value="">Select Wever</option>
-                                                            @foreach( $data['loomMaster'] as $loom) 
+                                                            @foreach( $data['loomMasteruser'] as $loom) 
                                                                 @if($editdesignCard)
-                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[1]) ? $editdesignCard->weaver[1] : '')? 'selected' : '') }}>{{ucfirst($loom['loom_name'])}} </option>
+                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[1]) ? $editdesignCard->weaver[1] : '')? 'selected' : '') }}>{{ucfirst($loom['name'])}} </option>
                                                                     @else
-                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['loom_name'])}} </option>
+                                                                    <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['name'])}} </option>
                                                                 @endif
                                                             @endforeach
                                                         </select>
@@ -528,7 +531,7 @@
                                                         <th>Needle No</th>
                                                         <th>Pantone</th>
                                                         <th>Color</th>
-                                                        <th>Color Shade</th>
+                                                        <th>Shade</th>
                                                         <th>Denier</th>
                                                         <th>A</th>
                                                         <th>B</th>
@@ -543,45 +546,45 @@
                                                         <input type="hidden" id="form_row_count" value="{{ count($editdesignCard->needle) }}">
                                                         @forelse($editdesignCard->needle as $index => $needle)
                                                             <tr id="inputFormRow">
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][needle_no]" value="{{ $needle['needle_no'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][pantone]" value="{{ $needle['pantone'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][color]" value="{{ $needle['color'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][color_shade]" value="{{ $needle['color_shade'] }}"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][denier]"  value="{{ $needle['denier'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][a]" value="{{ $needle['a'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][b]" value="{{ $needle['b'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][c]" value="{{ $needle['c'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][d]" value="{{ $needle['d'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[{{$index}}][e]" value="{{ $needle['e'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[{{$index}}][needle_no]" value="{{ $needle['needle_no'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[{{$index}}][pantone]" value="{{ $needle['pantone'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[{{$index}}][color]" value="{{ $needle['color'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="needle[{{$index}}][color_shade]" value="{{ $needle['color_shade'] }}"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[{{$index}}][denier]"  value="{{ $needle['denier'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[{{$index}}][a]" value="{{ $needle['a'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[{{$index}}][b]" value="{{ $needle['b'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[{{$index}}][c]" value="{{ $needle['c'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[{{$index}}][d]" value="{{ $needle['d'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[{{$index}}][e]" value="{{ $needle['e'] }}" placeholder="Enter the value"></td>
                                                                 <td><button id="removeRow" class="btn btn-danger" type="button">remove</button></td>
                                                             </tr>
                                                         @empty
                                                             <tr id="inputFormRow">
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][needle_no]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][pantone]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][color]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][color_shade]" value=""></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][denier]"  value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][a]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][b]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][c]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][d]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][e]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][needle_no]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][pantone]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][color]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="color" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][color_shade]" value=""></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][denier]"  value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][a]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][b]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][c]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][d]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][e]" value="" placeholder="Enter the value"></td>
                                                                 <td><button id="removeRow" class="btn btn-danger" type="button">remove</button></td>
                                                             </tr>
                                                         @endforelse
                                                     @else
                                                         <tr id="inputFormRow">
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][needle_no]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][pantone]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][needle_no]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][pantone]" value="" placeholder="Enter the value"></td>
                                                             <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][color]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][color_shade]" value=""></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][denier]"  value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][a]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][b]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][c]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][d]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][e]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle[0][color_shade]" value=""></td>
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][denier]"  value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][a]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][b]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="needle[0][c]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][d]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle[0][e]" value="" placeholder="Enter the value"></td>
                                                             <td><button id="removeRow" class="btn btn-danger" type="button">remove</button></td>
                                                         </tr>
                                                     @endif
@@ -694,16 +697,16 @@
             index++;
             var html = '';
             html +='<tr id="inputFormRow">';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][needle_no]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][pantone]" value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="needle['+index+'][needle_no]" value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="needle['+index+'][pantone]" value="" placeholder="Enter the value"></td>';
             html +='<td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][color]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][color_shade]" value=""></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][denier]"  value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][a]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][b]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][c]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][d]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="needle['+index+'][e]" value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle['+index+'][color_shade]" value=""></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle['+index+'][denier]"  value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="needle['+index+'][a]" value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="needle['+index+'][b]" value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle['+index+'][c]" value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle['+index+'][d]" value="" placeholder="Enter the value"></td>';
+            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="needle['+index+'][e]" value="" placeholder="Enter the value"></td>';
             html +='<td><button id="removeRow" class="btn btn-danger" type="button">remove</button></td>';
             html +='</tr>';
         

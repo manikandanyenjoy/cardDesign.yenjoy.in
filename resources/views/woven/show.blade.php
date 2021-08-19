@@ -26,6 +26,9 @@
     margin-right: auto;
     object-fit: cover; /*magic*/
     }
+    tr.main_label_input {
+    height: 45px!important;
+}
 </style>
 @section('content_header')
     <div class="row mb-2">
@@ -353,8 +356,8 @@
                                     <div class="form-group">
                                         <div class="mt-4">
                                             <label for="document_name">Design File</label>
-                                            @if(count($viewDesignCard->design_file) > 0)
-                                                @foreach($viewDesignCard->design_file as $designFile)
+                                            @if($viewDesignCard->design_file && count(json_decode($viewDesignCard->design_file)) > 0)
+                                                @foreach(json_decode($viewDesignCard->design_file) as $designFile)
                                                     <p>{{ $designFile."," }}</p>
                                                 @endforeach
                                             @endif
