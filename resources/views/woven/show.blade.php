@@ -71,11 +71,9 @@
                                                 <td>{{ ucwords($viewDesignCard->salesRepDetail->name ) }}</td>
                                                 <th>Weaver</th>
                                                 <td width="150px">
-                                                    @if(isset($viewDesignCard->weaver[0]) || isset($viewDesignCard->weaver[1]))
-                                                        {{$weavers[0]['loom_name'].', '.$weavers[1]['loom_name']}}
-                                                    @else
-                                                    -
-                                                    @endif
+                                                    @foreach($weavers as $w)
+                                                     {{$w['loom_name']}}
+                                                    @endforeach
                                                    
                                                 </td>
                                             </tr>
@@ -318,7 +316,7 @@
                                                     <th>Needle No</th>
                                                     <th>Pantone</th>
                                                     <th>Color</th>
-                                                    <th>Color Shade</th>
+                                                    <th>Shade</th>
                                                     <th>Denier</th>
                                                     <th>A</th>
                                                     <th>B</th>
@@ -353,22 +351,28 @@
                                 <div class="col-3">
                                     <div class="form-group">
                                         <label>Front Image</label>
-                                        <div class="object-fit-container">   
-                                            <img class="object-fit-cover"  src="{{ $viewDesignCard->front_image }}"/>
+                                        <div class="object-fit-container"> 
+                                           @if($viewDesignCard->front_image) 
+                                            <img class="object-fit-cover"  src="{{asset('./designCards/'.$viewDesignCard->front_image)}}"/>
+                                            @endif
                                         </div>
                                     </div> 
                                     <hr>
                                     <div class="form-group">
                                         <label>Back Image</label>
-                                        <div class="object-fit-container">   
-                                            <img class="object-fit-cover"  src="{{ $viewDesignCard->back_image }}"/>
+                                        <div class="object-fit-container">
+                                            @if($viewDesignCard->back_image)   
+                                            <img class="object-fit-cover"  src="{{asset('./designCards/'.$viewDesignCard->back_image)}}"/>
+                                            @endif
                                         </div>
                                     </div> 
                                     <hr>
                                     <div class="form-group">
                                         <label>All View Image</label>
-                                        <div class="object-fit-container">   
-                                            <img class="object-fit-cover" src="{{ $viewDesignCard->all_view_image }}" />
+                                        <div class="object-fit-container">
+                                             @if($viewDesignCard->all_view_image)   
+                                            <img class="object-fit-cover" src="{{asset('./designCards/'.$viewDesignCard->all_view_image)}}" />
+                                            @endif
                                         </div>
                                     </div> 
                                     <hr>
@@ -378,6 +382,9 @@
                                             @if($viewDesignCard->design_file && count(json_decode($viewDesignCard->design_file)) > 0)
                                                 @foreach(json_decode($viewDesignCard->design_file) as $designFile)
                                                     {{ $loop->first ? '' : ', ' }}
+                                                    <a href="{{asset('./cardsDocuments/'.$viewDesignCard->id.'/'.$designFile)}}" download>
+                                                      <img style="width: 20px; border: 2px solid black;" src="https://cdn.icon-icons.com/icons2/1875/PNG/512/download_120262.png" alt="W3Schools">
+                                                    </a>
                                                     {{ $designFile }}
                                                 @endforeach
                                             @endif

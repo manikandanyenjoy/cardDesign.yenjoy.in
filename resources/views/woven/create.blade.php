@@ -684,7 +684,7 @@
                                             <div class="object-fit-container">   
                                                 @if($editdesignCard)
                                                     @if($editdesignCard->front_image)
-                                                        <img class="object-fit-cover" src="{{ $editdesignCard ? $editdesignCard->front_image : '' }}" id="result" />
+                                                        <img class="object-fit-cover" src="{{asset('./designCards/'.$editdesignCard->front_image)}}" id="result" />
                                                     @else
                                                         <img class="object-fit-cover" id="result" />
                                                     @endif
@@ -703,7 +703,7 @@
                                             <div class="object-fit-container">  
                                                 @if($editdesignCard)
                                                     @if($editdesignCard->back_image)
-                                                        <img class="object-fit-cover" src="{{ $editdesignCard ? $editdesignCard->back_image : '' }}" id="result1" />
+                                                        <img class="object-fit-cover" src="{{asset('./designCards/'.$editdesignCard->back_image)}}" id="result1" />
                                                     @else
                                                         <img class="object-fit-cover" id="result1" />
                                                     @endif
@@ -722,7 +722,7 @@
                                             <div class="object-fit-container">   
                                                 @if($editdesignCard)
                                                     @if($editdesignCard->all_view_image)
-                                                        <img class="object-fit-cover" src="{{ $editdesignCard ? $editdesignCard->all_view_image : '' }}" id="result2" />
+                                                        <img class="object-fit-cover" src="{{asset('./designCards/'.$editdesignCard->all_view_image)}}" id="result2" />
                                                     @else
                                                         <img class="object-fit-cover" id="result2" />
                                                     @endif

@@ -75,10 +75,12 @@ class WovenController extends Controller
 
             $result = DesignCard::create($validatedFields);
 
-            if ($request->hasFile("front_crop_image")) {
+            if ($request->hasFile("front_image")) {
                 $frontFileName = $this->decodeBase64Image($request->front_image, $result->id, 'front_image');
 
                 $uploadFiles["front_image"] = $frontFileName;
+            }else{
+                unset($validatedFields["front_image"]);
             }
 
             // if ($request->hasFile("front_crop_image")) {
@@ -91,10 +93,12 @@ class WovenController extends Controller
             //     $uploadFiles["front_image"] = $frontFilename;
             // }
 
-            if ($request->hasFile("back_crop_image")) {
+            if ($request->hasFile("back_image")) {
                 $backFilename = $this->decodeBase64Image($request->back_image, $result->id, 'back_image');
 
                 $uploadFiles["back_image"] = $backFilename;
+            }else{
+                unset($validatedFields["back_image"]);
             }
 
             // if ($request->hasFile("back_crop_image")) {
@@ -107,10 +111,12 @@ class WovenController extends Controller
             //     $uploadFiles["back_image"] = $backFilename;
             // }
 
-            if ($request->hasFile("all_view_crop_image")) {
+            if ($request->hasFile("all_view_image")) {
                 $viewAllFilename = $this->decodeBase64Image($request->all_view_image, $result->id, 'all_view_image');
 
                 $uploadFiles["all_view_image"] = $viewAllFilename;
+            }else{
+                unset($validatedFields["all_view_image"]);
             }
 
             // if ($request->hasFile("all_view_crop_image")) {
@@ -133,9 +139,11 @@ class WovenController extends Controller
                     $mulitpleDesignFile[] = $filePaths;  
                 }
                 $uploadFiles['design_file'] = json_encode($mulitpleDesignFile);
+            }else{
+                unset($validatedFields["design_file"]);
             }
             
-            if($request->hasfile('front_crop_image') || $request->hasfile('back_crop_image') || $request->hasfile('all_view_crop_image') || $request->hasfile('design_files'))
+            if($request->hasfile('back_image') || $request->hasfile('front_image') || $request->hasfile('all_view_image') || $request->hasfile('design_files'))
             {
                 $result->update($uploadFiles);
             }
@@ -201,27 +209,33 @@ class WovenController extends Controller
             //     $validatedFields["all_view_image"] = $viewAllFilename;
             // }
 
-            if ($request->hasFile("front_crop_image")) {
+            if ($request->hasFile("front_image")) {
                 $frontFileName = $this->decodeBase64Image($request->front_image, $woven->id, 'front_image');
 
                 $validatedFields["front_image"] = $frontFileName;
+            }else{
+                unset($validatedFields["front_image"]);
             }
             
-            if ($request->hasFile("back_crop_image")) {
+            if ($request->hasFile("back_image")) {
                 $backFilename = $this->decodeBase64Image($request->back_image, $woven->id, 'back_image');
 
                 $validatedFields["back_image"] = $backFilename;
+            }else{
+                unset($validatedFields["back_image"]);
             }
 
-            if ($request->hasFile("all_view_crop_image")) {
+            if ($request->hasFile("all_view_image")) {
                 $viewAllFilename = $this->decodeBase64Image($request->all_view_image, $woven->id, 'all_view_image');
 
                 $validatedFields["all_view_image"] = $viewAllFilename;
+            }else{
+                unset($validatedFields["all_view_image"]);
             }
 
-            if(request()->hasFile('design_file'))
+            if(request()->hasFile('design_files'))
             {
-                $designFiles                = request()->file('design_file');
+                $designFiles                = request()->file('design_files');
 
                 foreach($designFiles as $key => $designFile)
                 {
@@ -234,6 +248,8 @@ class WovenController extends Controller
                     
                 }
                 $validatedFields['design_file']   = json_encode($mulitpleDesignFile);
+            }else{
+                unset($validatedFields["design_file"]);
             }
           
             $woven->update($validatedFields);

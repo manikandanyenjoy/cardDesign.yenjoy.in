@@ -67,16 +67,16 @@ return [
         ],
         'cardsImage' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/designCards'),
+            'root' => public_path('designCards'),
             // 'url' => env('APP_URL').'/storage',
-            'url' => env('APP_URL').'/storage/designCards',
+            'url' => env('APP_URL').'/designCards',
             'visibility' => 'public',
         ],
         'cardsDocuments' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/cardsDocuments'),
-            'url' => env('APP_URL').'/storage',
-            'visibility' => 'private',
+            'root' => public_path('cardsDocuments'),
+            'url' => env('APP_URL').'/cardsDocuments',
+            'visibility' => 'public',
         ],
 
     ],
