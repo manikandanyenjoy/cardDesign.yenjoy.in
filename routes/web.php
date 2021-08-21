@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -208,6 +209,12 @@ Route::middleware(['auth'])->group(function () {
  Route::get('woven-design-card/{woven}', [\App\Http\Controllers\Admin\WovenController::class, 'show'])->name('woven.show');
  Route::delete('woven-design-card/{woven}', [\App\Http\Controllers\Admin\WovenController::class, 'destroy'])->name('woven.destroy');
 
+    Route::get('roles',[RoleController::class,'index'])->name('role.index');
+    Route::get('roles/create',[RoleController::class,'create'])->name('role.create');
+    Route::post('roles/store',[RoleController::class,'store'])->name('role.store');
+    Route::get('roles/{role}/edit',[RoleController::class,'edit'])->name('role.edit');
+    Route::put('roles/{role}',[RoleController::class,'update'])->name('role.update');
+    Route::delete('roles/{role}',[RoleController::class,'destroy'])->name('role.destroy');
 
 });
 

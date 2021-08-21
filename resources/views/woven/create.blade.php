@@ -11,6 +11,7 @@
         border: 4px solid rgba(10,10,10,0.5);
     }
     .object-fit-container {
+        overflow:hidden;
         border: 2px solid;
         padding: 10px;
     
@@ -85,7 +86,7 @@
                                                 <tr>
                                                     <th>Customer</th>
                                                     <td>
-                                                        <select class="form-control" name="customer_id">
+                                                        <select class="form-control @error('customer_id') is-invalid @enderror" name="customer_id">
                                                             <option value="">Select Customer</option>
                                                             @foreach( $data['customerMaster'] as $customer) 
                                                                 @if($editdesignCard)
@@ -95,6 +96,11 @@
                                                                 @endif
                                                             @endforeach
                                                         </select>
+                                                        @error('customer_id') 
+                                                            <div class="invalid-feedback">
+                                                                {{ $message }}
+                                                            </div>
+                                                        @enderror
                                                     </td>
                                                     <th>Label</th>
                                                     <td><input type="text" name="label" value="{{ $editdesignCard ? old('label',$editdesignCard->label) : old('label') }}" class="form-control"></td>
@@ -199,7 +205,7 @@
                                                             <th></th>
                                                             <th>
                                                                 <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="main_label" checked>
+                                                                    <input type="checkbox" class="custom-control-input" id="main_label" checked disabled>
                                                                     <label class="custom-control-label" for="main_label">Main Label</label>
                                                                 </div>
                                                             </th>
@@ -259,11 +265,11 @@
                                                                 <div class="form-group d-flex">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="radio" value="yes" name="main_label[wastage]" {{ $editdesignCard && isset($editdesignCard->main_label['wastage']) ? $editdesignCard->main_label['wastage'] == 'yes' ? 'checked' : '' : '' }}>
-                                                                        <label class="form-check-label">Yes</label>
+                                                                        <label class="form-check-label ml-4">Yes</label>
                                                                     </div>
-                                                                    <div class="form-check ml-3">
+                                                                    <div class="form-check">
                                                                         <input class="form-check-input" type="radio" value="no" name="main_label[wastage]" {{ $editdesignCard && isset($editdesignCard->main_label['wastage']) ? $editdesignCard->main_label['wastage'] == 'no' ? 'checked' : '' : 'checked' }}>
-                                                                        <label class="form-check-label">No</label>
+                                                                        <label class="form-check-label ml-4">No</label>
                                                                     </div>
                                                                 </div>                                                                
                                                             </td>
@@ -296,173 +302,256 @@
                                                         <tr>
                                                             <th>
                                                                 <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="tab_label">
+                                                                    @if($editdesignCard)
+                                                                        <input type="checkbox" name="tab_label[label]"  value="{{ (isset($editdesignCard->tab_label['label']) ? (($editdesignCard->tab_label['label'] == 'yes') ? 'yes' : 'no') : 'no') }}" {{ (isset($editdesignCard->tab_label['label']) ? (($editdesignCard->tab_label['label'] == 'yes') ? 'checked' : '') : '') }} class="custom-control-input" id="tab_label">
+                                                                    @else
+                                                                        <input type="checkbox" name="tab_label[label]"  value="{{ old('tab_label.label') == 'yes' ? 'yes' : 'no' }}" {{ old('tab_label.label') == 'yes' ? 'checked' : '' }} class="custom-control-input" id="tab_label">
+                                                                    @endif
                                                                     <label class="custom-control-label" for="tab_label">Tab Label</label>
                                                                 </div>
                                                             </th>
                                                         </tr>
-
-                                                        <tr class="tab_label_input d-none">
-                                                            <td width="200px"><input type="text" name="tab_label[design_no]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['design_no']) ? $editdesignCard->tab_label['design_no'] : '' }}" class="form-control"></td>
+                                                        @if($editdesignCard)
+                                                            <tr class="tab_label_input {{ isset($editdesignCard->tab_label['label']) ? (($editdesignCard->tab_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="tab_label_input @if(old('tab_label.label') == 'no') d-none @elseif(old('tab_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
+                                                            <td width="200px"><input type="text" name="tab_label[design_no]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['design_no']) ? old('tab_label.design_no',$editdesignCard->tab_label['design_no']) : old('tab_label.design_no') }}" class="form-control"></td>
                                                         </tr>
                                                         
-                                                        <tr class="tab_label_input d-none">
+                                                        @if($editdesignCard)
+                                                            <tr class="tab_label_input {{ isset($editdesignCard->tab_label['label']) ? (($editdesignCard->tab_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="tab_label_input @if(old('tab_label.label') == 'no') d-none @elseif(old('tab_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
                                                             <td width="200px">
-                                                         <select name="tab_label[quality]" class="form-control">
-                                                            <option value="">Select Quality</option>
-                                                            @foreach( $data['wovenQuality'] as $quality) 
-                                                                @if($editdesignCard)
-                                                                    <option value="{{$quality['id']}}" {{ old('finishing') == $quality['id'] ? 'selected' : ($quality['id'] == ($editdesignCard && isset($editdesignCard->tab_label['quality']) ? $editdesignCard->tab_label['quality'] : '')? 'selected' : '') }}>{{ucfirst($quality['quality'])}} </option>
-                                                                @else
-                                                                    <option value="{{$quality['id']}}" {{ old('finishing') == $quality['id'] ? 'selected' : '' }}>{{ucfirst($quality['quality'])}} </option>
-                                                                @endif
-                                                            @endforeach
-                                                        </select>
-                                                                </td>
+                                                                <select name="tab_label[quality]" class="form-control">
+                                                                    <option value="">Select Quality</option>
+                                                                    @foreach( $data['wovenQuality'] as $quality) 
+                                                                        @if($editdesignCard)
+                                                                            <option value="{{$quality['id']}}" {{ old('finishing') == $quality['id'] ? 'selected' : ($quality['id'] == ($editdesignCard && isset($editdesignCard->tab_label['quality']) ? $editdesignCard->tab_label['quality'] : '')? 'selected' : '') }}>{{ucfirst($quality['quality'])}} </option>
+                                                                        @else
+                                                                            <option value="{{$quality['id']}}" {{ old('finishing') == $quality['id'] ? 'selected' : '' }}>{{ucfirst($quality['quality'])}} </option>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
                                                         </tr>
                                                         
-                                                        <tr class="tab_label_input d-none">
-                                                            <td width="200px"><input type="text" name="tab_label[picks]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['picks']) ? $editdesignCard->tab_label['picks'] : '' }}" class="form-control"></td>
+                                                        @if($editdesignCard)
+                                                            <tr class="tab_label_input {{ isset($editdesignCard->tab_label['label']) ? (($editdesignCard->tab_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                          <tr class="tab_label_input @if(old('tab_label.label') == 'no') d-none @elseif(old('tab_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
+                                                            <td width="200px"><input type="text" name="tab_label[picks]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['picks']) ? old('tab_label.picks', $editdesignCard->tab_label['picks']) : old('tab_label.picks') }}" class="form-control"></td>
                                                         </tr>
 
-                                                        <tr class="tab_label_input d-none">
-                                                            <td width="200px"><input type="text" name="tab_label[total_picks]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_picks']) ? $editdesignCard->tab_label['total_picks'] : '' }}" class="form-control"></td>
+                                                        @if($editdesignCard)
+                                                            <tr class="tab_label_input {{ isset($editdesignCard->tab_label['label']) ? (($editdesignCard->tab_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="tab_label_input @if(old('tab_label.label') == 'no') d-none @elseif(old('tab_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
+                                                            <td width="200px"><input type="text" name="tab_label[total_picks]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_picks']) ? old('tab_label.total_picks', $editdesignCard->tab_label['total_picks']) : old('tab_label.total_picks') }}" class="form-control"></td>
                                                         </tr>
 
-                                                        <tr class="tab_label_input d-none">
+                                                        @if($editdesignCard)
+                                                            <tr class="tab_label_input {{ isset($editdesignCard->tab_label['label']) ? (($editdesignCard->tab_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="tab_label_input @if(old('tab_label.label') == 'no') d-none @elseif(old('tab_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
                                                             <td width="200px">
                                                                 <div class="form-group row">
                                                                     @if($editdesignCard)
-                                                                        <input type="text" name="tab_label[total_repeat][]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_repeat'][0]) ? $editdesignCard->tab_label['total_repeat'][0] : '' }}" class="form-control col">
-                                                                        <input type="text" name="tab_label[total_repeat][]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_repeat'][1]) ? $editdesignCard->tab_label['total_repeat'][1] : '' }}" class="form-control col">
-                                                                        <input type="text" name="tab_label[total_repeat][]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_repeat'][2]) ? $editdesignCard->tab_label['total_repeat'][2] : '' }}" class="form-control col">
+                                                                        <input type="text" name="tab_label[total_repeat][]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_repeat'][0]) ? old('tab_label.total_repeat.0',$editdesignCard->tab_label['total_repeat'][0]) : ''  }}" class="form-control col">
+                                                                        <input type="text" name="tab_label[total_repeat][]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_repeat'][1]) ? old('tab_label.total_repeat.1',$editdesignCard->tab_label['total_repeat'][1]) : ''  }}" class="form-control col">
+                                                                        <input type="text" name="tab_label[total_repeat][]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_repeat'][2]) ? old('tab_label.total_repeat.2',$editdesignCard->tab_label['total_repeat'][2]) : ''  }}" class="form-control col">
                                                                     @else
-                                                                        <input type="text" name="tab_label[total_repeat]" class="form-control col">
-                                                                        <input type="text" name="tab_label[total_repeat]" class="form-control col">
-                                                                        <input type="text" name="tab_label[total_repeat]" class="form-control col">
+                                                                        <input type="text" name="tab_label[total_repeat][]" value="{{ old('tab_label.total_repeat.0') }}" class="form-control col">
+                                                                        <input type="text" name="tab_label[total_repeat][]" value="{{ old('tab_label.total_repeat.1') }}" class="form-control col">
+                                                                        <input type="text" name="tab_label[total_repeat][]" value="{{ old('tab_label.total_repeat.2') }}" class="form-control col">
                                                                     @endif
                                                                 </div>
                                                             </td>
                                                         </tr>
 
-                                                        <tr class="tab_label_input d-none">
+                                                        @if($editdesignCard)
+                                                            <tr class="tab_label_input {{ isset($editdesignCard->tab_label['label']) ? (($editdesignCard->tab_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="tab_label_input @if(old('tab_label.label') == 'no') d-none @elseif(old('tab_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
                                                             <td width="200px">
                                                                 <div class="form-group d-flex">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="radio" value="yes" name="tab_label[wastage]" {{ $editdesignCard && isset($editdesignCard->tab_label['wastage']) ? $editdesignCard->tab_label['wastage'] == 'yes' ? 'checked' : '' : '' }}>
-                                                                        <label class="form-check-label">Yes</label>
+                                                                        <label class="form-check-label ml-4">Yes</label>
                                                                     </div>
-                                                                    <div class="form-check ml-3">
-                                                                        <input class="form-check-input" type="radio" value="no" name="tab_label[wastage]" {{ $editdesignCard && isset($editdesignCard->tab_label['wastage']) ? $editdesignCard->tab_label['wastage'] == 'yes' ? 'checked' : '' : 'checked' }}>
-                                                                        <label class="form-check-label">No</label>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio" value="no" name="tab_label[wastage]" {{ $editdesignCard && isset($editdesignCard->tab_label['wastage']) ? $editdesignCard->tab_label['wastage'] == 'no' ? 'checked' : '' : 'checked' }}>
+                                                                        <label class="form-check-label ml-4">No</label>
                                                                     </div>
                                                                 </div>  
                                                             </td>
                                                         </tr>
 
-                                                        <tr class="tab_label_input d-none">
+                                                        @if($editdesignCard)
+                                                            <tr class="tab_label_input {{ isset($editdesignCard->tab_label['label']) ? (($editdesignCard->tab_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="tab_label_input @if(old('tab_label.label') == 'no') d-none @elseif(old('tab_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
                                                             <td width="200px">
-                                                                <input type="text" name="tab_label[width]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['width']) ? $editdesignCard->tab_label['width'] : '' }}" class="form-control">
+                                                                <input type="text" name="tab_label[width]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['width']) ? old('tab_label.width', $editdesignCard->tab_label['width']) :  old('tab_label.width') }}" class="form-control">
                                                             </td>
                                                         </tr>
 
-                                                        <tr class="tab_label_input d-none">
-                                                            <td width="200px"><input type="text" name="tab_label[length]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['length']) ? $editdesignCard->tab_label['length'] : '' }}" class="form-control"></td>
+                                                        @if($editdesignCard)
+                                                            <tr class="tab_label_input {{ isset($editdesignCard->tab_label['label']) ? (($editdesignCard->tab_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="tab_label_input @if(old('tab_label.label') == 'no') d-none @elseif(old('tab_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
+                                                            <td width="200px"><input type="text" name="tab_label[length]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['length']) ? old('tab_label.length', $editdesignCard->tab_label['length']) : old('tab_label.length') }}" class="form-control"></td>
                                                         </tr>
 
-                                                        <tr class="tab_label_input d-none">
-                                                            <td width="200px"><input type="text" name="tab_label[sq_mm]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['sq_mm']) ? $editdesignCard->tab_label['sq_mm'] : '' }}" class="form-control"></td>
+                                                        @if($editdesignCard)
+                                                            <tr class="tab_label_input {{ isset($editdesignCard->tab_label['label']) ? (($editdesignCard->tab_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="tab_label_input @if(old('tab_label.label') == 'no') d-none @elseif(old('tab_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
+                                                            <td width="200px"><input type="text" name="tab_label[sq_mm]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['sq_mm']) ? old('tab_label.sq_mm', $editdesignCard->tab_label['sq_mm']) : old('tab_label.sq_mm') }}" class="form-control"></td>
                                                         </tr>
 
-                                                        <tr class="tab_label_input d-none">
-                                                            <td width="200px"><input type="text" name="tab_label[sq_inch]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['sq_inch']) ? $editdesignCard->tab_label['sq_inch'] : '' }}" class="form-control"></td>
+                                                        @if($editdesignCard)
+                                                            <tr class="tab_label_input {{ isset($editdesignCard->tab_label['label']) ? (($editdesignCard->tab_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="tab_label_input @if(old('tab_label.label') == 'no') d-none @elseif(old('tab_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
+                                                            <td width="200px"><input type="text" name="tab_label[sq_inch]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['sq_inch']) ? old('tab_label.sq_inch', $editdesignCard->tab_label['sq_inch']) : old('tab_label.sq_inch') }}" class="form-control"></td>
                                                         </tr>
                                                     </table>
                                                 </div>
+
                                                 <div class="col">
                                                     <table class="table table-bordered">
                                                         <tr>
                                                             <th>
                                                                 <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="size_label">
+                                                                    <input type="checkbox" name="size_labels" {{ old('size_labels') == 'on' ? 'checked' : ''}} class="custom-control-input" id="size_label">
                                                                     <label class="custom-control-label" for="size_label">Size Label</label>
                                                                 </div>
                                                             </th>
                                                         </tr>
 
-                                                        <tr class="size_label_input d-none">
-                                                            <td width="200px"><input type="text" name="size_label[design_no]" value="{{ $editdesignCard && isset($editdesignCard->size_label['design_no']) ? $editdesignCard->size_label['design_no'] : '' }}" class="form-control"></td>
+                                                        @if($editdesignCard)
+                                                            <tr class="size_label_input {{ isset($editdesignCard->size_label['label']) ? (($editdesignCard->size_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="size_label_input @if(old('size_label.label') == 'no') d-none @elseif(old('size_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
+                                                            <td width="200px"><input type="text" name="size_label[design_no]" value="{{ $editdesignCard && isset($editdesignCard->size_label['design_no']) ? old('size_label.design_no',$editdesignCard->size_label['design_no']) : old('size_label.design_no') }}" class="form-control"></td>
                                                         </tr>
                                                         
-                                                        <tr class="size_label_input d-none">
+                                                        @if($editdesignCard)
+                                                            <tr class="size_label_input {{ isset($editdesignCard->size_label['label']) ? (($editdesignCard->size_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="size_label_input @if(old('size_label.label') == 'no') d-none @elseif(old('size_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
                                                             <td width="200px">
-                                                                
-                                                         <select name="size_label[quality]" class="form-control">
-                                                            <option value="">Select Quality</option>
-                                                            @foreach( $data['wovenQuality'] as $quality) 
-                                                                @if($editdesignCard)
-                                                                    <option value="{{$quality['id']}}" {{ old('finishing') == $quality['id'] ? 'selected' : ($quality['id'] == ($editdesignCard && isset($editdesignCard->size_label['quality']) ? $editdesignCard->size_label['quality'] : '')? 'selected' : '') }}>{{ucfirst($quality['quality'])}} </option>
-                                                                @else
-                                                                    <option value="{{$quality['id']}}" {{ old('finishing') == $quality['id'] ? 'selected' : '' }}>{{ucfirst($quality['quality'])}} </option>
-                                                                @endif
-                                                            @endforeach
-                                                        </select>
-                                                                </td>
+                                                                <select name="size_label[quality]" class="form-control">
+                                                                    <option value="">Select Quality</option>
+                                                                    @foreach( $data['wovenQuality'] as $quality) 
+                                                                        @if($editdesignCard)
+                                                                            <option value="{{$quality['id']}}" {{ old('finishing') == $quality['id'] ? 'selected' : ($quality['id'] == ($editdesignCard && isset($editdesignCard->size_label['quality']) ? $editdesignCard->size_label['quality'] : '')? 'selected' : '') }}>{{ucfirst($quality['quality'])}} </option>
+                                                                        @else
+                                                                            <option value="{{$quality['id']}}" {{ old('finishing') == $quality['id'] ? 'selected' : '' }}>{{ucfirst($quality['quality'])}} </option>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
                                                         </tr>
                                                         
-                                                        <tr class="size_label_input d-none">
-                                                            <td width="200px"><input type="text" name="size_label[picks]" value="{{ $editdesignCard && isset($editdesignCard->size_label['picks']) ? $editdesignCard->size_label['picks'] : '' }}" class="form-control"></td>
+                                                        @if($editdesignCard)
+                                                            <tr class="size_label_input {{ isset($editdesignCard->size_label['label']) ? (($editdesignCard->size_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="size_label_input @if(old('size_label.label') == 'no') d-none @elseif(old('size_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
+                                                            <td width="200px"><input type="text" name="size_label[picks]" value="{{ $editdesignCard && isset($editdesignCard->size_label['picks']) ? old('size_label.picks',$editdesignCard->size_label['picks']) : old('size_label.picks') }}" class="form-control"></td>
                                                         </tr>
 
-                                                        <tr class="size_label_input d-none">
-                                                            <td width="200px"><input type="text" name="size_label[total_picks]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_picks']) ? $editdesignCard->size_label['total_picks'] : '' }}" class="form-control"></td>
+                                                        @if($editdesignCard)
+                                                            <tr class="size_label_input {{ isset($editdesignCard->size_label['label']) ? (($editdesignCard->size_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="size_label_input @if(old('size_label.label') == 'no') d-none @elseif(old('size_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
+                                                            <td width="200px"><input type="text" name="size_label[total_picks]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_picks']) ? old('size_label.total_picks',$editdesignCard->size_label['total_picks']) : old('size_label.total_picks') }}" class="form-control"></td>
                                                         </tr>
 
-                                                        <tr class="size_label_input d-none">
+                                                        @if($editdesignCard)
+                                                            <tr class="size_label_input {{ isset($editdesignCard->size_label['label']) ? (($editdesignCard->size_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="size_label_input @if(old('size_label.label') == 'no') d-none @elseif(old('size_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
                                                             <td width="200px">
                                                                 <div class="form-group row">
                                                                     @if($editdesignCard)
-                                                                        <input type="text" name="size_label[total_repeat][]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_repeat'][0]) ? $editdesignCard->size_label['total_repeat'][0] : '' }}" class="form-control col">
-                                                                        <input type="text" name="size_label[total_repeat][]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_repeat'][1]) ? $editdesignCard->size_label['total_repeat'][1] : '' }}" class="form-control col">
-                                                                        <input type="text" name="size_label[total_repeat][]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_repeat'][2]) ? $editdesignCard->size_label['total_repeat'][2] : '' }}" class="form-control col">
+                                                                        <input type="text" name="size_label[total_repeat][]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_repeat'][0]) ? old('size_label.total_repeat.0',$editdesignCard->size_label['total_repeat'][0]) : old('size_label.total_repeat.0') }}" class="form-control col">
+                                                                        <input type="text" name="size_label[total_repeat][]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_repeat'][1]) ? old('size_label.total_repeat.1',$editdesignCard->size_label['total_repeat'][1]) : old('size_label.total_repeat.1') }}" class="form-control col">
+                                                                        <input type="text" name="size_label[total_repeat][]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_repeat'][2]) ? old('size_label.total_repeat.2',$editdesignCard->size_label['total_repeat'][2]) : old('size_label.total_repeat.2') }}" class="form-control col">
                                                                     @else
-                                                                        <input type="text" name="size_label[total_repeat]" class="form-control col">
-                                                                        <input type="text" name="size_label[total_repeat]" class="form-control col">
-                                                                        <input type="text" name="size_label[total_repeat]" class="form-control col">
+                                                                        <input type="text" name="size_label[total_repeat][]" value="{{ old('size_label.total_repeat.0') }}" class="form-control col">
+                                                                        <input type="text" name="size_label[total_repeat][]" value="{{ old('size_label.total_repeat.1') }}" class="form-control col">
+                                                                        <input type="text" name="size_label[total_repeat][]" value="{{ old('size_label.total_repeat.2') }}" class="form-control col">
                                                                     @endif
                                                                 </div>
                                                             </td>
                                                         </tr>
 
-                                                        <tr class="size_label_input d-none">
+                                                        @if($editdesignCard)
+                                                            <tr class="size_label_input {{ isset($editdesignCard->size_label['label']) ? (($editdesignCard->size_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="size_label_input @if(old('size_label.label') == 'no') d-none @elseif(old('size_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
                                                             <td width="200px">
                                                                 <div class="form-group d-flex">
                                                                     <div class="form-check">
-                                                                        <input class="form-check-input" type="radio" value="yes" name="size_label[wastage]" {{ $editdesignCard && isset($editdesignCard->size_label['wastage']) ? $editdesignCard->size_label['wastage'] == 'no' ? 'checked' : '' : '' }}>
-                                                                        <label class="form-check-label">Yes</label>
+                                                                        <input class="form-check-input" type="radio" value="yes" name="size_label[wastage]" {{ $editdesignCard && isset($editdesignCard->size_label['wastage']) ? $editdesignCard->size_label['wastage'] == 'yes' ? 'checked' : '' : '' }}>
+                                                                        <label class="form-check-label ml-4">Yes</label>
                                                                     </div>
-                                                                    <div class="form-check ml-3">
+                                                                    <div class="form-check">
                                                                         <input class="form-check-input" type="radio" value="no" name="size_label[wastage]" {{ $editdesignCard && isset($editdesignCard->size_label['wastage']) ? $editdesignCard->size_label['wastage'] == 'no' ? 'checked' : '' : 'checked' }}>
-                                                                        <label class="form-check-label">No</label>
+                                                                        <label class="form-check-label ml-4">No</label>
                                                                     </div>
                                                                 </div>                                                                
                                                             </td>
                                                         </tr>
 
-                                                        <tr class="size_label_input d-none">
-                                                            <td width="200px"><input type="text" name="size_label[width]" value="{{ $editdesignCard && isset($editdesignCard->size_label['width']) ? $editdesignCard->size_label['width'] : '' }}" class="form-control"></td>
+                                                        @if($editdesignCard)
+                                                            <tr class="size_label_input {{ isset($editdesignCard->size_label['label']) ? (($editdesignCard->size_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="size_label_input @if(old('size_label.label') == 'no') d-none @elseif(old('size_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
+                                                            <td width="200px"><input type="text" name="size_label[width]" value="{{ $editdesignCard && isset($editdesignCard->size_label['width']) ? old('size_label.width', $editdesignCard->size_label['width']) : old('size_label.width') }}" class="form-control"></td>
                                                         </tr>
 
-                                                        <tr class="size_label_input d-none">
-                                                            <td width="200px"><input type="text" name="size_label[length]" value="{{ $editdesignCard && isset($editdesignCard->size_label['length']) ? $editdesignCard->size_label['length'] : '' }}" class="form-control"></td>
+                                                        @if($editdesignCard)
+                                                            <tr class="size_label_input {{ isset($editdesignCard->size_label['label']) ? (($editdesignCard->size_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="size_label_input @if(old('size_label.label') == 'no') d-none @elseif(old('size_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
+                                                            <td width="200px"><input type="text" name="size_label[length]" value="{{ $editdesignCard && isset($editdesignCard->size_label['length']) ? old('size_label.length', $editdesignCard->size_label['length']) : old('size_label.length') }}" class="form-control"></td>
                                                         </tr>
 
-                                                        <tr class="size_label_input d-none">
-                                                            <td width="200px"><input type="text" name="size_label[sq_mm]" value="{{ $editdesignCard && isset($editdesignCard->size_label['sq_mm']) ? $editdesignCard->size_label['sq_mm'] : '' }}" class="form-control"></td>
+                                                        @if($editdesignCard)
+                                                            <tr class="size_label_input {{ isset($editdesignCard->size_label['label']) ? (($editdesignCard->size_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="size_label_input @if(old('size_label.label') == 'no') d-none @elseif(old('size_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
+                                                            <td width="200px"><input type="text" name="size_label[sq_mm]" value="{{ $editdesignCard && isset($editdesignCard->size_label['sq_mm']) ? old('size_label.sq_mm', $editdesignCard->size_label['sq_mm']) : old('size_label.sq_mm') }}" class="form-control"></td>
                                                         </tr>
 
-                                                        <tr class="size_label_input d-none">
-                                                            <td width="200px"><input type="text" name="size_label[sq_inch]" value="{{ $editdesignCard && isset($editdesignCard->size_label['sq_inch']) ? $editdesignCard->size_label['sq_inch'] : '' }}" class="form-control"></td>
+                                                        @if($editdesignCard)
+                                                            <tr class="size_label_input {{ isset($editdesignCard->size_label['label']) ? (($editdesignCard->size_label['label'] == 'no') ? 'd-none' : '') : 'd-none' }}">
+                                                        @else
+                                                            <tr class="size_label_input @if(old('size_label.label') == 'no') d-none @elseif(old('size_label.label') == 'yes')) @else d-none @endif">
+                                                        @endif
+                                                            <td width="200px"><input type="text" name="size_label[sq_inch]" value="{{ $editdesignCard && isset($editdesignCard->size_label['sq_inch']) ? old('size_label.sq_inch', $editdesignCard->size_label['sq_inch']) : old('size_label.sq_inch') }}" class="form-control"></td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -600,14 +689,13 @@
                                                         <img class="object-fit-cover" id="result" />
                                                     @endif
                                                 @else
-                                                    <img class="object-fit-cover" id="result" />
+                                                    <img class="object-fit-cover" id="result" />                                                  
                                                 @endif
                                             </div>
                                             <div class="mt-4">
                                                 <label for="file">Front Image</label>
-                                                <input type="hidden" id="front_image_height">
-                                                <input type="hidden" id="front_image_width">
-                                                <input type="file" id="file" accept="image/*" name="front_crop_image">
+                                                <input type="hidden" name="front_image" id="front_crop_image">
+                                                <input type="file" id="file" name="front_crop_image" accept="image/*">
                                             </div>
                                         </div> 
                                         <hr>
@@ -625,6 +713,7 @@
                                             </div>
                                             <div class="mt-4">
                                                 <label for="file">Back Image</label>
+                                                <input type="hidden" name="back_image" id="back_crop_image">
                                                 <input type="file" id="file1" accept="image/*" name="back_crop_image">
                                             </div>
                                         </div> 
@@ -643,6 +732,7 @@
                                             </div>
                                             <div class="mt-4">
                                                 <label for="file">All View Image</label>
+                                                <input type="hidden" name="all_view_image" id="all_view_crop_image">
                                                 <input type="file" id="file2" accept="image/*" name="all_view_crop_image">                                               
                                             </div>
                                         </div> 
@@ -650,7 +740,7 @@
                                         <div class="form-group">
                                             <div class="mt-4">
                                                 <label for="document_name">Design File</label>
-                                                <input type="file" id="document_name" multiple name="design_file[]">
+                                                <input type="file" id="document_name" multiple name="design_files[]">
                                             </div>
                                         </div> 
                                     </div>
@@ -754,6 +844,8 @@
 
 
         $("#tab_label").on("change",function(){
+            var tablabel_val = $(this).val() == 'no' ? 'yes' : 'no';
+            $("#tab_label").val(tablabel_val);
             $(".tab_label_input").toggleClass("d-none");
         });
 

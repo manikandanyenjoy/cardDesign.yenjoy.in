@@ -5,10 +5,8 @@ $(document).ready(function () {
 
 		if (!pixelarity.open(img, false, function (res, faces) {
 			$("#result").attr("src", res);
+			$("#front_crop_image").val(res);
 			$(".face").remove();
-
-			$("#front_image_height").val(Math.floor($('#result').height()));
-			$("#front_image_width").val(Math.floor($('#result').width()));
 
 			for (var i = 0; i < faces.length; i++) {
 				console.log("width" + faces[i].height, faces[i].width);
@@ -28,6 +26,7 @@ $(document).ready(function () {
 			console.log(faces);
 
 			$("#result1").attr("src", res);
+			$("#back_crop_image").val(res);
 			$(".face").remove();
 
 			for (var i = 0; i < faces.length; i++) {
@@ -47,6 +46,7 @@ $(document).ready(function () {
 			console.log(faces);
 
 			$("#result2").attr("src", res);
+			$("#all_view_crop_image").val(res);
 			$(".face").remove();
 
 			for (var i = 0; i < faces.length; i++) {

@@ -12,6 +12,7 @@
         padding: 0;
     }
        .object-fit-container {
+           overflow:hidden;
         border: 2px solid;
         padding: 10px;
     
@@ -65,20 +66,25 @@
 
                                             <tr>
                                                 <th>Designer</th>
-                                                <td>{{ ucwords($viewDesignCard->designerDetail->name ) }}</td>
+                                                <td>{{ $viewDesignCard->designerDetail? ucwords($viewDesignCard->designerDetail->name ) : '-' }}</td>
                                                 <th>Sales Rep</th>
                                                 <td>{{ ucwords($viewDesignCard->salesRepDetail->name ) }}</td>
                                                 <th>Weaver</th>
                                                 <td width="150px">
-                                                    {{ isset($viewDesignCard->weaver[0]) ? $viewDesignCard->weaver[0] : '' }},{{ isset($viewDesignCard->weaver[1]) ? $viewDesignCard->weaver[1] : '' }},{{ isset($viewDesignCard->weaver[2]) ? $viewDesignCard->weaver[2] : '' }}
+                                                    @if(isset($viewDesignCard->weaver[0]) || isset($viewDesignCard->weaver[1]))
+                                                        {{$weavers[0]['loom_name'].', '.$weavers[1]['loom_name']}}
+                                                    @else
+                                                    -
+                                                    @endif
+                                                   
                                                 </td>
                                             </tr>
 
                                             <tr>
                                                 <th>Warp</th>
-                                                <td>{{ ucwords($viewDesignCard->warpDetail->name ) }}</td>
+                                                <td>{{ $viewDesignCard->warpDetail ? ucwords($viewDesignCard->warpDetail->name) : '-' }}</td>
                                                 <th>Finishing</th>
-                                                <td>{{ ucwords($viewDesignCard->finishing ) }}</td>
+                                                <td>{{ $viewDesignCard->finishingDetail ? ucwords($viewDesignCard->finishingDetail->machine ) : '-' }}</td>
                                                 <th>Notes</th>
                                                 <td>{{ $viewDesignCard->description }}</td>
                                             </tr>
@@ -94,27 +100,40 @@
 
                                                     <tr class="main_label_input">
                                                         <th width="200px">Design No</th>
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['design_no']) ? $viewDesignCard->main_label['design_no'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['design_no']) ? $viewDesignCard->main_label['design_no'] : '-' }}</td>
                                                     </tr>
                                                     
                                                     <tr class="main_label_input">
                                                         <th width="200px">Quality</th>
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['quality']) ? $viewDesignCard->main_label['quality'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['quality']) ? $viewDesignCard->main_label['quality'] : '-' }}</td>
                                                     </tr>
                                                     
                                                     <tr class="main_label_input">
                                                         <th width="200px">Picks/Cm</th>
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['picks']) ? $viewDesignCard->main_label['picks'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['picks']) ? $viewDesignCard->main_label['picks'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
                                                         <th width="200px">Total Picks</th>
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['total_picks']) ? $viewDesignCard->main_label['total_picks'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['total_picks']) ? $viewDesignCard->main_label['total_picks'] : '-' }}</td>
                                                     </tr>
                                                     
                                                     <tr class="main_label_input">
                                                         <th width="200px">Total Repeat</th>
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['total_repeat'][0]) ? $viewDesignCard->main_label['total_repeat'][0] : '' }},{{ $viewDesignCard && isset($viewDesignCard->main_label['total_repeat'][1]) ? $viewDesignCard->main_label['total_repeat'][1] : '' }},{{ $viewDesignCard && isset($viewDesignCard->main_label['total_repeat'][1]) ? $viewDesignCard->main_label['total_repeat'][1] : '' }}</td>
+                                                        <td width="200px">
+                                                            @if(isset($viewDesignCard->main_label['total_repeat']))
+                                                                @foreach($viewDesignCard->main_label['total_repeat'] as $total_repeat)
+                                                                   @if(!empty($total_repeat) || $total_repeat != null || $total_repeat != "")
+                                                                        {{ $loop->first ? '' : ', ' }}
+                                                                        {{ $total_repeat }}
+                                                                    @else
+                                                                        
+                                                                    @endif
+                                                                @endforeach
+                                                            @else
+                                                            -
+                                                            @endif
+                                                        </td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
@@ -124,22 +143,22 @@
 
                                                     <tr class="main_label_input">
                                                         <th width="200px">Width</th>
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['width']) ? $viewDesignCard->main_label['width'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['width']) ? $viewDesignCard->main_label['width'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
                                                         <th width="200px">Length</th>
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['length']) ? $viewDesignCard->main_label['length'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['length']) ? $viewDesignCard->main_label['length'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
                                                         <th width="200px">Sq mm</th>
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['sq_mm']) ? $viewDesignCard->main_label['sq_mm'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['sq_mm']) ? $viewDesignCard->main_label['sq_mm'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
                                                         <th width="200px">Sq inch</th>
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['sq_inch']) ? $viewDesignCard->main_label['sq_inch'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['sq_inch']) ? $viewDesignCard->main_label['sq_inch'] : '-' }}</td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -151,43 +170,43 @@
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['design_no']) ? $viewDesignCard->tab_label['design_no'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['design_no']) ? $viewDesignCard->tab_label['design_no'] : '-' }}</td>
                                                     </tr>
                                                     
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['quality']) ? $viewDesignCard->tab_label['quality'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['quality']) ? $viewDesignCard->tab_label['quality'] : '-' }}</td>
                                                     </tr>
                                                     
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['picks']) ? $viewDesignCard->tab_label['picks'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['picks']) ? $viewDesignCard->tab_label['picks'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['total_picks']) ? $viewDesignCard->tab_label['total_picks'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['total_picks']) ? $viewDesignCard->tab_label['total_picks'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['total_repeat'][0]) ? $viewDesignCard->tab_label['total_repeat'][0] : '' }},{{ $viewDesignCard && isset($viewDesignCard->tab_label['total_repeat'][1]) ? $viewDesignCard->tab_label['total_repeat'][1] : '' }},{{ $viewDesignCard && isset($viewDesignCard->tab_label['total_repeat'][1]) ? $viewDesignCard->tab_label['total_repeat'][1] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['total_repeat'][0]) ? $viewDesignCard->tab_label['total_repeat'][0].',' : '' }} {{ $viewDesignCard && isset($viewDesignCard->tab_label['total_repeat'][1]) ? $viewDesignCard->tab_label['total_repeat'][1].',' : '' }} {{ $viewDesignCard && isset($viewDesignCard->tab_label['total_repeat'][1]) ? $viewDesignCard->tab_label['total_repeat'][1] : '' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['wastage']) ? $viewDesignCard->tab_label['wastage'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['wastage']) ? $viewDesignCard->tab_label['wastage'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['width']) ? $viewDesignCard->tab_label['width'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['width']) ? $viewDesignCard->tab_label['width'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['length']) ? $viewDesignCard->tab_label['length'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['length']) ? $viewDesignCard->tab_label['length'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['sq_mm']) ? $viewDesignCard->tab_label['sq_mm'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['sq_mm']) ? $viewDesignCard->tab_label['sq_mm'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['sq_inch']) ? $viewDesignCard->tab_label['sq_inch'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['sq_inch']) ? $viewDesignCard->tab_label['sq_inch'] : '-' }}</td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -198,43 +217,43 @@
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['design_no']) ? $viewDesignCard->size_label['design_no'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['design_no']) ? $viewDesignCard->size_label['design_no'] : '-' }}</td>
                                                     </tr>
                                                     
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['quality']) ? $viewDesignCard->size_label['quality'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['quality']) ? $viewDesignCard->size_label['quality'] : '-' }}</td>
                                                     </tr>
                                                     
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['picks']) ? $viewDesignCard->size_label['picks'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['picks']) ? $viewDesignCard->size_label['picks'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['total_picks']) ? $viewDesignCard->size_label['total_picks'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['total_picks']) ? $viewDesignCard->size_label['total_picks'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['total_repeat'][0]) ? $viewDesignCard->size_label['total_repeat'][0] : '' }},{{ $viewDesignCard && isset($viewDesignCard->size_label['total_repeat'][1]) ? $viewDesignCard->size_label['total_repeat'][1] : '' }},{{ $viewDesignCard && isset($viewDesignCard->size_label['total_repeat'][1]) ? $viewDesignCard->size_label['total_repeat'][1] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['total_repeat'][0]) ? $viewDesignCard->size_label['total_repeat'][0].',' : '' }} {{ $viewDesignCard && isset($viewDesignCard->size_label['total_repeat'][1]) ? $viewDesignCard->size_label['total_repeat'][1].',' : '' }} {{ $viewDesignCard && isset($viewDesignCard->size_label['total_repeat'][1]) ? $viewDesignCard->size_label['total_repeat'][1] : '' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['wastage']) ? $viewDesignCard->size_label['wastage'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['wastage']) ? $viewDesignCard->size_label['wastage'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['width']) ? $viewDesignCard->size_label['width'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['width']) ? $viewDesignCard->size_label['width'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['length']) ? $viewDesignCard->size_label['length'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['length']) ? $viewDesignCard->size_label['length'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['sq_mm']) ? $viewDesignCard->size_label['sq_mm'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['sq_mm']) ? $viewDesignCard->size_label['sq_mm'] : '-' }}</td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['sq_inch']) ? $viewDesignCard->size_label['sq_inch'] : '' }}</td>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['sq_inch']) ? $viewDesignCard->size_label['sq_inch'] : '-' }}</td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -257,38 +276,38 @@
                                             <tbody>
                                                 <tr>
                                                     <th>Main</th>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['basic']) ? $viewDesignCard->add_on_main_cost['basic'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['cut_fold']) ? $viewDesignCard->add_on_main_cost['cut_fold'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['diecut']) ? $viewDesignCard->add_on_main_cost['diecut'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['nonwoven']) ? $viewDesignCard->add_on_main_cost['nonwoven'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['iron_on_back']) ? $viewDesignCard->add_on_main_cost['iron_on_back'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['extra']) ? $viewDesignCard->add_on_main_cost['extra'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['total']) ? $viewDesignCard->add_on_main_cost['total'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['offered']) ? $viewDesignCard->add_on_main_cost['offered'] : '-' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['basic']) ? $viewDesignCard->add_on_main_cost['basic'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['cut_fold']) ? $viewDesignCard->add_on_main_cost['cut_fold'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['diecut']) ? $viewDesignCard->add_on_main_cost['diecut'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['nonwoven']) ? $viewDesignCard->add_on_main_cost['nonwoven'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['iron_on_back']) ? $viewDesignCard->add_on_main_cost['iron_on_back'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['extra']) ? $viewDesignCard->add_on_main_cost['extra'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['total']) ? $viewDesignCard->add_on_main_cost['total'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_main_cost['offered']) ? $viewDesignCard->add_on_main_cost['offered'] : '0' }}</td>
                                                 </tr>
 
                                                 <tr>
                                                     <th>Tab</th>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['basic']) ? $viewDesignCard->add_on_tab_cost['basic'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['cut_fold']) ? $viewDesignCard->add_on_tab_cost['cut_fold'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['diecut']) ? $viewDesignCard->add_on_tab_cost['diecut'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['nonwoven']) ? $viewDesignCard->add_on_tab_cost['nonwoven'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['iron_on_back']) ? $viewDesignCard->add_on_tab_cost['iron_on_back'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['extra']) ? $viewDesignCard->add_on_tab_cost['extra'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['total']) ? $viewDesignCard->add_on_tab_cost['total'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['offered']) ? $viewDesignCard->add_on_tab_cost['offered'] : '-' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['basic']) ? $viewDesignCard->add_on_tab_cost['basic'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['cut_fold']) ? $viewDesignCard->add_on_tab_cost['cut_fold'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['diecut']) ? $viewDesignCard->add_on_tab_cost['diecut'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['nonwoven']) ? $viewDesignCard->add_on_tab_cost['nonwoven'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['iron_on_back']) ? $viewDesignCard->add_on_tab_cost['iron_on_back'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['extra']) ? $viewDesignCard->add_on_tab_cost['extra'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['total']) ? $viewDesignCard->add_on_tab_cost['total'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_tab_cost['offered']) ? $viewDesignCard->add_on_tab_cost['offered'] : '0' }}</td>
                                                 </tr>
 
                                                 <tr>
                                                     <th>Size</th>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['basic']) ? $viewDesignCard->add_on_size_cost['basic'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['cut_fold']) ? $viewDesignCard->add_on_size_cost['cut_fold'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['diecut']) ? $viewDesignCard->add_on_size_cost['diecut'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['nonwoven']) ? $viewDesignCard->add_on_size_cost['nonwoven'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['iron_on_back']) ? $viewDesignCard->add_on_size_cost['iron_on_back'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['extra']) ? $viewDesignCard->add_on_size_cost['extra'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['total']) ? $viewDesignCard->add_on_size_cost['total'] : '-' }}</td>
-                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['offered']) ? $viewDesignCard->add_on_size_cost['offered'] : '-' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['basic']) ? $viewDesignCard->add_on_size_cost['basic'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['cut_fold']) ? $viewDesignCard->add_on_size_cost['cut_fold'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['diecut']) ? $viewDesignCard->add_on_size_cost['diecut'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['nonwoven']) ? $viewDesignCard->add_on_size_cost['nonwoven'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['iron_on_back']) ? $viewDesignCard->add_on_size_cost['iron_on_back'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['extra']) ? $viewDesignCard->add_on_size_cost['extra'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['total']) ? $viewDesignCard->add_on_size_cost['total'] : '0' }}</td>
+                                                    <td>{{ $viewDesignCard && isset($viewDesignCard->add_on_size_cost['offered']) ? $viewDesignCard->add_on_size_cost['offered'] : '0' }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -314,7 +333,7 @@
                                                         <td>{{ $needle['needle_no'] ?? '-' }}</td>
                                                         <td>{{ $needle['pantone'] ?? '-' }}</td>
                                                         <td style="background:{{ $needle['color'] ?? '' }};"></td>
-                                                        <td style="background:{{ $needle['color_shade'] ?? '' }};"></td>
+                                                        <td>{{ $needle['color_shade'] ?? '-' }}</td>
                                                         <td>{{ $needle['denier'] ?? '-' }}</td>
                                                         <td>{{ $needle['a'] ?? '-' }}</td>
                                                         <td>{{ $needle['b'] ?? '-' }}</td>
@@ -358,7 +377,8 @@
                                             <label for="document_name">Design File</label>
                                             @if($viewDesignCard->design_file && count(json_decode($viewDesignCard->design_file)) > 0)
                                                 @foreach(json_decode($viewDesignCard->design_file) as $designFile)
-                                                    <p>{{ $designFile."," }}</p>
+                                                    {{ $loop->first ? '' : ', ' }}
+                                                    {{ $designFile }}
                                                 @endforeach
                                             @endif
                                         </div>

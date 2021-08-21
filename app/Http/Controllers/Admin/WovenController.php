@@ -13,6 +13,7 @@ use App\Models\WarpMaster;
 use App\Models\FinishingMachineMaster;
 use App\Models\WovenQuality;
 use App\Http\Requests\Admin\WovenRequest;
+use Illuminate\Support\Facades\Storage;
 
 class WovenController extends Controller
 {
@@ -38,8 +39,31 @@ class WovenController extends Controller
         return view("woven.create", compact("data","editdesignCard"));
     }
 
-//    WovenRequest
-    public function store(Request $request)
+    public function decodeBase64Image($request, $id, $type)
+    {
+        // $image = $request->input('front_image'); // image base64 encoded
+        // preg_match("/data:image\/(.*?);/",$image,$image_extension); // extract the image extension
+        //         $image = preg_replace('/data:image\/(.*?);base64,/','',$image); // remove the type part
+        //         $image = str_replace(' ', '+', $image);
+        //         $imageName = '1/image_' . time() . '.' . $image_extension[1]; //generating unique file name;
+        //         // dd($imageName);
+        //         Storage::disk('cardsImage')->put($imageName,base64_decode($image));
+        $image = $request; // image base64 encoded
+
+        preg_match("/data:image\/(.*?);/",$image,$image_extension); // extract the image extension
+
+        $image = preg_replace('/data:image\/(.*?);base64,/','',$image); // remove the type part
+
+        $image = str_replace(' ', '+', $image);
+
+        $filePath = "{$id}/{$type}_".time(). '.' . $image_extension[1]; //generating unique file name;
+
+        Storage::disk('cardsImage')->put($filePath, base64_decode($image));
+
+        return $filePath;
+    }
+
+    public function store(WovenRequest $request)
     {
         try {
           
@@ -47,136 +71,75 @@ class WovenController extends Controller
 
             $uploadFiles        = [];
 
-            $validatedFields = $this->addOrEditRequest($request);
-
+            $validatedFields = $this->addOrEditRequest($request);         
 
             $result = DesignCard::create($validatedFields);
 
             if ($request->hasFile("front_crop_image")) {
-                $frontImage = $request->file("front_crop_image");
+                $frontFileName = $this->decodeBase64Image($request->front_image, $result->id, 'front_image');
 
-                $frontFilename   = md5($frontImage->getClientOriginalName() . time()) ."." .$frontImage->getClientOriginalExtension();
-
-                $uploadFiles["front_image"] = $frontFilename;
-
-                $filePath = $frontImage->store("{$result->id}", [
-                    "disk" => "cardsImage",
-                ]);
+                $uploadFiles["front_image"] = $frontFileName;
             }
 
-            if ($request->hasFile("back_crop_image")) {
-                $backImage = $request->file("back_crop_image");
-
-                $backFilename   = md5($backImage->getClientOriginalName() . time()) ."." .$backImage->getClientOriginalExtension();
-
-                $uploadFiles["back_image"] = $backFilename;
-                
-                $filePath = $backImage->store("{$result->id}", [
-                    "disk" => "cardsImage",
-                ]);
-            }
-
-            if ($request->hasFile("all_view_crop_image")) {
-                $viewAllImage = $request->file("all_view_crop_image");
-
-                $viewAllFilename   = md5($viewAllImage->getClientOriginalName() . time()) ."." .$viewAllImage->getClientOriginalExtension();
-
-                $uploadFiles["all_view_image"] = $viewAllFilename;
-                
-                $filePath = $viewAllImage->store("{$result->id}", [
-                    "disk" => "cardsImage",
-                ]);
-            }
-
-           
-
-            // if ($request->hasFile("design_file")) {
-            //     $designFile = $request->file("design_file");
-
-            //     $viewAllFilename   = md5($designFile->getClientOriginalName() . time()) ."." .$designFile->getClientOriginalExtension();
-
-            //     $uploadFiles["all_view_image"] = $viewAllFilename;
-                
-            //     $filePath = $designFile->store("{$result->id}", [
-            //         "disk" => "cardsDocuments",
-            //     ]);
-            // }
-
-            if($request->file("design_file"))
-            {
-                $designFiles                = request()->file('design_file');
-
-                foreach($designFiles as $key => $designFile)
-                {
-                    $designfileNames   = time().$key.'.'.$designFile->getClientOriginalExtension();
-                    $mulitpleDesignFile[] = $designfileNames;
-                 
-                    $filePaths = $designFile->store("{$result->id}", [
-                        "disk" => "cardsDocuments",
-                    ]);
-                }
-
-                $uploadFiles['design_file']   = json_encode($mulitpleDesignFile);
-            }
-
-            if ($request->hasFile("front_crop_image") || $request->hasFile("back_crop_image") || $request->hasFile("all_view_crop_image")) {
-                $result->update($uploadFiles);
-            }
-
-            
-            // $validatedFields = $request->validated();
-            // unset($validatedFields["image"]);
-
-            // $result = DesignCard::create([
-            //     'date' => $request->date,
-            //     'customer_id' => $request->customer,
-            //     'lable' => $request->label,
-            //     'designer_id' => $request->designer,
-            //     'design_number' => $request->design_no,
-            //     'salesrep_id' => $request->sales_rep,
-            //     'weaver_id' => $request->warp,
-            //     'warps_id' => $request->warp,
-            //     'picks' => $request->pick,
-            //     'total_picks' => $request->total_pick,
-            //     'loom_id' => json_encode($request->looms),
-            //     'total_repet' => json_encode($request->total_repeat),
-            //     'wastage' => $request->wastage,
-            //     'finishing_id' => $request->finishings,
-            //     'cost_in_roll' => $request->cast_inch,
-            //     'total_cost' => $request->total_area,
-            //     'catagory' => $request->catagory,
-            //     'length' => $request->length,
-            //     'sq_inch'=> $request->sq_inch,
-            //     'customer_grade'=> $request->customer_grade,
-            //     'width' =>$request->width,
-            //     'add_on_cast'=>json_encode($request->add_on_cast),
-            //     'needle'=>json_encode($request->needle)
-            // ]);
-
-            // if ($request->hasFile("document_name")) {
-            //     $file = $request->file("document_name");
-            //     $filePath = $file->store("{$result->id}", [
-            //         "disk" => "cardsDocuments",
-            //     ]);
-            // }
-
-            // if (isset($filePath)) {
-            //     $result->update([
-            //         "document_name" => $filePath,
-            //     ]);
-            // }
             // if ($request->hasFile("front_crop_image")) {
-            //     $file = $request->file("front_crop_image");
-            //     $filePath = $file->store("{$result->id}", [
+            //     $frontImage      = $request->file("front_crop_image");
+
+            //     $frontFilename = $frontImage->store("{$result->id}", [
             //         "disk" => "cardsImage",
             //     ]);
+
+            //     $uploadFiles["front_image"] = $frontFilename;
             // }
 
-            // if (isset($filePath)) {
-            //     $result->update([
-            //         "crap_image" => $filePath,
+            if ($request->hasFile("back_crop_image")) {
+                $backFilename = $this->decodeBase64Image($request->back_image, $result->id, 'back_image');
+
+                $uploadFiles["back_image"] = $backFilename;
+            }
+
+            // if ($request->hasFile("back_crop_image")) {
+            //     $backImage      = $request->file("back_crop_image");
+                
+            //     $backFilename = $backImage->store("{$result->id}", [
+            //         "disk" => "cardsImage",
             //     ]);
+
+            //     $uploadFiles["back_image"] = $backFilename;
             // }
+
+            if ($request->hasFile("all_view_crop_image")) {
+                $viewAllFilename = $this->decodeBase64Image($request->all_view_image, $result->id, 'all_view_image');
+
+                $uploadFiles["all_view_image"] = $viewAllFilename;
+            }
+
+            // if ($request->hasFile("all_view_crop_image")) {
+            //     $viewAllImage = $request->file("all_view_crop_image");
+                
+            //     $viewAllFilename = $viewAllImage->store("{$result->id}", [
+            //         "disk" => "cardsImage",
+            //     ]);
+
+            //     $uploadFiles["all_view_image"] = $viewAllFilename;
+            // }
+
+            if($request->hasfile('design_files'))
+            {
+                foreach($request->file('design_files') as $file)
+                {
+                    $filePaths = $file->store("{$result->id}", [
+                        "disk" => "cardsDocuments",
+                    ]);
+                    $mulitpleDesignFile[] = $filePaths;  
+                }
+                $uploadFiles['design_file'] = json_encode($mulitpleDesignFile);
+            }
+            
+            if($request->hasfile('front_crop_image') || $request->hasfile('back_crop_image') || $request->hasfile('all_view_crop_image') || $request->hasfile('design_files'))
+            {
+                $result->update($uploadFiles);
+            }
+           
         return redirect()
                 ->route("woven.index")
                 ->with("success", "Design card created successfully.");
@@ -197,43 +160,61 @@ class WovenController extends Controller
     {   
         $data           = $this->mastersDatas();
         $editdesignCard = DesignCard::where('id',$woven->id)->first();
-        // dd($editdesignCard->front_image,$editdesignCard->back_image);
+        // dd($editdesignCard->back_image);
         return view("woven.create", compact("data","editdesignCard"));
     }
 
-    public function update(Request $request, DesignCard $woven)
+    public function update(WovenRequest $request, DesignCard $woven)
     {
         try {
             $mulitpleDesignFile = [];
             
             $validatedFields    = $this->addOrEditRequest($request);
 
-            if ($request->hasFile("front_crop_image")) {
-                $frontImage      = $request->file("front_crop_image");
+            // if ($request->hasFile("front_crop_image")) {
+            //     $frontImage      = $request->file("front_crop_image");
 
-                $frontFilename = $frontImage->store("{$woven->id}", [
-                    "disk" => "cardsImage",
-                ]);
+            //     $frontFilename = $frontImage->store("{$woven->id}", [
+            //         "disk" => "cardsImage",
+            //     ]);
 
-                $validatedFields["front_image"] = $frontFilename;
-            }
+            //     $validatedFields["front_image"] = $frontFilename;
+            // }
 
-            if ($request->hasFile("back_crop_image")) {
-                $backImage      = $request->file("back_crop_image");
+            // if ($request->hasFile("back_crop_image")) {
+            //     $backImage      = $request->file("back_crop_image");
                 
-                $backFilename = $backImage->store("{$woven->id}", [
-                    "disk" => "cardsImage",
-                ]);
+            //     $backFilename = $backImage->store("{$woven->id}", [
+            //         "disk" => "cardsImage",
+            //     ]);
+
+            //     $validatedFields["back_image"] = $backFilename;
+            // }
+
+            // if ($request->hasFile("all_view_crop_image")) {
+            //     $viewAllImage = $request->file("all_view_crop_image");
+                
+            //     $viewAllFilename = $viewAllImage->store("{$woven->id}", [
+            //         "disk" => "cardsImage",
+            //     ]);
+
+            //     $validatedFields["all_view_image"] = $viewAllFilename;
+            // }
+
+            if ($request->hasFile("front_crop_image")) {
+                $frontFileName = $this->decodeBase64Image($request->front_image, $woven->id, 'front_image');
+
+                $validatedFields["front_image"] = $frontFileName;
+            }
+            
+            if ($request->hasFile("back_crop_image")) {
+                $backFilename = $this->decodeBase64Image($request->back_image, $woven->id, 'back_image');
 
                 $validatedFields["back_image"] = $backFilename;
             }
 
             if ($request->hasFile("all_view_crop_image")) {
-                $viewAllImage = $request->file("all_view_crop_image");
-                
-                $viewAllFilename = $viewAllImage->store("{$woven->id}", [
-                    "disk" => "cardsImage",
-                ]);
+                $viewAllFilename = $this->decodeBase64Image($request->all_view_image, $woven->id, 'all_view_image');
 
                 $validatedFields["all_view_image"] = $viewAllFilename;
             }
@@ -257,23 +238,6 @@ class WovenController extends Controller
           
             $woven->update($validatedFields);
         
-            // $validatedFields = $request->validated();
-            // unset($validatedFields["image"]);
-
-            // $woven->update($request->all());
-
-            // if ($request->hasFile("image")) {
-            //     $file = $request->file("image");
-            //     $filePath = $file->store("{$woven->id}/business_document", [
-            //         "disk" => "folds",
-            //     ]);
-            // }
-
-            // if (isset($filePath)) {
-            //     $fold->update([
-            //         "image" => $filePath,
-            //     ]);
-            // }
             return redirect()
         ->route("woven.index")
         ->with("success", "Desgin card updated successfully.");
@@ -291,7 +255,9 @@ class WovenController extends Controller
     public function show($woven)
     {
         $viewDesignCard = DesignCard::with(['customerDetail','designerDetail','salesRepDetail','warpDetail','finishingDetail'])->findOrFail($woven);
-        return view("woven.show", compact("viewDesignCard"));
+        $weavers         = LoomMaster::whereIn('id',$viewDesignCard->weaver)->get()->toArray();
+        // dd($viewDesignCard->main_label['total_repeat']);
+        return view("woven.show", compact("viewDesignCard","weavers"));
     }
 
 

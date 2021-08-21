@@ -159,6 +159,6 @@ class DesignCard extends Model
 
     public function finishingDetail()
     {
-        return $this->hasOne(FinishingMachineMaster::class,'id','finishing_id');
+        return $this->hasOne(FinishingMachineMaster::class,'id','finishing');
     }          
 }

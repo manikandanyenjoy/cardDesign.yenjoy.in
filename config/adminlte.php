@@ -355,6 +355,12 @@ return [
             'url'         => 'woven-design-cards',
 
         ],
+        [
+            'text'        => ['Roles'],
+            'icon'        => 'far fa-id-badge',
+            'url'         => 'roles',
+
+        ],
         
         ['header' => 'account_settings'],
         [

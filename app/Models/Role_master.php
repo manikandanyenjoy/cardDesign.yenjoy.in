@@ -9,5 +9,8 @@ class Role_master extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        "name"
+    ];
    
 }

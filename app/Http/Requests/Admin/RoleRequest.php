@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class WovenRequest extends FormRequest
+class RoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +25,7 @@ class WovenRequest extends FormRequest
     public function rules()
     {
         return [
-            "customer_id" => "required",
-            "label" => "required",
-            "date" => "required",
-            "salesrep_id" => "required",
+            "name" => ["required",Rule::unique('role_masters')->ignore($this->role)]
         ];
     }
 
@@ -39,10 +37,8 @@ class WovenRequest extends FormRequest
     public function messages()
     {
         return [
-            "customer_id.required"  => "Select customer is required",
-            "label.required"        => "Label is required",
-            "date.required"         => "Date is required",
-            "salesrep_id.required"  => "Select sales rep is required",
+            "name.required" => "Role name is required",
+            "name.unique"   => "This Role name is already used",
         ];
     }
 }
