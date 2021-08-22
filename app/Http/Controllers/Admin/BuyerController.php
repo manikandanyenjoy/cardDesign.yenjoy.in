@@ -22,35 +22,25 @@ class BuyerController extends Controller
     }
 
     public function create()
-    {     $data['salesrep'] = Staf_master::where('role_id',2)->orderBy('created_at', 'DESC')->get()->toArray();
-        return view("buyers.create",compact('data'));
+    {   
+        $editCustomer = "";  
+        $data['salesrep'] = Staf_master::where('role_id',2)->orderBy('created_at', 'DESC')->get()->toArray();
+        return view("buyers.create",compact('data','editCustomer'));
     }
 
     public function store(BuyerRequest $request)
     {
-        
-          
-        if($request->same_as){ $shipping = $request->billing_address;}else{ $shipping = $request->shipping_address;}
-        $result = CustomerMaster::Insert(array(
-            'company_name' => $request->company_name,
-            'company_phone'=> $request->company_phone,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'mobile_number' => $request->mobile_number,
-            'email' => $request->email,
-            'secondary_email' => $request->secondary_email,
-            'sales_rep'=>$request->sales_rep,
-            'password' => Hash::make($request->password),
-            'status' => $request->status,
-            'bank_name' => $request->bank_name,
-            'account_no' => $request->account_no,
-            'IFSCCode' => $request->IFSCCode,
-            'opening_balance' => $request->opening_balance,
-            'credit_period' => $request->credit_period,
-            'billing_address' => $request->billing_address,
-            'shipping_address' => $shipping,
-            'grade' => $request->grade,
-        ));
+        if($request->same_as){
+            $shipping = $request->billing_address;
+        }else{
+            $shipping = $request->shipping_address;
+        }
+
+        $data               = $request->validated(); 
+        $data['password']   = Hash::make($request->password);
+        $data['status']     = $request->status; 
+
+        CustomerMaster::create($data);
 
         return redirect()
             ->route("buyers.index")
@@ -59,37 +49,28 @@ class BuyerController extends Controller
 
     public function edit(CustomerMaster $buyer)
     {
-        
+        $editCustomer = $buyer;  
         $data['salesrep'] = Staf_master::where('role_id',2)->orderBy('created_at', 'DESC')->get()->toArray();
-        return view("buyers.edit", compact("buyer","data"));
+        return view("buyers.create", compact("editCustomer","data"));
     }
 
     public function update(BuyerRequest $request, CustomerMaster $buyer)
     {
-        
-        if($request->same_as){ $shipping = $request->billing_address;}else{ $shipping = $request->shipping_address;}
-        $result = CustomerMaster::where('id', $buyer->id)->update(array(
-            'company_name' => $request->company_name,
-            'company_phone'=> $request->company_phone,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'mobile_number' => $request->mobile_number,
-            'email' => $request->email,
-            'secondary_email' => $request->secondary_email,
-            'sales_rep'=>$request->sales_rep,
-            'password' => Hash::make($request->password),
-            'status' => $request->status,
-            'bank_name' => $request->bank_name,
-            'account_no' => $request->account_no,
-            'IFSCCode' => $request->IFSCCode,
-            'opening_balance' => $request->opening_balance,
-            'credit_period' => $request->credit_period,
-            'billing_address' => $request->billing_address,
-            'shipping_address' => $shipping,
-            'grade' => $request->grade,
-        ));
+        if($request->same_as){
+            $shipping = $request->billing_address;
+        }else{
+            $shipping = $request->shipping_address;
+        }
 
+        $data           = $request->validated(); 
+        $data['status'] = $request->status; 
+
+        if($request->password != "")
+        {
+            $data['password'] = Hash::make($request->password);
+        }
         
+        CustomerMaster::where('id', $buyer->id)->update($data);
 
         return redirect()
             ->route("buyers.index")

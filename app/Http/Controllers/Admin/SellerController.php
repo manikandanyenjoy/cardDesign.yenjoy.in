@@ -19,30 +19,24 @@ class SellerController extends Controller
 
     public function create()
     {
-        return view("sellers.create");
+        $editVendor="";
+        return view("sellers.create",compact('editVendor'));
 
     }
 
     public function store(SellerRequest $request)
     {
-        if($request->same_as){ $shipping = $request->billing_address;}else{ $shipping = $request->shipping_address;}
-        $result = VendorMaster::Insert(array(
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'mobile_number' => $request->mobile_number,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'status' => $request->status,
-            'bank_name' => $request->bank_name,
-            'account_no' => $request->account_no,
-            'status' => $request->status,
-            'IFSCCode' => $request->IFSCCode,
-            'opening_balance' => $request->opening_balance,
-            'credit_period' => $request->credit_period,
-            'billing_address' => $request->billing_address,
-            'shipping_address' => $shipping,
-            'grade' => $request->grade,
-        ));
+        if($request->same_as){ 
+            $shipping = $request->billing_address;
+        }else{
+            $shipping = $request->shipping_address;
+        }
+
+        $data               = $request->validated(); 
+        $data['password']   = Hash::make($request->password);
+        $data['status']     = $request->status; 
+
+        VendorMaster::create($data);
        
         return redirect()
             ->route("sellers.index")
@@ -51,30 +45,27 @@ class SellerController extends Controller
 
     public function edit(VendorMaster $seller)
     {   
-        return view("sellers.edit", compact("seller"));
+        $editVendor= $seller;
+        return view("sellers.create",compact('editVendor'));
     }
 
     public function update(SellerRequest $request, VendorMaster $seller)
     {
-       
-        if($request->same_as){ $shipping = $request->billing_address;}else{ $shipping = $request->shipping_address;}
-       $result = VendorMaster::where('id', $seller->id)->update(array(
-           'first_name' => $request->first_name,
-           'last_name' => $request->last_name,
-           'mobile_number' => $request->mobile_number,
-           'email' => $request->email,
-           'password' => Hash::make($request->password),
-           'status' => $request->status,
-           'bank_name' => $request->bank_name,
-           'account_no' => $request->account_no,
-           'status' => $request->status,
-           'IFSCCode' => $request->IFSCCode,
-           'opening_balance' => $request->opening_balance,
-           'credit_period' => $request->credit_period,
-           'billing_address' => $request->billing_address,
-           'shipping_address' => $shipping,
-           'grade' => $request->grade,
-       ));
+        if($request->same_as){
+            $shipping = $request->billing_address;
+        }else{
+            $shipping = $request->shipping_address;
+        }
+
+        $data           = $request->validated(); 
+        $data['status'] = $request->status; 
+
+        if($request->password != "")
+        {
+            $data['password'] = Hash::make($request->password);
+        }
+
+       VendorMaster::where('id', $seller->id)->update($data);
        
         return redirect()
             ->route("sellers.index")

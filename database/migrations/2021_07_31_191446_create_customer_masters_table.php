@@ -21,7 +21,7 @@ class CreateCustomerMastersTable extends Migration
             $table->string("last_name");
             $table->string("mobile_number");
             $table->string("email")->unique();
-            $table->text("secondary_email");
+            $table->text("secondary_email")->nullable();
             $table->unsignedBigInteger("sales_rep");
             $table->timestamp("email_verified_at")->nullable();
             $table->string("password");
@@ -34,6 +34,7 @@ class CreateCustomerMastersTable extends Migration
             $table->text("billing_address");
             $table->text("shipping_address");
             $table->string("grade");
+            $table->string("GST");
             $table->string("CGST");
             $table->string("SGST");
             $table->string("IGST");

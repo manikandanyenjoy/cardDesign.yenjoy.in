@@ -1,14 +1,14 @@
 @extends('adminlte::page')
 
-@section('title', 'Sellers')
+@section('title', 'Vendors')
 
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1>{{ __('Sellers') }}</h1>
+            <h1>{{ __('Vendors') }}</h1>
         </div>
         <div class="col-sm-6">
-            <a href="{{ route('sellers.create') }}" class="btn bg-gradient-primary float-right">{{ __('Add Seller') }}</a>
+            <a href="{{ route('sellers.create') }}" class="btn bg-gradient-primary float-right">{{ __('Add Vendor') }}</a>
         </div>
     </div>
 @stop
@@ -21,7 +21,7 @@
                     @include('shared.errors')
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Sellers</h3>
+                            <h3 class="card-title">Vendors</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">

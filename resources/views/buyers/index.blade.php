@@ -8,7 +8,7 @@
             <h1>{{ __('Customers') }}</h1>
         </div>
         <div class="col-sm-6">
-            <a href="{{ route('buyers.create') }}" class="btn bg-gradient-primary float-right">{{ __('Add buyer') }}</a>
+            <a href="{{ route('buyers.create') }}" class="btn bg-gradient-primary float-right">{{ __('Add Customer') }}</a>
         </div>
     </div>
 @stop

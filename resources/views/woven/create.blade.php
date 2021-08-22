@@ -140,21 +140,21 @@
                                                         <div class="form-group row mx-2">
                                                             <select style="width: 50%;"  class="form-control" name="weaver[]">
                                                                 <option value="">Select</option>
-                                                                @foreach( $data['loomMaster'] as $loom) 
+                                                                @foreach( $data['loomOperator'] as $loom) 
                                                                     @if($editdesignCard)
-                                                                        <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[0]) ? $editdesignCard->weaver[0] : '')? 'selected' : '') }}>{{ucfirst($loom['loom_name'])}} </option>
-                                                                        @else
-                                                                        <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['loom_name'])}} </option>
+                                                                        <option value="{{$loom['id']}}" {{ old('weaver.0') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[0]) ? $editdesignCard->weaver[0] : '')? 'selected' : '') }}>{{ucfirst($loom['name'])}} </option>
+                                                                    @else
+                                                                        <option value="{{$loom['id']}}" {{ old('weaver.0') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['name'])}} </option>
                                                                     @endif
                                                                 @endforeach
                                                             </select>
                                                             <select style="width: 50%;" class="form-control" name="weaver[]">
                                                                 <option value="">Select</option>
-                                                                @foreach( $data['loomMaster'] as $loom) 
+                                                                @foreach( $data['loomOperator'] as $loom) 
                                                                     @if($editdesignCard)
-                                                                        <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[1]) ? $editdesignCard->weaver[1] : '')? 'selected' : '') }}>{{ucfirst($loom['loom_name'])}} </option>
+                                                                        <option value="{{$loom['id']}}" {{ old('weaver.1') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[1]) ? $editdesignCard->weaver[1] : '')? 'selected' : '') }}>{{ucfirst($loom['name'])}} </option>
                                                                         @else
-                                                                        <option value="{{$loom['id']}}" {{ old('wever[]') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['loom_name'])}} </option>
+                                                                        <option value="{{$loom['id']}}" {{ old('weaver.1') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['name'])}} </option>
                                                                     @endif
                                                                 @endforeach
                                                             </select>

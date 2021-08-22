@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SellerRequest extends FormRequest
 {
@@ -26,9 +27,7 @@ class SellerRequest extends FormRequest
         $validation = [
             "first_name" => "required|alpha_num|min:4|max:50",
             "last_name" => "required|alpha_num|max:50",
-            "email" => "required|email|unique:vendor_masters,email",
-            "password" =>
-                'required|confirmed|min:8',
+            "email" => ["required",Rule::unique('vendor_masters')->ignore($this->seller)],
             "mobile_number" => 'required|min:10|numeric',
             "bank_name" => 'required',
             "account_no" => 'required',
@@ -36,25 +35,19 @@ class SellerRequest extends FormRequest
             "opening_balance" => 'required',
             "credit_period" => 'required',
             "grade" => 'required',
+            "GST" => 'required',
             
         ];
 
-        if ($this->isMethod("put")) {
-        $validation = [
-            "first_name" => "required|alpha_num|min:4|max:50",
-            "last_name" => "required|alpha_num|max:50",
-            "password" =>
-                'required|confirmed|min:8',
-            "mobile_number" => 'required|min:10|numeric',
-            "bank_name" => 'required',
-            "account_no" => 'required',
-            "IFSCCode" => 'required',
-            "opening_balance" => 'required',
-            "credit_period" => 'required',
-            "grade" => 'required',
-            
-        ];
-    }
+        if($this->isMethod("post"))
+        {
+            $validation["password"] = 'required|confirmed|min:8';
+        }
+
+        if($this->isMethod("put"))
+        {
+            $validation["password"] = 'nullable|confirmed|min:8';
+        }
 
         return $validation;
     }

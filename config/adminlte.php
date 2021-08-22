@@ -292,7 +292,8 @@ return [
                     
                 ],
                 [
-                    'text'        => ['Loom Operators'],
+                    // 'text'        => ['Loom Operators'],
+                    'text'        => ['Weaver'],
                     'url'         => 'loomoperators',
                     
                 ],

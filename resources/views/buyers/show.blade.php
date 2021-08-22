@@ -1,14 +1,17 @@
 @extends('adminlte::page')
 
-@section('title', 'Customer')
+@section('title', 'Customer Detail')
 
 @section('content_header')
-    <div class="row mb-2">
-        <div class="col-sm-6">
-            <h1>{{ __('Customer - ') . $buyer->first_name}}</h1>
-        </div>
-        <div class="col-sm-6">
-            <a href="{{ route('buyers.index') }}" class="btn bg-gradient-primary float-right">Back</a>
+    <div class="row mb-1">
+        <div class="offset-md-1 col-md-10">
+            <h1 class="float-left ml-2 font-weight-bold">
+                {{ __('Customer - ') . ucfirst($buyer->first_name)}}
+            </h1>
+            <div class="float-right">
+                <a href="{{ route('buyers.edit',$buyer->id) }}" class="btn bg-gradient-success btn-md mr-2">{{ __('Edit') }}</a>
+                <a href="{{ route('buyers.index') }}" class="btn bg-gradient-danger btn-md mr-2">{{ __('Back') }}</a>
+            </div>
         </div>
     </div>
 @stop
@@ -17,18 +20,18 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="offset-md-3 col-md-6">
+                <div class="offset-md-1 col-md-10">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">buyers</h3>
+                            <h3 class="card-title">Customer Detail</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table class="table table-bordered table-sm">
                                 <tbody>
-                                <tr>
+                                    <tr>
                                         <td><strong>{{ __('Company Name') }}</strong></td>
-                                        <td>{{ $buyer->company_name }}</td>
+                                        <td>{{ ucwords($buyer->company_name) }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('Company Phone Number') }}</strong></td>
@@ -36,14 +39,14 @@
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('First Name') }}</strong></td>
-                                        <td>{{ $buyer->first_name }}</td>
+                                        <td>{{ ucwords($buyer->first_name) }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('Last Name') }}</strong></td>
-                                        <td>{{ $buyer->last_name }}</td>
+                                        <td>{{ ucwords($buyer->last_name) }}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>{{ __('Email') }}</strong></td>
+                                        <td><strong>{{ __('Primary Email') }}</strong></td>
                                         <td>{{ $buyer->email }}</td>
                                     </tr>
                                     <tr>
@@ -55,7 +58,7 @@
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('Sales Rep') }}</strong></td>
-                                        <td>{{ $salesrep->name }}</td>
+                                        <td>{{ $salesrep ? $salesrep->name : '-' }}</td>
                                     </tr>
                                     
                                     <tr>
@@ -85,6 +88,10 @@
                                     <tr>
                                         <td><strong>{{ __('Grade') }}</strong></td>
                                         <td>{{ $buyer->grade }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('GST NO') }}</strong></td>
+                                        <td>{{ $buyer->GST }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('Billing Address') }}</strong></td>

@@ -72,7 +72,7 @@
                                                 <th>Weaver</th>
                                                 <td width="150px">
                                                     @foreach($weavers as $w)
-                                                     {{$w['loom_name']}}
+                                                     {{$w['name']}}
                                                     @endforeach
                                                    
                                                 </td>

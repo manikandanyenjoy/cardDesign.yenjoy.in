@@ -29,6 +29,7 @@ class CustomerMaster extends Model
         "opening_balance",
         "credit_period",
         "grade",
+        "GST",
         "company_name",
         "company_phone",
         "billing_address",
