@@ -53,7 +53,7 @@
                                             </div>
 
                                             <div class="form-group col-6">
-                                                <label for="last_name">Last Name <span class="text-danger">*</span></label>
+                                                <label for="last_name">Last Name</label>
                                                 <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="last_name" name="last_name" value="{{ $editVendor ? old('last_name',$editVendor->last_name) : old('last_name') }}" placeholder="Last Name">
                                                 @error('last_name')
                                                 <span class="error invalid-feedback">{{ $message }}</span>

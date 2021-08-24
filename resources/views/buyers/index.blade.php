@@ -29,6 +29,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width: 50px">#</th>
+                                    <th>Company Name</th>
                                     <th>Firstname</th>
                                     <th>Lastname</th>
                                     <th>Email</th>
@@ -41,8 +42,9 @@
                                 @forelse ($buyers as $index => $buyer)
                                     <tr>
                                         <td>{{ $index + $buyers->firstItem() }}</td>
-                                        <td>{{ $buyer->first_name }}</td>
-                                        <td>{{ $buyer->last_name }}</td>
+                                        <td>{{ ucwords($buyer->company_name) }}</td>
+                                        <td>{{ ucfirst($buyer->first_name) }}</td>
+                                        <td>{{ $buyer->last_name ? ucfirst($buyer->last_name) : '-' }}</td>
                                         <td>{{ $buyer->email }}</td>
                                         <td>{{ $buyer->mobile_number }}</td>
                                        

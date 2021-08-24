@@ -71,7 +71,7 @@
                                             </div>
 
                                             <div class="form-group col-6">
-                                                <label for="last_name">Last Name <span class="text-danger">*</span></label>
+                                                <label for="last_name">Last Name</label>
                                                 <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="last_name" name="last_name" value="{{ $editCustomer ? old('last_name',$editCustomer->last_name) : old('last_name') }}" placeholder="Last Name">
                                                 @error('last_name')
                                                 <span class="error invalid-feedback">{{ $message }}</span>
@@ -90,7 +90,7 @@
 
                                             <div class="form-group col-6">
                                                 <label for="secondary_email">Secondary Email's <span class="font-italic">(optional)</span></label>
-                                                <textarea class="form-control" id="secondary_email" name="secondary_email" value="{{ $editCustomer ? old('secondary_email',$editCustomer->secondary_email) : old('secondary_email') }}" placeholder="abc@gmail.com,xyz@gmail.com"></textarea>
+                                                <textarea class="form-control" id="secondary_email" name="secondary_email" placeholder="abc@gmail.com,xyz@gmail.com">{{ $editCustomer ? old('secondary_email',$editCustomer->secondary_email) : old('secondary_email') }}</textarea>
                                             </div>
                                         </div>
 

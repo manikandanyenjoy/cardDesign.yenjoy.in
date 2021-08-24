@@ -60,9 +60,13 @@ class SellerController extends Controller
         $data           = $request->validated(); 
         $data['status'] = $request->status; 
 
-        if($request->password != "")
+        if($request->password != "" && $request->password != null)
         {
             $data['password'] = Hash::make($request->password);
+        }
+        else
+        {
+            unset($data['password']);
         }
 
        VendorMaster::where('id', $seller->id)->update($data);

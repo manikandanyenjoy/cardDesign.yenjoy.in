@@ -34,7 +34,9 @@ class CreateDesignCardsTable extends Migration
             $table->text("add_on_main_cost")->nullable();
             $table->text("add_on_tab_cost")->nullable();
             $table->text("add_on_size_cost")->nullable();
-            $table->text("needle")->nullable();
+            $table->longText("main_needle")->nullable();
+            $table->longText("tab_needle")->nullable();
+            $table->longText("size_needle")->nullable();
             $table->string("speed_effiency")->nullable();
             $table->string("customer_grade")->nullable();
             $table->string("category")->nullable();

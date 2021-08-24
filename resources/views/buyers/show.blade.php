@@ -43,7 +43,7 @@
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('Last Name') }}</strong></td>
-                                        <td>{{ ucwords($buyer->last_name) }}</td>
+                                        <td>{{ $buyer->last_name ? ucwords($buyer->last_name) : '-' }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('Primary Email') }}</strong></td>

@@ -41,8 +41,8 @@
                                 @forelse ($sellers as $index => $seller)
                                     <tr>
                                         <td>{{ $index + $sellers->firstItem() }}</td>
-                                        <td>{{ $seller->first_name }}</td>
-                                        <td>{{ $seller->last_name }}</td>
+                                        <td>{{ ucfirst($seller->first_name) }}</td>
+                                        <td>{{ $seller->last_name ? ucfirst($seller->last_name) : '-' }}</td>
                                         <td>{{ $seller->email }}</td>
                                         <td>{{ $seller->mobile_number }}</td>
                                        

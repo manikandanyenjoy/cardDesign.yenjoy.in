@@ -36,9 +36,10 @@ class BuyerController extends Controller
             $shipping = $request->shipping_address;
         }
 
-        $data               = $request->validated(); 
-        $data['password']   = Hash::make($request->password);
-        $data['status']     = $request->status; 
+        $data                       = $request->validated(); 
+        $data['password']           = Hash::make($request->password);
+        $data['status']             = $request->status; 
+        $data['secondary_email']    = $request->secondary_email; 
 
         CustomerMaster::create($data);
 
@@ -62,12 +63,17 @@ class BuyerController extends Controller
             $shipping = $request->shipping_address;
         }
 
-        $data           = $request->validated(); 
-        $data['status'] = $request->status; 
+        $data                    = $request->validated(); 
+        $data['status']          = $request->status; 
+        $data['secondary_email'] = $request->secondary_email; 
 
-        if($request->password != "")
+        if($request->password != "" && $request->password != null)
         {
             $data['password'] = Hash::make($request->password);
+        }
+        else
+        {
+            unset($data['password']);
         }
         
         CustomerMaster::where('id', $buyer->id)->update($data);

@@ -30,7 +30,9 @@ class DesignCard extends Model
         "add_on_main_cost",
         "add_on_tab_cost",
         "add_on_size_cost",
-        "needle",
+        "main_needle",
+        "tab_needle",
+        "size_needle",
         "speed_effiency",
         "customer_grade",
         "category",
@@ -100,12 +102,30 @@ class DesignCard extends Model
             : [];
     }
 
-    public function getNeedleAttribute($value)
+    public function getMainNeedleAttribute($value)
     {
-        $needle = json_decode($value, true);
+        $mainNeedle = json_decode($value, true);
 
-        return is_array($needle) && count($needle) > 0
-            ? $needle
+        return is_array($mainNeedle) && count($mainNeedle) > 0
+            ? $mainNeedle
+            : [];
+    }
+
+    public function getTabNeedleAttribute($value)
+    {
+        $tabNeedle = json_decode($value, true);
+
+        return is_array($tabNeedle) && count($tabNeedle) > 0
+            ? $tabNeedle
+            : [];
+    }
+
+    public function getSizeNeedleAttribute($value)
+    {
+        $sizeNeedle = json_decode($value, true);
+
+        return is_array($sizeNeedle) && count($sizeNeedle) > 0
+            ? $sizeNeedle
             : [];
     }
 

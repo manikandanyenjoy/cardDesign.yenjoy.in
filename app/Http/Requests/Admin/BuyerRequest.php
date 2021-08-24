@@ -25,7 +25,7 @@ class BuyerRequest extends FormRequest
     {
         $validation = [
             "first_name" => "required|alpha_num|min:4|max:50",
-            "last_name" => "required|alpha_num|max:50",
+            "last_name" => "nullable|alpha_num|max:50",
             "email" => "required|email|unique:vendor_masters,email",
          
             "mobile_number" => 'required|min:10|numeric',

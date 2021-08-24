@@ -57,7 +57,7 @@
                                         <table class="table table-bordered text-nowrap">
                                             <tr>
                                                 <th>Customer</th>
-                                                <td>{{ ucwords($viewDesignCard->customerDetail->full_name ) }}</td>
+                                                <td>{{ $viewDesignCard->customerDetail ? ucwords($viewDesignCard->customerDetail->company_name ) : '-' }}</td>
                                                 <th>Label</th>
                                                 <td>{{ ucwords($viewDesignCard->label ) }}</td>
                                                 <th>Date</th>
@@ -90,7 +90,7 @@
                                                 
                                         <div class="row">
                                             <div class="col">
-                                                <table class="table table-bordered">
+                                                <table class="table table-bordered text-nowrap">
                                                     <tr>
                                                         <th></th>
                                                         <th>Main Label</th>
@@ -124,6 +124,24 @@
                                                                    @if(!empty($total_repeat) || $total_repeat != null || $total_repeat != "")
                                                                         {{ $loop->first ? '' : ', ' }}
                                                                         {{ $total_repeat }}
+                                                                    @else
+                                                                        
+                                                                    @endif
+                                                                @endforeach
+                                                            @else
+                                                            -
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="main_label_input">
+                                                        <th width="200px">Total Labour Hours</th>
+                                                        <td width="200px">
+                                                            @if(isset($viewDesignCard->main_label['total_labour_hours']))
+                                                                @foreach($viewDesignCard->main_label['total_labour_hours'] as $total_labour_hours)
+                                                                   @if(!empty($total_labour_hours) || $total_labour_hours != null || $total_labour_hours != "")
+                                                                        {{ $loop->first ? '' : ', ' }}
+                                                                        {{ $total_labour_hours }}
                                                                     @else
                                                                         
                                                                     @endif
@@ -188,6 +206,23 @@
                                                     </tr>
 
                                                     <tr class="main_label_input">
+                                                        <td width="200px">
+                                                            @if(isset($viewDesignCard->tab_label['total_labour_hours']))
+                                                                @foreach($viewDesignCard->tab_label['total_labour_hours'] as $total_labour_hours)
+                                                                   @if(!empty($total_labour_hours) || $total_labour_hours != null || $total_labour_hours != "")
+                                                                        {{ $loop->first ? '' : ', ' }}
+                                                                        {{ $total_labour_hours }}
+                                                                    @else
+                                                                        
+                                                                    @endif
+                                                                @endforeach
+                                                            @else
+                                                            -
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="main_label_input">
                                                         <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['wastage']) ? $viewDesignCard->tab_label['wastage'] : '-' }}</td>
                                                     </tr>
 
@@ -232,6 +267,23 @@
 
                                                     <tr class="main_label_input">
                                                         <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['total_repeat'][0]) ? $viewDesignCard->size_label['total_repeat'][0].',' : '' }} {{ $viewDesignCard && isset($viewDesignCard->size_label['total_repeat'][1]) ? $viewDesignCard->size_label['total_repeat'][1].',' : '' }} {{ $viewDesignCard && isset($viewDesignCard->size_label['total_repeat'][1]) ? $viewDesignCard->size_label['total_repeat'][1] : '' }}</td>
+                                                    </tr>
+
+                                                    <tr class="main_label_input">
+                                                        <td width="200px">
+                                                            @if(isset($viewDesignCard->size_label['total_labour_hours']))
+                                                                @foreach($viewDesignCard->size_label['total_labour_hours'] as $total_labour_hours)
+                                                                   @if(!empty($total_labour_hours) || $total_labour_hours != null || $total_labour_hours != "")
+                                                                        {{ $loop->first ? '' : ', ' }}
+                                                                        {{ $total_labour_hours }}
+                                                                    @else
+                                                                        
+                                                                    @endif
+                                                                @endforeach
+                                                            @else
+                                                            -
+                                                            @endif
+                                                        </td>
                                                     </tr>
 
                                                     <tr class="main_label_input">
@@ -310,6 +362,7 @@
                                             </tbody>
                                         </table>
 
+                                        <h5 class="font-weight-bold">Main</h5>
                                         <table class="table table-bordered text-nowrap">
                                             <thead>
                                                 <tr>
@@ -326,18 +379,94 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="add_new_row">
-                                                @forelse($viewDesignCard->needle as $needle)
+                                                @forelse($viewDesignCard->main_needle as $mainNeedle)
                                                     <tr id="inputFormRow">
-                                                        <td>{{ $needle['needle_no'] ?? '-' }}</td>
-                                                        <td>{{ $needle['pantone'] ?? '-' }}</td>
-                                                        <td style="background:{{ $needle['color'] ?? '' }};"></td>
-                                                        <td>{{ $needle['color_shade'] ?? '-' }}</td>
-                                                        <td>{{ $needle['denier'] ?? '-' }}</td>
-                                                        <td>{{ $needle['a'] ?? '-' }}</td>
-                                                        <td>{{ $needle['b'] ?? '-' }}</td>
-                                                        <td>{{ $needle['c'] ?? '-' }}</td>
-                                                        <td>{{ $needle['d'] ?? '-' }}</td>
-                                                        <td>{{ $needle['e'] ?? '-' }}</td>
+                                                        <td>{{ $mainNeedle['needle_no'] ?? '-' }}</td>
+                                                        <td>{{ $mainNeedle['pantone'] ?? '-' }}</td>
+                                                        <td style="background:{{ $mainNeedle['color'] ?? '' }};"></td>
+                                                        <td>{{ $mainNeedle['color_shade'] ?? '-' }}</td>
+                                                        <td>{{ $mainNeedle['denier'] ?? '-' }}</td>
+                                                        <td>{{ $mainNeedle['a'] ?? '-' }}</td>
+                                                        <td>{{ $mainNeedle['b'] ?? '-' }}</td>
+                                                        <td>{{ $mainNeedle['c'] ?? '-' }}</td>
+                                                        <td>{{ $mainNeedle['d'] ?? '-' }}</td>
+                                                        <td>{{ $mainNeedle['e'] ?? '-' }}</td>
+                                                    </tr>
+                                                @empty
+                                                   <tr>
+                                                       <td colspan="9"></td>
+                                                   </tr>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+
+                                        <h5 class="font-weight-bold">Tab</h5>
+                                        <table class="table table-bordered text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>Needle No</th>
+                                                    <th>Pantone</th>
+                                                    <th>Color</th>
+                                                    <th>Shade</th>
+                                                    <th>Denier</th>
+                                                    <th>A</th>
+                                                    <th>B</th>
+                                                    <th>C</th>
+                                                    <th>D</th>
+                                                    <th>E</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse($viewDesignCard->tab_needle as $tabNeedle)
+                                                    <tr>
+                                                        <td>{{ $tabNeedle['needle_no'] ?? '-' }}</td>
+                                                        <td>{{ $tabNeedle['pantone'] ?? '-' }}</td>
+                                                        <td style="background:{{ $tabNeedle['color'] ?? '' }};"></td>
+                                                        <td>{{ $tabNeedle['color_shade'] ?? '-' }}</td>
+                                                        <td>{{ $tabNeedle['denier'] ?? '-' }}</td>
+                                                        <td>{{ $tabNeedle['a'] ?? '-' }}</td>
+                                                        <td>{{ $tabNeedle['b'] ?? '-' }}</td>
+                                                        <td>{{ $tabNeedle['c'] ?? '-' }}</td>
+                                                        <td>{{ $tabNeedle['d'] ?? '-' }}</td>
+                                                        <td>{{ $tabNeedle['e'] ?? '-' }}</td>
+                                                    </tr>
+                                                @empty
+                                                   <tr>
+                                                       <td colspan="9"></td>
+                                                   </tr>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+
+                                        <h5 class="font-weight-bold">Size</h5>
+                                        <table class="table table-bordered text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>Needle No</th>
+                                                    <th>Pantone</th>
+                                                    <th>Color</th>
+                                                    <th>Shade</th>
+                                                    <th>Denier</th>
+                                                    <th>A</th>
+                                                    <th>B</th>
+                                                    <th>C</th>
+                                                    <th>D</th>
+                                                    <th>E</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse($viewDesignCard->size_needle as $sizeNeedle)
+                                                    <tr>
+                                                        <td>{{ $sizeNeedle['needle_no'] ?? '-' }}</td>
+                                                        <td>{{ $mainNeedle['pantone'] ?? '-' }}</td>
+                                                        <td style="background:{{ $sizeNeedle['color'] ?? '' }};"></td>
+                                                        <td>{{ $sizeNeedle['color_shade'] ?? '-' }}</td>
+                                                        <td>{{ $sizeNeedle['denier'] ?? '-' }}</td>
+                                                        <td>{{ $sizeNeedle['a'] ?? '-' }}</td>
+                                                        <td>{{ $sizeNeedle['b'] ?? '-' }}</td>
+                                                        <td>{{ $sizeNeedle['c'] ?? '-' }}</td>
+                                                        <td>{{ $sizeNeedle['d'] ?? '-' }}</td>
+                                                        <td>{{ $sizeNeedle['e'] ?? '-' }}</td>
                                                     </tr>
                                                 @empty
                                                    <tr>

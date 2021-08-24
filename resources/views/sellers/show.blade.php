@@ -6,7 +6,7 @@
     <div class="row mb-1">
         <div class="offset-md-1 col-md-10">
             <h1 class="float-left ml-2 font-weight-bold">
-                {{ __('Seller - ') . $seller->first_name}}<
+                {{ __('Seller - ') . $seller->first_name}}
             </h1>
             <div class="float-right">
                 <a href="{{ route('sellers.edit',$seller->id) }}" class="btn bg-gradient-success btn-md mr-2">{{ __('Edit') }}</a>
@@ -23,7 +23,7 @@
                 <div class="offset-md-1 col-md-10">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Sellers</h3>
+                            <h3 class="card-title">Seller Detail</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -36,7 +36,7 @@
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('Last Name') }}</strong></td>
-                                        <td>{{ ucfirst($seller->last_name) }}</td>
+                                        <td>{{ $seller->last_name ? ucfirst($seller->last_name) : '-' }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('Email') }}</strong></td>

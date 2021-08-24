@@ -303,7 +303,9 @@ class WovenController extends Controller
         $validatedFields['add_on_main_cost']    = json_encode($request->main_cost);
         $validatedFields['add_on_tab_cost']     = json_encode($request->tab_cost);
         $validatedFields['add_on_size_cost']    = json_encode($request->size_cost);
-        $validatedFields['needle']              = json_encode($request->needle);
+        $validatedFields['main_needle']         = json_encode($request->main_needle);
+        $validatedFields['tab_needle']          = json_encode($request->tab_needle);
+        $validatedFields['size_needle']         = json_encode($request->size_needle);
         
         return $validatedFields;
     }
