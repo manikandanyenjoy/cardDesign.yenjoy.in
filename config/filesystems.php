@@ -61,8 +61,9 @@ return [
 
         'staffs' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/staffs_document'),
-            'url' => env('APP_URL').'/storage',
+            // 'root' => storage_path('app/public/staffs_document'),
+            'root' => public_path('staffs_document'),
+            'url' => env('APP_URL').'/staffs_document',
             'visibility' => 'private',
         ],
         'cardsImage' => [

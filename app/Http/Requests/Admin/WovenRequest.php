@@ -24,10 +24,15 @@ class WovenRequest extends FormRequest
     public function rules()
     {
         return [
-            "customer_id" => "required",
-            "label" => "required",
-            "date" => "required",
-            "salesrep_id" => "required",
+            "customer_id"           => "required",
+            "label"                 => "required",
+            "date"                  => "required",
+            "salesrep_id"           => "required",
+            "front_crop_image"      => "nullable|mimes:jpg,jpeg,png|max:2000",
+            "back_crop_image"       => "nullable|mimes:jpg,jpeg,png|max:2000",
+            "all_view_crop_image"   => "nullable|mimes:jpg,jpeg,png|max:2000",
+            "design_files"          => "nullable",
+            "design_files.*"        => "max:25000",
         ];
     }
 
@@ -39,10 +44,17 @@ class WovenRequest extends FormRequest
     public function messages()
     {
         return [
-            "customer_id.required"  => "Select customer is required",
-            "label.required"        => "Label is required",
-            "date.required"         => "Date is required",
-            "salesrep_id.required"  => "Select sales rep is required",
+            "customer_id.required"          => "Select customer is required",
+            "label.required"                => "Label is required",
+            "date.required"                 => "Date is required",
+            "salesrep_id.required"          => "Select sales rep is required",
+            "front_crop_image.mimes"        => "Front image supported format jpg, jpeg & png",
+            "front_crop_image.max"          => "Front image should be less than 5mb",
+            "back_crop_image.mimes"         => "Back image supported format jpg, jpeg & png",
+            "back_crop_image.max"           => "Back image should be less than 5mb",
+            "all_view_crop_image.mimes"     => "All view image should be less than 5mb",
+            "all_view_crop_image.max"       => "All view image supported format jpg, jpeg & png",
+            "design_files.*.max"            => "Design file should be less than 25mb",
         ];
     }
 }

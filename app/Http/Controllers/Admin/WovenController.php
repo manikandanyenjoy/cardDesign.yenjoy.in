@@ -14,6 +14,7 @@ use App\Models\FinishingMachineMaster;
 use App\Models\WovenQuality;
 use App\Http\Requests\Admin\WovenRequest;
 use Illuminate\Support\Facades\Storage;
+use App\Models\FoldMaster;
 
 class WovenController extends Controller
 {
@@ -278,7 +279,7 @@ class WovenController extends Controller
     
     public function show($woven)
     {
-        $viewDesignCard = DesignCard::with(['customerDetail','designerDetail','salesRepDetail','warpDetail','finishingDetail'])->findOrFail($woven);
+        $viewDesignCard = DesignCard::with(['customerDetail','designerDetail','salesRepDetail','warpDetail','foldMasterDetail'])->findOrFail($woven);
         $weavers         = Staf_master::where('role_id',5)->whereIn('id',$viewDesignCard->weaver)->orderBy('created_at', 'DESC')->get()->toArray();
         
         return view("woven.show", compact("viewDesignCard","weavers"));
@@ -318,6 +319,7 @@ class WovenController extends Controller
         $data['salesrepMaster']   = Staf_master::where('role_id',2)->orderBy('created_at', 'DESC')->get()->toArray();
         $data['warpMaster']       = WarpMaster::orderBy('created_at', 'DESC')->get()->toArray();
         $data['finishingMaster']  = FinishingMachineMaster::orderBy('created_at', 'DESC')->get()->toArray();
+        $data['foldMaster']       = FoldMaster::orderBy('created_at', 'DESC')->get()->toArray();
         $data['wovenQuality']     = WovenQuality::get()->toArray();
         return $data;
     }

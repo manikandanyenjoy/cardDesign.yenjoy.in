@@ -82,7 +82,7 @@
                                                 <th>Warp</th>
                                                 <td>{{ $viewDesignCard->warpDetail ? ucwords($viewDesignCard->warpDetail->name) : '-' }}</td>
                                                 <th>Finishing</th>
-                                                <td>{{ $viewDesignCard->finishingDetail ? ucwords($viewDesignCard->finishingDetail->machine ) : '-' }}</td>
+                                                <td>{{ $viewDesignCard->foldMasterDetail ? ucwords($viewDesignCard->foldMasterDetail->type_of_fold ) : '-' }}</td>
                                                 <th>Notes</th>
                                                 <td>{{ $viewDesignCard->description }}</td>
                                             </tr>

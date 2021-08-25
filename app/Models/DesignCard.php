@@ -177,8 +177,13 @@ class DesignCard extends Model
         return $this->hasOne(WarpMaster::class,'id','warps_id');
     }
 
-    public function finishingDetail()
+    // public function finishingDetail()
+    // {
+    //     return $this->hasOne(FinishingMachineMaster::class,'id','finishing');
+    // }     
+
+    public function foldMasterDetail()
     {
-        return $this->hasOne(FinishingMachineMaster::class,'id','finishing');
+        return $this->hasOne(foldMaster::class,'id','finishing');
     }          
 }

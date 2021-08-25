@@ -60,7 +60,14 @@
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('Document') }}</strong></td>
-                                        <td><a target="_blank" href="{{env('APP_URL')}}/storage/staffs_document/{{ $staff->document_name }}">View Document</a></td>
+                                        <!-- <td><a target="_blank" href="{{env('APP_URL')}}/storage/staffs_document/{{ $staff->document_name }}">View Document</a></td> -->
+                                        <td>
+                                            @if($staff->document_name)
+                                                <a href="{{$staff->document_name}}" download><i class="fas fa-download"></i>Download</a>
+                                            @else
+                                                No document files 
+                                            @endif
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('Left On') }}</strong></td>

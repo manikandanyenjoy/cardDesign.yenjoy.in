@@ -18,4 +18,9 @@ class Staf_master extends Model
     {
         $this->attributes["password"] = bcrypt($value);
     }
+
+    public function getDocumentNameAttribute($value)
+    {
+        return $value ? asset('staffs_document/'.$value) : "";
+    }
 }

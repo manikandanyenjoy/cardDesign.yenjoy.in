@@ -176,15 +176,15 @@
                                                             @endforeach
                                                         </select>
                                                     </td>
-                                                    <th>Finishing</th>
+                                                    <th>Folds</th>
                                                     <td>
                                                          <select name="finishing" class="form-control">
-                                                            <option value="">Select finishing</option>
-                                                            @foreach( $data['finishingMaster'] as $finishing) 
+                                                            <option value="">Select Folds</option>
+                                                            @foreach( $data['foldMaster'] as $fold) 
                                                                 @if($editdesignCard)
-                                                                    <option value="{{$finishing['id']}}" {{ old('finishing') == $finishing['id'] ? 'selected' : ($warp['id'] == $editdesignCard->finishing ? 'selected' : '') }}>{{ucfirst($finishing['machine'])}} </option>
+                                                                    <option value="{{$fold['id']}}" {{ old('finishing') == $fold['id'] ? 'selected' : ($warp['id'] == $editdesignCard->finishing ? 'selected' : '') }}>{{ucfirst($fold['type_of_fold'])}} </option>
                                                                 @else
-                                                                    <option value="{{$finishing['id']}}" {{ old('finishing') == $finishing['id'] ? 'selected' : '' }}>{{ucfirst($finishing['machine'])}} </option>
+                                                                    <option value="{{$fold['id']}}" {{ old('finishing') == $fold['id'] ? 'selected' : '' }}>{{ucfirst($fold['type_of_fold'])}} </option>
                                                                 @endif
                                                             @endforeach
                                                         </select>
@@ -260,7 +260,7 @@
                                                         </tr>
 
                                                         <tr>
-                                                            <th width="200px">Total Labour Hours</th>
+                                                            <th width="200px">Total Label Per Hours</th>
                                                             <td width="200px">
                                                                 <div class="form-group row">
                                                                     @if($editdesignCard)
@@ -471,7 +471,11 @@
                                                         <tr>
                                                             <th>
                                                                 <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" name="size_labels" {{ old('size_labels') == 'on' ? 'checked' : ''}} class="custom-control-input" id="size_label">
+                                                                    @if($editdesignCard)
+                                                                        <input type="checkbox" name="size_label[label]"  value="{{ (isset($editdesignCard->size_label['label']) ? (($editdesignCard->size_label['label'] == 'yes') ? 'yes' : 'no') : 'no') }}" {{ (isset($editdesignCard->size_label['label']) ? (($editdesignCard->size_label['label'] == 'yes') ? 'checked' : '') : '') }} class="custom-control-input" id="size_label">
+                                                                    @else
+                                                                        <input type="checkbox" name="size_label[label]"  value="{{ old('size_label.label') == 'yes' ? 'yes' : 'no' }}" {{ old('size_label.label') == 'yes' ? 'checked' : '' }} class="custom-control-input" id="size_label">
+                                                                    @endif
                                                                     <label class="custom-control-label" for="size_label">Size Label</label>
                                                                 </div>
                                                             </th>
@@ -688,10 +692,9 @@
                                                 </thead>
                                                 <tbody id="add_main_new_row">
                                                     @if($editdesignCard)
-                                                        <input type="hidden" id="form_row_count" value="{{ count($editdesignCard->main_needle) }}">
                                                         @forelse($editdesignCard->main_needle as $needleIndex => $mainNeedle)
-                                                            <tr id="inputMainFormRow">
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[{{$needleIndex}}][needle_no]" value="{{ $mainNeedle['needle_no'] }}" placeholder="Enter the value"></td>
+                                                            <tr class="inputMainFormRow">
+                                                                <td><input type="text" readonly class="main_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[{{$needleIndex}}][needle_no]" value="{{ $mainNeedle['needle_no'] }}" placeholder="Enter the value"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[{{$needleIndex}}][pantone]" value="{{ $mainNeedle['pantone'] }}" placeholder="Enter the value"></td>
                                                                 <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[{{$needleIndex}}][color]" value="{{ $mainNeedle['color'] }}" placeholder="Enter the value"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="main_needle[{{$needleIndex}}][color_shade]" value="{{ $mainNeedle['color_shade'] }}"></td>
@@ -704,8 +707,8 @@
                                                                 <td><button id="removeMainRow" class="btn btn-danger" type="button">remove</button></td>
                                                             </tr>
                                                         @empty
-                                                            <tr id="inputMainFormRow">
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
+                                                            <tr class="inputMainFormRow">
+                                                                <td><input type="text" readonly class="main_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][pantone]" value="" placeholder="Enter the value"></td>
                                                                 <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][color]" value="" placeholder="Enter the value"></td>
                                                                 <td><input type="color" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][color_shade]" value=""></td>
@@ -719,8 +722,8 @@
                                                             </tr>
                                                         @endforelse
                                                     @else
-                                                        <tr id="inputMainFormRow">
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
+                                                        <tr class="inputMainFormRow">
+                                                            <td><input type="text" readonly class="main_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
                                                             <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][pantone]" value="" placeholder="Enter the value"></td>
                                                             <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="main_needle[0][color]" value="" placeholder="Enter the value"></td>
                                                             <td><input type="text" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="main_needle[0][color_shade]" value=""></td>
@@ -758,10 +761,9 @@
                                                 </thead>
                                                 <tbody id="add_tab_new_row">
                                                     @if($editdesignCard)
-                                                        <input type="hidden" id="form_row_count" value="{{ count($editdesignCard->tab_needle) }}">
                                                         @forelse($editdesignCard->tab_needle as $tabIndex => $tabNeedle)
-                                                            <tr id="inputTabFormRow">
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[{{$tabIndex}}][needle_no]" value="{{ $tabNeedle['needle_no'] }}" placeholder="Enter the value"></td>
+                                                            <tr class="inputTabFormRow">
+                                                                <td><input type="text" readonly class="tab_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[{{$tabIndex}}][needle_no]" value="{{ $tabNeedle['needle_no'] }}" placeholder="Enter the value"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[{{$tabIndex}}][pantone]" value="{{ $tabNeedle['pantone'] }}" placeholder="Enter the value"></td>
                                                                 <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[{{$tabIndex}}][color]" value="{{ $tabNeedle['color'] }}" placeholder="Enter the value"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="tab_needle[{{$tabIndex}}][color_shade]" value="{{ $tabNeedle['color_shade'] }}"></td>
@@ -774,8 +776,8 @@
                                                                 <td><button id="removeTabRow" class="btn btn-danger" type="button">remove</button></td>
                                                             </tr>
                                                         @empty
-                                                            <tr id="inputTabFormRow">
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
+                                                            <tr class="inputTabFormRow">
+                                                                <td><input type="text" readonly class="tab_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][pantone]" value="" placeholder="Enter the value"></td>
                                                                 <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][color]" value="" placeholder="Enter the value"></td>
                                                                 <td><input type="color" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][color_shade]" value=""></td>
@@ -789,8 +791,8 @@
                                                             </tr>
                                                         @endforelse
                                                     @else
-                                                        <tr id="inputTabFormRow">
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
+                                                        <tr class="inputTabFormRow">
+                                                            <td><input type="text" readonly class="tab_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
                                                             <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][pantone]" value="" placeholder="Enter the value"></td>
                                                             <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="tab_needle[0][color]" value="" placeholder="Enter the value"></td>
                                                             <td><input type="text" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="tab_needle[0][color_shade]" value=""></td>
@@ -828,10 +830,9 @@
                                                 </thead>
                                                 <tbody id="add_size_new_row">
                                                     @if($editdesignCard)
-                                                        <input type="hidden" id="form_row_count" value="{{ count($editdesignCard->size_needle) }}">
                                                         @forelse($editdesignCard->size_needle as $sizeIndex => $sizeNeedle)
-                                                            <tr id="inputSizeFormRow">
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[{{$sizeIndex}}][needle_no]" value="{{ $sizeNeedle['needle_no'] }}" placeholder="Enter the value"></td>
+                                                            <tr class="inputSizeFormRow">
+                                                                <td><input type="text" readonly class="size_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[{{$sizeIndex}}][needle_no]" value="{{ $sizeNeedle['needle_no'] }}" placeholder="Enter the value"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[{{$sizeIndex}}][pantone]" value="{{ $sizeNeedle['pantone'] }}" placeholder="Enter the value"></td>
                                                                 <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[{{$sizeIndex}}][color]" value="{{ $sizeNeedle['color'] }}" placeholder="Enter the value"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="size_needle[{{$sizeIndex}}][color_shade]" value="{{ $sizeNeedle['color_shade'] }}"></td>
@@ -844,8 +845,8 @@
                                                                 <td><button id="removeSizeRow" class="btn btn-danger" type="button">remove</button></td>
                                                             </tr>
                                                         @empty
-                                                            <tr id="inputSizeFormRow">
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
+                                                            <tr class="inputSizeFormRow">
+                                                                <td><input type="text" readonly class="size_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][pantone]" value="" placeholder="Enter the value"></td>
                                                                 <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][color]" value="" placeholder="Enter the value"></td>
                                                                 <td><input type="color" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][color_shade]" value=""></td>
@@ -859,8 +860,8 @@
                                                             </tr>
                                                         @endforelse
                                                     @else
-                                                        <tr id="inputSizeFormRow">
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
+                                                        <tr class="inputSizeFormRow">
+                                                            <td><input type="text" readonly class="size_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
                                                             <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][pantone]" value="" placeholder="Enter the value"></td>
                                                             <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="size_needle[0][color]" value="" placeholder="Enter the value"></td>
                                                             <td><input type="text" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="size_needle[0][color_shade]" value=""></td>
@@ -894,7 +895,10 @@
                                             <div class="mt-4">
                                                 <label for="file">Front Image</label>
                                                 <input type="hidden" name="front_image" id="front_crop_image">
-                                                <input type="file" id="file" name="front_crop_image" accept="image/*">
+                                                <input type="file" id="file" name="front_crop_image" class="@error('front_crop_image') is-invalid @enderror" accept="image/*">
+                                                @error('front_crop_image') 
+                                                    <div class="invalid-feedback">{{$message}}</div>
+                                                @enderror
                                             </div>
                                         </div> 
                                         <hr>
@@ -913,7 +917,10 @@
                                             <div class="mt-4">
                                                 <label for="file">Back Image</label>
                                                 <input type="hidden" name="back_image" id="back_crop_image">
-                                                <input type="file" id="file1" accept="image/*" name="back_crop_image">
+                                                <input type="file" id="file1" class="@error('back_image') is-invalid @enderror" accept="image/*" name="back_crop_image">
+                                                @error('back_image') 
+                                                    <div class="invalid-feedback">{{$message}}</div>
+                                                @enderror    
                                             </div>
                                         </div> 
                                         <hr>
@@ -932,7 +939,10 @@
                                             <div class="mt-4">
                                                 <label for="file">All View Image</label>
                                                 <input type="hidden" name="all_view_image" id="all_view_crop_image">
-                                                <input type="file" id="file2" accept="image/*" name="all_view_crop_image">                                               
+                                                <input type="file" id="file2" class="@error('all_view_crop_image') is-invalid @enderror" accept="image/*" name="all_view_crop_image"> 
+                                                @error('all_view_crop_image') 
+                                                    <div class="invalid-feedback">{{$message}}</div>
+                                                @enderror                                              
                                             </div>
                                         </div> 
                                         <hr>
@@ -940,10 +950,17 @@
                                             <div class="mt-4">
                                                 <label for="document_name">Design File</label>
                                                 <input type="file" id="document_name" multiple name="design_files[]">
+                                                @php $errMsg = $errors->get('design_files.*'); @endphp
+                                                @if(isset($errMsg["design_files.0"][0]))
+                                                    <div class="form-text" role="alert">
+                                                        <small class="text-danger font-weight-bold">
+                                                            {{ $errMsg["design_files.0"][0] }}
+                                                        </small>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div> 
                                     </div>
-                                   
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -1004,13 +1021,12 @@
         
         // main row starts
         var index = 0;
-        var needle_no = 1;
         $("#addMainRow").click(function () {
             index++;
-            needle_no++;
+            let tabSequenceNo = $('.inputMainFormRow').length + 1;
             var html = '';
-            html +='<tr id="inputMainFormRow">';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="main_needle['+index+'][needle_no]" value="'+needle_no+'" placeholder="Enter the value"></td>';
+            html +='<tr class="inputMainFormRow">';
+            html +='<td><input type="text" readonly class="main_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="main_needle['+index+'][needle_no]" value="'+tabSequenceNo+'" placeholder="Enter the value"></td>';
             html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="main_needle['+index+'][pantone]" value="" placeholder="Enter the value"></td>';
             html +='<td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="main_needle['+index+'][color]" value="" placeholder="Enter the value"></td>';
             html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle['+index+'][color_shade]" value=""></td>';
@@ -1027,31 +1043,29 @@
         });
 
         $(document).on('click', '#removeMainRow', function () {
-            let tabl = $("#add_main_new_row > tr").length;
+            let tabl = $('.inputMainFormRow').length;
             if(tabl === 1)
             {
-                // $('#add_main_new_row').html('<tr><td colspan="10" class="text-center">No Needle pantone found...</td></tr>');
                 alert("Sorry you can't remove this row");
             }
             else
             {
-                index--;
-                needle_no--;
-
-               $(this).closest('#inputMainFormRow').remove();
+                $(this).closest('.inputMainFormRow').remove();
+                $('.inputMainFormRow').each(function(i){
+                    $(this).find('.main_sequence').val(i+1);
+                });
             }
         });
         // main row ends
 
         // tab row starts
         var tabIndex = 0;
-        var tabNeedleNo = 1;
         $("#addTabRow").click(function () {
             tabIndex++;
-            tabNeedleNo++;
+            let tabSequenceNo = $('.inputTabFormRow').length + 1;
             var tabHtml = '';
-            tabHtml +='<tr id="inputTabFormRow">';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="tab_needle['+tabIndex+'][needle_no]" value="'+tabNeedleNo+'" placeholder="Enter the value"></td>';
+            tabHtml +='<tr class="inputTabFormRow">';
+            tabHtml +='<td><input type="text" readonly class="tab_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="tab_needle['+tabIndex+'][needle_no]" value="'+tabSequenceNo+'" placeholder="Enter the value"></td>';
             tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="tab_needle['+tabIndex+'][pantone]" value="" placeholder="Enter the value"></td>';
             tabHtml +='<td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="tab_needle['+tabIndex+'][color]" value="" placeholder="Enter the value"></td>';
             tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle['+tabIndex+'][color_shade]" value=""></td>';
@@ -1068,31 +1082,29 @@
         });
 
         $(document).on('click', '#removeTabRow', function () {
-            let tabl = $("#add_tab_new_row > tr").length;
+            let tabl = $('.inputTabFormRow').length;
             if(tabl === 1)
             {
-                // $('#add_main_new_row').html('<tr><td colspan="10" class="text-center">No Needle pantone found...</td></tr>');
                 alert("Sorry you can't remove this row");
             }
             else
             {
-                tabIndex--;
-                tabNeedleNo--;
-
-               $(this).closest('#inputTabFormRow').remove();
+                $(this).closest('.inputTabFormRow').remove();
+                $('.inputTabFormRow').each(function(i){
+                    $(this).find('.tab_sequence').val(i+1);
+                });
             }
         });
         // tab row ends
 
         // size row starts
         var sizeIndex = 0;
-        var sizeNeedleNo = 1;
         $("#addSizeRow").click(function () {
             sizeIndex++;
-            sizeNeedleNo++;
+            let sizeSequenceNo = $('.inputSizeFormRow').length + 1;
             var tabHtml = '';
-            tabHtml +='<tr id="inputSizeFormRow">';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="size_needle['+sizeIndex+'][needle_no]" value="'+sizeNeedleNo+'" placeholder="Enter the value"></td>';
+            tabHtml +='<tr class="inputSizeFormRow">';
+            tabHtml +='<td><input type="text" readonly class="size_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="size_needle['+sizeIndex+'][needle_no]" value="'+sizeSequenceNo+'" placeholder="Enter the value"></td>';
             tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="size_needle['+sizeIndex+'][pantone]" value="" placeholder="Enter the value"></td>';
             tabHtml +='<td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="size_needle['+sizeIndex+'][color]" value="" placeholder="Enter the value"></td>';
             tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle['+sizeIndex+'][color_shade]" value=""></td>';
@@ -1109,16 +1121,17 @@
         });
 
         $(document).on('click', '#removeSizeRow', function () {
-            let tabl = $("#add_size_new_row > tr").length;
+            let tabl = $('.inputSizeFormRow').length;
             if(tabl === 1)
             {
                 alert("Sorry you can't remove this row");
             }
             else
             {
-                sizeIndex--;
-                sizeNeedleNo--;
-                $(this).closest('#inputSizeFormRow').remove();
+                $(this).closest('.inputSizeFormRow').remove();
+                $('.inputSizeFormRow').each(function(i){
+                    $(this).find('.size_sequence').val(i+1);
+                });
             }
         });
         // size row ends
@@ -1207,6 +1220,8 @@
         });
 
         $("#size_label").on("change",function(){
+            var tablabel_val = $(this).val() == 'no' ? 'yes' : 'no';
+            $("#size_label").val(tablabel_val);
             $(".size_label_input").toggleClass("d-none");
         });
     </script>
