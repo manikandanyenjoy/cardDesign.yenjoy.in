@@ -1,6 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Edit Woven')
+@if($editdesignCard)
+    @section('title', 'Edit Design Card')
+@else
+    @section('title', 'Create Design Card')
+@endif
 
 <style type="text/css">
     .face{
@@ -239,7 +243,7 @@
 
                                                         <tr>
                                                             <th width="200px">Total Picks</th>
-                                                            <td width="200px"><input type="text" name="main_label[total_picks]" value="{{ $editdesignCard && isset($editdesignCard->main_label['total_picks']) ? $editdesignCard->main_label['total_picks'] : '' }}" class="form-control"></td>
+                                                            <td width="200px"><input type="text" name="main_label[total_picks]" id="main_total_picks" value="{{ $editdesignCard && isset($editdesignCard->main_label['total_picks']) ? $editdesignCard->main_label['total_picks'] : '' }}" class="form-control"></td>
                                                         </tr>
 
                                                         <tr>
@@ -264,13 +268,13 @@
                                                             <td width="200px">
                                                                 <div class="form-group row">
                                                                     @if($editdesignCard)
-                                                                        <input type="text" name="main_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->main_label['total_labour_hours'][0]) ? old('main_label.total_labour_hours.0', $editdesignCard->main_label['total_labour_hours'][0]) : old('main_label.total_labour_hours.0') }}" class="form-control col">
-                                                                        <input type="text" name="main_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->main_label['total_labour_hours'][1]) ? old('main_label.total_labour_hours.1', $editdesignCard->main_label['total_labour_hours'][1]) : old('main_label.total_labour_hours.1') }}" class="form-control col">
-                                                                        <input type="text" name="main_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->main_label['total_labour_hours'][2]) ? old('main_label.total_labour_hours.2', $editdesignCard->main_label['total_labour_hours'][2]) : old('main_label.total_labour_hours.2') }}" class="form-control col">
+                                                                        <input type="text" id="main_labelhrs_first" name="main_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->main_label['total_labour_hours'][0]) ? old('main_label.total_labour_hours.0', $editdesignCard->main_label['total_labour_hours'][0]) : old('main_label.total_labour_hours.0') }}" class="form-control col">
+                                                                        <input type="text" id="main_labelhrs_second" name="main_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->main_label['total_labour_hours'][1]) ? old('main_label.total_labour_hours.1', $editdesignCard->main_label['total_labour_hours'][1]) : old('main_label.total_labour_hours.1') }}" class="form-control col">
+                                                                        <input type="text" id="main_labelhrs_third" name="main_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->main_label['total_labour_hours'][2]) ? old('main_label.total_labour_hours.2', $editdesignCard->main_label['total_labour_hours'][2]) : old('main_label.total_labour_hours.2') }}" class="form-control col">
                                                                     @else
-                                                                        <input type="text" name="main_label[total_labour_hours][]" value="{{ old('main_label.total_labour_hours.0') }}" class="form-control col">
-                                                                        <input type="text" name="main_label[total_labour_hours][]" value="{{ old('main_label.total_labour_hours.1') }}" class="form-control col">
-                                                                        <input type="text" name="main_label[total_labour_hours][]" value="{{ old('main_label.total_labour_hours.2') }}" class="form-control col">
+                                                                        <input type="text" id="main_labelhrs_first" name="main_label[total_labour_hours][]" value="{{ old('main_label.total_labour_hours.0') }}" class="form-control col">
+                                                                        <input type="text" id="main_labelhrs_second" name="main_label[total_labour_hours][]" value="{{ old('main_label.total_labour_hours.1') }}" class="form-control col">
+                                                                        <input type="text" id="main_labelhrs_third" name="main_label[total_labour_hours][]" value="{{ old('main_label.total_labour_hours.2') }}" class="form-control col">
                                                                     @endif
                                                                 </div>
                                                             </td>
@@ -368,7 +372,7 @@
                                                         @else
                                                             <tr class="tab_label_input @if(old('tab_label.label') == 'no') d-none @elseif(old('tab_label.label') == 'yes')) @else d-none @endif">
                                                         @endif
-                                                            <td width="200px"><input type="text" name="tab_label[total_picks]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_picks']) ? old('tab_label.total_picks', $editdesignCard->tab_label['total_picks']) : old('tab_label.total_picks') }}" class="form-control"></td>
+                                                            <td width="200px"><input type="text" id="tab_total_picks" name="tab_label[total_picks]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_picks']) ? old('tab_label.total_picks', $editdesignCard->tab_label['total_picks']) : old('tab_label.total_picks') }}" class="form-control"></td>
                                                         </tr>
 
                                                         @if($editdesignCard)
@@ -399,13 +403,13 @@
                                                             <td width="200px">
                                                                 <div class="form-group row">
                                                                     @if($editdesignCard)
-                                                                        <input type="text" name="tab_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_labour_hours'][0]) ? old('tab_label.total_labour_hours.0', $editdesignCard->tab_label['total_labour_hours'][0]) : old('tab_label.total_labour_hours.0') }}" class="form-control col">
-                                                                        <input type="text" name="tab_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_labour_hours'][1]) ? old('tab_label.total_labour_hours.1', $editdesignCard->tab_label['total_labour_hours'][1]) : old('tab_label.total_labour_hours.1') }}" class="form-control col">
-                                                                        <input type="text" name="tab_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_labour_hours'][2]) ? old('tab_label.total_labour_hours.2', $editdesignCard->tab_label['total_labour_hours'][2]) : old('tab_label.total_labour_hours.2') }}" class="form-control col">
+                                                                        <input type="text" id="tab_labelhrs_first" name="tab_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_labour_hours'][0]) ? old('tab_label.total_labour_hours.0', $editdesignCard->tab_label['total_labour_hours'][0]) : old('tab_label.total_labour_hours.0') }}" class="form-control col">
+                                                                        <input type="text" id="tab_labelhrs_second" name="tab_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_labour_hours'][1]) ? old('tab_label.total_labour_hours.1', $editdesignCard->tab_label['total_labour_hours'][1]) : old('tab_label.total_labour_hours.1') }}" class="form-control col">
+                                                                        <input type="text" id="tab_labelhrs_third" name="tab_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->tab_label['total_labour_hours'][2]) ? old('tab_label.total_labour_hours.2', $editdesignCard->tab_label['total_labour_hours'][2]) : old('tab_label.total_labour_hours.2') }}" class="form-control col">
                                                                     @else
-                                                                        <input type="text" name="tab_label[total_labour_hours][]" value="{{ old('tab_label.total_labour_hours.0') }}" class="form-control col">
-                                                                        <input type="text" name="tab_label[total_labour_hours][]" value="{{ old('tab_label.total_labour_hours.1') }}" class="form-control col">
-                                                                        <input type="text" name="tab_label[total_labour_hours][]" value="{{ old('tab_label.total_labour_hours.2') }}" class="form-control col">
+                                                                        <input type="text" id="tab_labelhrs_first" name="tab_label[total_labour_hours][]" value="{{ old('tab_label.total_labour_hours.0') }}" class="form-control col">
+                                                                        <input type="text" id="tab_labelhrs_second" name="tab_label[total_labour_hours][]" value="{{ old('tab_label.total_labour_hours.1') }}" class="form-control col">
+                                                                        <input type="text" id="tab_labelhrs_third" name="tab_label[total_labour_hours][]" value="{{ old('tab_label.total_labour_hours.2') }}" class="form-control col">
                                                                     @endif
                                                                 </div>
                                                             </td>
@@ -521,7 +525,7 @@
                                                         @else
                                                             <tr class="size_label_input @if(old('size_label.label') == 'no') d-none @elseif(old('size_label.label') == 'yes')) @else d-none @endif">
                                                         @endif
-                                                            <td width="200px"><input type="text" name="size_label[total_picks]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_picks']) ? old('size_label.total_picks',$editdesignCard->size_label['total_picks']) : old('size_label.total_picks') }}" class="form-control"></td>
+                                                            <td width="200px"><input type="text" id="size_total_picks" name="size_label[total_picks]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_picks']) ? old('size_label.total_picks',$editdesignCard->size_label['total_picks']) : old('size_label.total_picks') }}" class="form-control"></td>
                                                         </tr>
 
                                                         @if($editdesignCard)
@@ -552,13 +556,13 @@
                                                             <td width="200px">
                                                                 <div class="form-group row">
                                                                     @if($editdesignCard)
-                                                                        <input type="text" name="size_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_labour_hours'][0]) ? old('size_label.total_labour_hours.0',$editdesignCard->size_label['total_labour_hours'][0]) : old('size_label.total_labour_hours.0') }}" class="form-control col">
-                                                                        <input type="text" name="size_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_labour_hours'][1]) ? old('size_label.total_labour_hours.1',$editdesignCard->size_label['total_labour_hours'][1]) : old('size_label.total_labour_hours.1') }}" class="form-control col">
-                                                                        <input type="text" name="size_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_labour_hours'][2]) ? old('size_label.total_labour_hours.2',$editdesignCard->size_label['total_labour_hours'][2]) : old('size_label.total_labour_hours.2') }}" class="form-control col">
+                                                                        <input type="text" id="size_labelhrs_first" name="size_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_labour_hours'][0]) ? old('size_label.total_labour_hours.0',$editdesignCard->size_label['total_labour_hours'][0]) : old('size_label.total_labour_hours.0') }}" class="form-control col">
+                                                                        <input type="text" id="size_labelhrs_second" name="size_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_labour_hours'][1]) ? old('size_label.total_labour_hours.1',$editdesignCard->size_label['total_labour_hours'][1]) : old('size_label.total_labour_hours.1') }}" class="form-control col">
+                                                                        <input type="text" id="size_labelhrs_third" name="size_label[total_labour_hours][]" value="{{ $editdesignCard && isset($editdesignCard->size_label['total_labour_hours'][2]) ? old('size_label.total_labour_hours.2',$editdesignCard->size_label['total_labour_hours'][2]) : old('size_label.total_labour_hours.2') }}" class="form-control col">
                                                                     @else
-                                                                        <input type="text" name="size_label[total_labour_hours][]" value="{{ old('size_label.total_labour_hours.0') }}" class="form-control col">
-                                                                        <input type="text" name="size_label[total_labour_hours][]" value="{{ old('size_label.total_labour_hours.1') }}" class="form-control col">
-                                                                        <input type="text" name="size_label[total_labour_hours][]" value="{{ old('size_label.total_labour_hours.2') }}" class="form-control col">
+                                                                        <input type="text" id="size_labelhrs_first" name="size_label[total_labour_hours][]" value="{{ old('size_label.total_labour_hours.0') }}" class="form-control col">
+                                                                        <input type="text" id="size_labelhrs_second" name="size_label[total_labour_hours][]" value="{{ old('size_label.total_labour_hours.1') }}" class="form-control col">
+                                                                        <input type="text" id="size_labelhrs_third" name="size_label[total_labour_hours][]" value="{{ old('size_label.total_labour_hours.2') }}" class="form-control col">
                                                                     @endif
                                                                 </div>
                                                             </td>
@@ -696,28 +700,102 @@
                                                             <tr class="inputMainFormRow">
                                                                 <td><input type="text" readonly class="main_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[{{$needleIndex}}][needle_no]" value="{{ $mainNeedle['needle_no'] }}" placeholder="Enter the value"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[{{$needleIndex}}][pantone]" value="{{ $mainNeedle['pantone'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[{{$needleIndex}}][color]" value="{{ $mainNeedle['color'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="main_needle[{{$needleIndex}}][color_shade]" value="{{ $mainNeedle['color_shade'] }}"></td>
+                                                                <td><input type="color" class="main_color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[{{$needleIndex}}][color]" value="{{ $mainNeedle['color'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" class="main_color_shade" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="main_needle[{{$needleIndex}}][color_shade]" value="{{ $mainNeedle['color_shade'] }}"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[{{$needleIndex}}][denier]"  value="{{ $mainNeedle['denier'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[{{$needleIndex}}][a]" value="{{ $mainNeedle['a'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[{{$needleIndex}}][b]" value="{{ $mainNeedle['b'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[{{$needleIndex}}][c]" value="{{ $mainNeedle['c'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[{{$needleIndex}}][d]" value="{{ $mainNeedle['d'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[{{$needleIndex}}][e]" value="{{ $mainNeedle['e'] }}" placeholder="Enter the value"></td>
+                                                                <td>
+                                                                    <select name="main_needle[{{$needleIndex}}][a]" class="main_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select A</option>
+                                                                        @foreach($data['yarnMaster'] as $yarn)
+                                                                            <option value="{{ $yarn['id'] }}" {{ $yarn['id'] == $mainNeedle['a'] ? 'selected' : '' }} data-main_color="{{ $yarn['yarn_color'] }}" data-main_shade="{{ $yarn['color_shade'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select name="main_needle[{{$needleIndex}}][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select B</option>
+                                                                        @foreach($data['yarnMaster'] as $yarn)
+                                                                            <option value="{{ $yarn['id'] }}" {{ $yarn['id'] == $mainNeedle['b'] ? 'selected' : '' }} >{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select name="main_needle[{{$needleIndex}}][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select C</option>
+                                                                        @foreach($data['yarnMaster'] as $yarn)
+                                                                            <option value="{{ $yarn['id'] }}" {{ $yarn['id'] == $mainNeedle['c'] ? 'selected' : '' }} >{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select name="main_needle[{{$needleIndex}}][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select D</option>
+                                                                        @foreach($data['yarnMaster'] as $yarn)
+                                                                            <option value="{{ $yarn['id'] }}" {{ $yarn['id'] == $mainNeedle['d'] ? 'selected' : '' }} >{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select name="main_needle[{{$needleIndex}}][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select E</option>
+                                                                        @foreach($data['yarnMaster'] as $yarn)
+                                                                            <option value="{{ $yarn['id'] }}" {{ $yarn['id'] == $mainNeedle['e'] ? 'selected' : '' }} >{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
                                                                 <td><button id="removeMainRow" class="btn btn-danger" type="button">remove</button></td>
                                                             </tr>
                                                         @empty
                                                             <tr class="inputMainFormRow">
                                                                 <td><input type="text" readonly class="main_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][pantone]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][color]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="color" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][color_shade]" value=""></td>
+                                                                <td><input type="color" class="main_color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][color]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" class="main_color_shade" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][color_shade]" value=""></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][denier]"  value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][a]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][b]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][c]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][d]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][e]" value="" placeholder="Enter the value"></td>
+                                                                <td>
+                                                                    <select name="main_needle[0][a]" class="main_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select A</option>
+                                                                        @foreach($data['yarnMaster'] as $yarn)
+                                                                            <option value="{{ $yarn['id'] }}" data-main_color="{{ $yarn['yarn_color'] }}" data-main_shade="{{ $yarn['color_shade'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+
+                                                                <td>
+                                                                    <select name="main_needle[0][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select B</option>
+                                                                        @foreach($data['yarnMaster'] as $yarn)
+                                                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+
+                                                                <td>
+                                                                    <select name="main_needle[0][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select C</option>
+                                                                        @foreach($data['yarnMaster'] as $yarn)
+                                                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+
+                                                                <td>
+                                                                    <select name="main_needle[0][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select D</option>
+                                                                        @foreach($data['yarnMaster'] as $yarn)
+                                                                            <option value="{{ $yarn['id'] }}" >{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+
+                                                                <td>
+                                                                    <select name="main_needle[0][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select E</option>
+                                                                        @foreach($data['yarnMaster'] as $yarn)
+                                                                            <option value="{{ $yarn['id'] }}" >{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
                                                                 <td><button id="removeMainRow" class="btn btn-danger" type="button">remove</button></td>
                                                             </tr>
                                                         @endforelse
@@ -725,14 +803,54 @@
                                                         <tr class="inputMainFormRow">
                                                             <td><input type="text" readonly class="main_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
                                                             <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][pantone]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="main_needle[0][color]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="main_needle[0][color_shade]" value=""></td>
+                                                            <td><input type="color" class="main_color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="main_needle[0][color]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" class="main_color_shade" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="main_needle[0][color_shade]" value=""></td>
                                                             <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][denier]"  value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][a]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][b]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="main_needle[0][c]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][d]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[0][e]" value="" placeholder="Enter the value"></td>
+                                                            <td>
+                                                                <select name="main_needle[0][a]" class="main_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <option value="">Select A</option>
+                                                                    @foreach($data['yarnMaster'] as $yarn)
+                                                                        <option value="{{ $yarn['id'] }}" data-main_color="{{ $yarn['yarn_color'] }}" data-main_shade="{{ $yarn['color_shade'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+
+                                                            <td>
+                                                                <select name="main_needle[0][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <option value="">Select B</option>
+                                                                    @foreach($data['yarnMaster'] as $yarn)
+                                                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+
+                                                            <td>
+                                                                <select name="main_needle[0][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <option value="">Select C</option>
+                                                                    @foreach($data['yarnMaster'] as $yarn)
+                                                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+
+                                                            <td>
+                                                                <select name="main_needle[0][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <option value="">Select D</option>
+                                                                    @foreach($data['yarnMaster'] as $yarn)
+                                                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+
+                                                            <td>
+                                                                <select name="main_needle[0][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <option value="">Select E</option>
+                                                                    @foreach($data['yarnMaster'] as $yarn)
+                                                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+                                                           
                                                             <td><button id="removeMainRow" class="btn btn-danger" type="button">remove</button></td>
                                                         </tr>
                                                     @endif
@@ -765,28 +883,102 @@
                                                             <tr class="inputTabFormRow">
                                                                 <td><input type="text" readonly class="tab_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[{{$tabIndex}}][needle_no]" value="{{ $tabNeedle['needle_no'] }}" placeholder="Enter the value"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[{{$tabIndex}}][pantone]" value="{{ $tabNeedle['pantone'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[{{$tabIndex}}][color]" value="{{ $tabNeedle['color'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="tab_needle[{{$tabIndex}}][color_shade]" value="{{ $tabNeedle['color_shade'] }}"></td>
+                                                                <td><input type="color" class="tab_color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[{{$tabIndex}}][color]" value="{{ $tabNeedle['color'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" class="tab_color_shade" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="tab_needle[{{$tabIndex}}][color_shade]" value="{{ $tabNeedle['color_shade'] }}"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[{{$tabIndex}}][denier]"  value="{{ $tabNeedle['denier'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[{{$tabIndex}}][a]" value="{{ $tabNeedle['a'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[{{$tabIndex}}][b]" value="{{ $tabNeedle['b'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[{{$tabIndex}}][c]" value="{{ $tabNeedle['c'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[{{$tabIndex}}][d]" value="{{ $tabNeedle['d'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[{{$tabIndex}}][e]" value="{{ $tabNeedle['e'] }}" placeholder="Enter the value"></td>
+                                                                <td>
+                                                                    <select name="tab_needle[{{$tabIndex}}][a]" class="tab_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select A</option>
+                                                                        @foreach($data['yarnMaster'] as $tabYarn)
+                                                                            <option value="{{ $tabYarn['id'] }}" {{ $tabYarn['id'] == $tabNeedle['a'] ? 'selected' : '' }} data-tab_color="{{ $tabYarn['yarn_color'] }}" data-tab_shade="{{ $tabYarn['color_shade'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select name="tab_needle[{{$tabIndex}}][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select B</option>
+                                                                        @foreach($data['yarnMaster'] as $tabYarn)
+                                                                            <option value="{{ $tabYarn['id'] }}" {{ $tabYarn['id'] == $tabNeedle['b'] ? 'selected' : '' }} >{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select name="tab_needle[{{$tabIndex}}][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select C</option>
+                                                                        @foreach($data['yarnMaster'] as $tabYarn)
+                                                                            <option value="{{ $tabYarn['id'] }}" {{ $tabYarn['id'] == $tabNeedle['c'] ? 'selected' : '' }} >{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select name="tab_needle[{{$tabIndex}}][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select D</option>
+                                                                        @foreach($data['yarnMaster'] as $tabYarn)
+                                                                            <option value="{{ $tabYarn['id'] }}" {{ $tabYarn['id'] == $tabNeedle['d'] ? 'selected' : '' }} >{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select name="tab_needle[{{$tabIndex}}][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select E</option>
+                                                                        @foreach($data['yarnMaster'] as $tabYarn)
+                                                                            <option value="{{ $tabYarn['id'] }}" {{ $tabYarn['id'] == $tabNeedle['e'] ? 'selected' : '' }} >{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
                                                                 <td><button id="removeTabRow" class="btn btn-danger" type="button">remove</button></td>
                                                             </tr>
                                                         @empty
                                                             <tr class="inputTabFormRow">
                                                                 <td><input type="text" readonly class="tab_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][pantone]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][color]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="color" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][color_shade]" value=""></td>
+                                                                <td><input type="color" class="tab_color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][color]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" class="tab_color_shade" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][color_shade]" value=""></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][denier]"  value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][a]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][b]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][c]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][d]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][e]" value="" placeholder="Enter the value"></td>
+                                                                <td>
+                                                                    <select name="tab_needle[0][a]" class="tab_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select A</option>
+                                                                        @foreach($data['yarnMaster'] as $tabYarn)
+                                                                            <option value="{{ $tabYarn['id'] }}" data-tab_color="{{ $tabYarn['yarn_color'] }}" data-tab_shade="{{ $tabYarn['color_shade'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+
+                                                                <td>
+                                                                    <select name="tab_needle[0][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select B</option>
+                                                                        @foreach($data['yarnMaster'] as $tabYarn)
+                                                                            <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+
+                                                                <td>
+                                                                    <select name="tab_needle[0][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select C</option>
+                                                                        @foreach($data['yarnMaster'] as $tabYarn)
+                                                                            <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+
+                                                                <td>
+                                                                    <select name="tab_needle[0][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select D</option>
+                                                                        @foreach($data['yarnMaster'] as $tabYarn)
+                                                                            <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+
+                                                                <td>
+                                                                    <select name="tab_needle[0][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select E</option>
+                                                                        @foreach($data['yarnMaster'] as $tabYarn)
+                                                                            <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
                                                                 <td><button id="removeTabRow" class="btn btn-danger" type="button">remove</button></td>
                                                             </tr>
                                                         @endforelse
@@ -794,14 +986,53 @@
                                                         <tr class="inputTabFormRow">
                                                             <td><input type="text" readonly class="tab_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
                                                             <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][pantone]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="tab_needle[0][color]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="tab_needle[0][color_shade]" value=""></td>
+                                                            <td><input type="color" class="tab_color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="tab_needle[0][color]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" class="tab_color_shade" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="tab_needle[0][color_shade]" value=""></td>
                                                             <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][denier]"  value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][a]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][b]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="tab_needle[0][c]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][d]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[0][e]" value="" placeholder="Enter the value"></td>
+                                                            <td>
+                                                                <select name="tab_needle[0][a]" class="tab_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <option value="">Select A</option>
+                                                                    @foreach($data['yarnMaster'] as $tabYarn)
+                                                                        <option value="{{ $tabYarn['id'] }}" data-tab_color="{{ $tabYarn['yarn_color'] }}" data-tab_shade="{{ $tabYarn['color_shade'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+
+                                                            <td>
+                                                                <select name="tab_needle[0][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <option value="">Select B</option>
+                                                                    @foreach($data['yarnMaster'] as $tabYarn)
+                                                                        <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+
+                                                            <td>
+                                                                <select name="tab_needle[0][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <option value="">Select C</option>
+                                                                    @foreach($data['yarnMaster'] as $tabYarn)
+                                                                        <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+
+                                                            <td>
+                                                                <select name="tab_needle[0][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <option value="">Select D</option>
+                                                                    @foreach($data['yarnMaster'] as $tabYarn)
+                                                                        <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+
+                                                            <td>
+                                                                <select name="tab_needle[0][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <option value="">Select E</option>
+                                                                    @foreach($data['yarnMaster'] as $tabYarn)
+                                                                        <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
                                                             <td><button id="removeTabRow" class="btn btn-danger" type="button">remove</button></td>
                                                         </tr>
                                                     @endif
@@ -834,27 +1065,102 @@
                                                             <tr class="inputSizeFormRow">
                                                                 <td><input type="text" readonly class="size_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[{{$sizeIndex}}][needle_no]" value="{{ $sizeNeedle['needle_no'] }}" placeholder="Enter the value"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[{{$sizeIndex}}][pantone]" value="{{ $sizeNeedle['pantone'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[{{$sizeIndex}}][color]" value="{{ $sizeNeedle['color'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="size_needle[{{$sizeIndex}}][color_shade]" value="{{ $sizeNeedle['color_shade'] }}"></td>
+                                                                <td><input type="color" class="size_color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[{{$sizeIndex}}][color]" value="{{ $sizeNeedle['color'] }}" placeholder="Enter the value"></td>
+                                                                <td><input type="text" class="size_color_shade" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="size_needle[{{$sizeIndex}}][color_shade]" value="{{ $sizeNeedle['color_shade'] }}"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[{{$sizeIndex}}][denier]"  value="{{ $sizeNeedle['denier'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[{{$sizeIndex}}][a]" value="{{ $sizeNeedle['a'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[{{$sizeIndex}}][b]" value="{{ $sizeNeedle['b'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[{{$sizeIndex}}][c]" value="{{ $sizeNeedle['c'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[{{$sizeIndex}}][d]" value="{{ $sizeNeedle['d'] }}" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[{{$sizeIndex}}][e]" value="{{ $sizeNeedle['e'] }}" placeholder="Enter the value"></td>
+                                                                <td>
+                                                                    <select name="sizeNeedle[{{$tabIndex}}][a]" class="size_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select A</option>
+                                                                        @foreach($data['yarnMaster'] as $sizeYarn)
+                                                                            <option value="{{ $sizeYarn['id'] }}" {{ $sizeYarn['id'] == $sizeNeedle['a'] ? 'selected' : '' }} data-size_color="{{ $sizeYarn['yarn_color'] }}" data-size_shade="{{ $sizeYarn['color_shade'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select name="sizeNeedle[{{$tabIndex}}][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select B</option>
+                                                                        @foreach($data['yarnMaster'] as $sizeYarn)
+                                                                            <option value="{{ $sizeYarn['id'] }}" {{ $sizeYarn['id'] == $sizeNeedle['b'] ? 'selected' : '' }} >{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select name="sizeNeedle[{{$tabIndex}}][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select C</option>
+                                                                        @foreach($data['yarnMaster'] as $sizeYarn)
+                                                                            <option value="{{ $sizeYarn['id'] }}" {{ $sizeYarn['id'] == $sizeNeedle['c'] ? 'selected' : '' }} >{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select name="sizeNeedle[{{$tabIndex}}][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select D</option>
+                                                                        @foreach($data['yarnMaster'] as $sizeYarn)
+                                                                            <option value="{{ $sizeYarn['id'] }}" {{ $sizeYarn['id'] == $sizeNeedle['d'] ? 'selected' : '' }} >{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select name="sizeNeedle[{{$tabIndex}}][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select E</option>
+                                                                        @foreach($data['yarnMaster'] as $sizeYarn)
+                                                                            <option value="{{ $sizeYarn['id'] }}" {{ $sizeYarn['id'] == $sizeNeedle['e'] ? 'selected' : '' }} >{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
                                                                 <td><button id="removeSizeRow" class="btn btn-danger" type="button">remove</button></td>
                                                             </tr>
                                                         @empty
                                                             <tr class="inputSizeFormRow">
                                                                 <td><input type="text" readonly class="size_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][pantone]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][color]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="color" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][color_shade]" value=""></td>
+                                                                <td><input type="color" class="size_color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][color]" value="" placeholder="Enter the value"></td>
+                                                                <td><input type="text" class="size_color_shade" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][color_shade]" value=""></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][denier]"  value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][a]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][b]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][c]" value="" placeholder="Enter the value"></td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][d]" value="" placeholder="Enter the value"></td>
+                                                                <td>
+                                                                    <select name="size_needle[0][a]" class="size_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select A</option>
+                                                                        @foreach($data['yarnMaster'] as $sizeYarn)
+                                                                            <option value="{{ $sizeYarn['id'] }}" data-size_color="{{ $sizeYarn['yarn_color'] }}" data-size_shade="{{ $sizeYarn['color_shade'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+
+                                                                <td>
+                                                                    <select name="size_needle[0][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select B</option>
+                                                                        @foreach($data['yarnMaster'] as $sizeYarn)
+                                                                            <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+
+                                                                <td>
+                                                                    <select name="size_needle[0][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select C</option>
+                                                                        @foreach($data['yarnMaster'] as $sizeYarn)
+                                                                            <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+
+                                                                <td>
+                                                                    <select name="size_needle[0][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select D</option>
+                                                                        @foreach($data['yarnMaster'] as $sizeYarn)
+                                                                            <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+
+                                                                <td>
+                                                                    <select name="size_needle[0][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                        <option value="">Select E</option>
+                                                                        @foreach($data['yarnMaster'] as $sizeYarn)
+                                                                            <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][e]" value="" placeholder="Enter the value"></td>
                                                                 <td><button id="removeSizeRow" class="btn btn-danger" type="button">remove</button></td>
                                                             </tr>
@@ -863,14 +1169,53 @@
                                                         <tr class="inputSizeFormRow">
                                                             <td><input type="text" readonly class="size_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][needle_no]" value="1" placeholder="Enter the value"></td>
                                                             <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][pantone]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="size_needle[0][color]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="size_needle[0][color_shade]" value=""></td>
+                                                            <td><input type="color" class="size_color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="size_needle[0][color]" value="" placeholder="Enter the value"></td>
+                                                            <td><input type="text" class="size_color_shade" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="size_needle[0][color_shade]" value=""></td>
                                                             <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][denier]"  value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][a]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][b]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="size_needle[0][c]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][d]" value="" placeholder="Enter the value"></td>
-                                                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][e]" value="" placeholder="Enter the value"></td>
+                                                            <td>
+                                                                <select name="size_needle[0][a]" class="size_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <option value="">Select A</option>
+                                                                    @foreach($data['yarnMaster'] as $sizeYarn)
+                                                                        <option value="{{ $sizeYarn['id'] }}" data-size_color="{{ $sizeYarn['yarn_color'] }}" data-size_shade="{{ $sizeYarn['color_shade'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+
+                                                            <td>
+                                                                <select name="size_needle[0][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <option value="">Select B</option>
+                                                                    @foreach($data['yarnMaster'] as $sizeYarn)
+                                                                        <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+
+                                                            <td>
+                                                                <select name="size_needle[0][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <option value="">Select C</option>
+                                                                    @foreach($data['yarnMaster'] as $sizeYarn)
+                                                                        <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+
+                                                            <td>
+                                                                <select name="size_needle[0][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <option value="">Select D</option>
+                                                                    @foreach($data['yarnMaster'] as $sizeYarn)
+                                                                        <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+
+                                                            <td>
+                                                                <select name="size_needle[0][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <option value="">Select E</option>
+                                                                    @foreach($data['yarnMaster'] as $sizeYarn)
+                                                                        <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
                                                             <td><button id="removeSizeRow" class="btn btn-danger" type="button">remove</button></td>
                                                         </tr>
                                                     @endif
@@ -1023,22 +1368,61 @@
         var index = 0;
         $("#addMainRow").click(function () {
             index++;
-            let tabSequenceNo = $('.inputMainFormRow').length + 1;
-            var html = '';
-            html +='<tr class="inputMainFormRow">';
-            html +='<td><input type="text" readonly class="main_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="main_needle['+index+'][needle_no]" value="'+tabSequenceNo+'" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="main_needle['+index+'][pantone]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="main_needle['+index+'][color]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle['+index+'][color_shade]" value=""></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle['+index+'][denier]"  value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="main_needle['+index+'][a]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="main_needle['+index+'][b]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle['+index+'][c]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle['+index+'][d]" value="" placeholder="Enter the value"></td>';
-            html +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle['+index+'][e]" value="" placeholder="Enter the value"></td>';
-            html +='<td><button id="removeMainRow" class="btn btn-danger" type="button">remove</button></td>';
-            html +='</tr>';
-        
+            let mainSequenceNo = $('.inputMainFormRow').length + 1;
+            var html = `<tr class="inputMainFormRow">
+                            <td><input type="text" readonly class="main_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="main_needle[${index}][needle_no]" value="${mainSequenceNo}" placeholder="Enter the value"></td>
+                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="main_needle[${index}][pantone]" value="" placeholder="Enter the value"></td>
+                            <td><input type="color" class="main_color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="main_needle[${index}][color]" value="" placeholder="Enter the value"></td>
+                            <td><input type="text" class="main_color_shade" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[${index}][color_shade]" value=""></td>
+                            <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="main_needle[${index}][denier]"  value="" placeholder="Enter the value"></td>
+                         
+                            <td>
+                                <select name="main_needle[${index}][a]" class="main_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                    <option value="">Select Yarn</option>
+                                    @foreach($data['yarnMaster'] as $yarn)
+                                        <option value="{{ $yarn['id'] }}" data-main_color="{{ $yarn['yarn_color'] }}" data-main_shade="{{ $yarn['color_shade'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+
+                            <td>
+                                <select name="main_needle[${index}][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                    <option value="">Select Yarn</option>
+                                    @foreach($data['yarnMaster'] as $yarn)
+                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+
+                            <td>
+                                <select name="main_needle[${index}][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                    <option value="">Select Yarn</option>
+                                    @foreach($data['yarnMaster'] as $yarn)
+                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+
+                            <td>
+                                <select name="main_needle[${index}][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                    <option value="">Select Yarn</option>
+                                    @foreach($data['yarnMaster'] as $yarn)
+                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+
+                            <td>
+                                <select name="main_needle[${index}][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                    <option value="">Select Yarn</option>
+                                    @foreach($data['yarnMaster'] as $yarn)
+                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+
+                            <td><button id="removeMainRow" class="btn btn-danger" type="button">remove</button></td>
+                        </tr>`
             $('#add_main_new_row').append(html);
         });
 
@@ -1056,6 +1440,13 @@
                 });
             }
         });
+        
+        $(document).on("change",".main_yarn",function(){
+            const mainColor = $(this).find(':selected').data('main_color');
+            const mainShade = $(this).find(':selected').data('main_shade');
+            $(this).closest('tr').find('.main_color').val(mainColor);
+            $(this).closest('tr').find('.main_color_shade').val(mainShade);
+        });
         // main row ends
 
         // tab row starts
@@ -1063,20 +1454,60 @@
         $("#addTabRow").click(function () {
             tabIndex++;
             let tabSequenceNo = $('.inputTabFormRow').length + 1;
-            var tabHtml = '';
-            tabHtml +='<tr class="inputTabFormRow">';
-            tabHtml +='<td><input type="text" readonly class="tab_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="tab_needle['+tabIndex+'][needle_no]" value="'+tabSequenceNo+'" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="tab_needle['+tabIndex+'][pantone]" value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="tab_needle['+tabIndex+'][color]" value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle['+tabIndex+'][color_shade]" value=""></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle['+tabIndex+'][denier]"  value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="tab_needle['+tabIndex+'][a]" value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="tab_needle['+tabIndex+'][b]" value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle['+tabIndex+'][c]" value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle['+tabIndex+'][d]" value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle['+tabIndex+'][e]" value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><button id="removeTabRow" class="btn btn-danger" type="button">remove</button></td>';
-            tabHtml +='</tr>';
+            var tabHtml = `<tr class="inputTabFormRow">
+                                <td><input type="text" readonly class="tab_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="tab_needle[${tabIndex}][needle_no]" value="${tabSequenceNo}" placeholder="Enter the value"></td>
+                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="tab_needle[${tabIndex}][pantone]" value="" placeholder="Enter the value"></td>
+                                <td><input type="color" class="tab_color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="tab_needle[${tabIndex}][color]" value="" placeholder="Enter the value"></td>
+                                <td><input type="text" class="tab_color_shade" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[${tabIndex}][color_shade]" value=""></td>
+                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="tab_needle[${tabIndex}][denier]"  value="" placeholder="Enter the value"></td>
+
+                                <td>
+                                    <select name="tab_needle[${tabIndex}][a]" class="tab_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                        <option value="">Select A</option>
+                                        @foreach($data['yarnMaster'] as $yarn)
+                                            <option value="{{ $yarn['id'] }}" data-tab_color="{{ $yarn['yarn_color'] }}" data-tab_shade="{{ $yarn['color_shade'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <select name="tab_needle[${tabIndex}][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                        <option value="">Select B</option>
+                                        @foreach($data['yarnMaster'] as $yarn)
+                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <select name="tab_needle[${tabIndex}][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                        <option value="">Select C</option>
+                                        @foreach($data['yarnMaster'] as $yarn)
+                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <select name="tab_needle[${tabIndex}][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                        <option value="">Select D</option>
+                                        @foreach($data['yarnMaster'] as $yarn)
+                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <select name="tab_needle[${tabIndex}][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                        <option value="">Select E</option>
+                                        @foreach($data['yarnMaster'] as $yarn)
+                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                                <td><button id="removeTabRow" class="btn btn-danger" type="button">remove</button></td>
+                            </tr>`;
         
             $('#add_tab_new_row').append(tabHtml);
         });
@@ -1095,6 +1526,13 @@
                 });
             }
         });
+
+        $(document).on("change",".tab_yarn",function(){
+            const tabColor = $(this).find(':selected').data('tab_color');
+            const tabShade = $(this).find(':selected').data('tab_shade');
+            $(this).closest('tr').find('.tab_color').val(tabColor);
+            $(this).closest('tr').find('.tab_color_shade').val(tabShade);
+        });
         // tab row ends
 
         // size row starts
@@ -1102,22 +1540,61 @@
         $("#addSizeRow").click(function () {
             sizeIndex++;
             let sizeSequenceNo = $('.inputSizeFormRow').length + 1;
-            var tabHtml = '';
-            tabHtml +='<tr class="inputSizeFormRow">';
-            tabHtml +='<td><input type="text" readonly class="size_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="size_needle['+sizeIndex+'][needle_no]" value="'+sizeSequenceNo+'" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="size_needle['+sizeIndex+'][pantone]" value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="size_needle['+sizeIndex+'][color]" value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle['+sizeIndex+'][color_shade]" value=""></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle['+sizeIndex+'][denier]"  value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="size_needle['+sizeIndex+'][a]" value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="size_needle['+sizeIndex+'][b]" value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle['+sizeIndex+'][c]" value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle['+sizeIndex+'][d]" value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle['+sizeIndex+'][e]" value="" placeholder="Enter the value"></td>';
-            tabHtml +='<td><button id="removeSizeRow" class="btn btn-danger" type="button">remove</button></td>';
-            tabHtml +='</tr>';
-        
-            $('#add_size_new_row').append(tabHtml);
+            var sizeHtml = `<tr class="inputTabFormRow">
+                                <td><input type="text" readonly class="size_sequence" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="size_needle[${sizeIndex}][needle_no]" value="${sizeSequenceNo}" placeholder="Enter the value"></td>
+                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="size_needle[${sizeIndex}][pantone]" value="" placeholder="Enter the value"></td>
+                                <td><input type="color" class="size_color" style="border-radius:.25rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" class="form-controls" name="size_needle[${sizeIndex}][color]" value="" placeholder="Enter the value"></td>
+                                <td><input type="text" class="size_color_shade" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[${sizeIndex}][color_shade]" value=""></td>
+                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[${sizeIndex}][denier]"  value="" placeholder="Enter the value"></td>
+
+                                <td>
+                                    <select name="size_needle[${sizeIndex}][a]" class="size_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                        <option value="">Select A</option>
+                                        @foreach($data['yarnMaster'] as $yarn)
+                                            <option value="{{ $yarn['id'] }}" data-size_color="{{ $yarn['yarn_color'] }}" data-size_shade="{{ $yarn['color_shade'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <select name="size_needle[${sizeIndex}][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                        <option value="">Select B</option>
+                                        @foreach($data['yarnMaster'] as $yarn)
+                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <select name="size_needle[${sizeIndex}][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                        <option value="">Select C</option>
+                                        @foreach($data['yarnMaster'] as $yarn)
+                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <select name="size_needle[${sizeIndex}][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                        <option value="">Select D</option>
+                                        @foreach($data['yarnMaster'] as $yarn)
+                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <select name="size_needle[${sizeIndex}][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                        <option value="">Select E</option>
+                                        @foreach($data['yarnMaster'] as $yarn)
+                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                                <td><button id="removeSizeRow" class="btn btn-danger" type="button">remove</button></td>
+                            </tr>`;
+            $('#add_size_new_row').append(sizeHtml);
         });
 
         $(document).on('click', '#removeSizeRow', function () {
@@ -1134,37 +1611,140 @@
                 });
             }
         });
-        // size row ends
 
+        $(document).on("change",".size_yarn",function(){
+            const sizeColor = $(this).find(':selected').data('size_color');
+            const sizeShade = $(this).find(':selected').data('size_shade');
+            $(this).closest('tr').find('.size_color').val(sizeColor);
+            $(this).closest('tr').find('.size_color_shade').val(sizeShade);
+        });
+        // size row ends     
 
-        $("#main_repeat_first_input").on("keyup",function(){
-            let mainFirstCal = parseFloat($(this).val()) ? parseFloat($(this).val()) * 1.2 : '';
-            $("#main_repeat_second_input").val(mainFirstCal.toFixed(2));
+        const mullerSpeed    = "{{$data['loomrMaster'][0]['speed']}}";
+        const airjet_12Speed = "{{$data['loomrMaster'][1]['speed']}}";
+        const airjet_16Speed = "{{$data['loomrMaster'][2]['speed']}}";
+
+        $("#main_total_picks, #main_repeat_first_input").on("keyup",function(){
+            const mainTotalPicks  = parseFloat($(this).val());        
+            const mainLabFst      = $("#main_labelhrs_first");
+            const mainLabsec      = $("#main_labelhrs_second");
+            const mainLabThir     = $("#main_labelhrs_third");
+            const mainRepFst        = $("#main_repeat_first_input");
+            const mainRepSec      = $("#main_repeat_second_input");
+            const mainRepThir     = $("#main_repeat_last_input");
+
+            if(($("#main_total_picks").val() && !isNaN($("#main_total_picks").val())) && ($("#main_repeat_first_input").val() && !isNaN($("#main_repeat_first_input").val()))){
+              const mainLabFirst  = (parseFloat(mullerSpeed)/mainTotalPicks)/parseFloat(mainRepFst.val())*60*85;
+              const mainLabSecond = (parseFloat(airjet_12Speed)/mainTotalPicks)/parseFloat(mainRepSec.val())*60*85;
+              const mainLabThird  = (parseFloat(airjet_16Speed)/mainTotalPicks)/parseFloat(mainRepThir.val())*60*85;
+              mainLabFst.val(mainLabFirst.toFixed(2));
+              mainLabsec.val(mainLabSecond.toFixed(2));
+              mainLabThir.val(mainLabThird.toFixed(2));
+            
+            }else{
+                mainLabFst.val('');
+                mainLabsec.val('');
+                mainLabThir.val('');
+            }
         });
 
-        $("#main_repeat_last_input").on("change",function(){
-            let mainLastCal = parseFloat($(this).val()) ? parseFloat($(this).val()) * 1.6 : '';
-            $("#main_repeat_last_input").val(mainLastCal.toFixed(2));
+        $("#main_repeat_first_input").on("keyup",function(){
+            const mainRepFirst   = $(this).val()
+            const mainRepSecond  = $("#main_repeat_second_input");
+            const mainRepThird   = $("#main_repeat_last_input");
+               
+            if(mainRepFirst && !isNaN(mainRepFirst)){
+                const mainFirstCal = parseFloat(mainRepFirst) * 1.2;
+                const mainLastCal  = parseFloat(mainRepFirst) * 1.6;
+
+                mainRepSecond.val(mainFirstCal.toFixed(2));
+                mainRepThird.val(mainLastCal.toFixed(2));
+            }
+            else{
+                mainRepSecond.val('');
+                mainRepThird.val('');
+            }
+        });
+
+        $("#tab_total_picks, #tab_repeat_first_input").on("keyup",function(){
+            const tabTotalPicks  = parseFloat($(this).val());        
+            const tabLabFst      = $("#tab_labelhrs_first");
+            const tabLabsec      = $("#tab_labelhrs_second");
+            const tabLabThir     = $("#tab_labelhrs_third");
+            const tabRepFst      = $("#tab_repeat_first_input");
+            const tabRepSec      = $("#tab_repeat_second_input");
+            const tabRepThir     = $("#tab_repeat_last_input");
+
+            if(($("#tab_total_picks").val() && !isNaN($("#tab_total_picks").val())) && ($("#tab_repeat_first_input").val() && !isNaN($("#tab_repeat_first_input").val()))){
+              const tabLabFirst  = (parseFloat(mullerSpeed)/tabTotalPicks)/parseFloat(tabRepFst.val())*60*85;
+              const tabLabSecond = (parseFloat(airjet_12Speed)/tabTotalPicks)/parseFloat(tabRepSec.val())*60*85;
+              const tabLabThird  = (parseFloat(airjet_16Speed)/tabTotalPicks)/parseFloat(tabRepThir.val())*60*85;
+              tabLabFst.val(tabLabFirst.toFixed(2));
+              tabLabsec.val(tabLabSecond.toFixed(2));
+              tabLabThir.val(tabLabThird.toFixed(2));
+            
+            }else{
+                tabLabFst.val('');
+                tabLabsec.val('');
+                tabLabThir.val('');
+            }
         });
 
         $("#tab_repeat_first_input").on("keyup",function(){
-            let tabFirstCal = parseFloat($(this).val()) ? parseFloat($(this).val()) * 1.2 : '';
-            $("#tab_repeat_second_input").val(tabFirstCal.toFixed(2));
+            const tabRepFirst      = $(this).val();
+            const tabRepSecond     = $("#tab_repeat_second_input");
+            const tabRepThird      = $("#tab_repeat_last_input");
+            
+            if(tabRepFirst && !isNaN(tabRepFirst)){
+                const tabFirstCal     = parseFloat(tabRepFirst) * 1.2;
+                const tabLastCal      = parseFloat(tabRepFirst) * 1.6;
+
+                tabRepSecond.val(tabFirstCal.toFixed(2));
+                tabRepThird.val(tabLastCal.toFixed(2));
+            }else{
+                tabRepSecond.val("");
+                tabRepThird.val("");
+            }
         });
 
-        $("#tab_repeat_last_input").on("change",function(){
-            let tabLastCal = parseFloat($(this).val()) ? parseFloat($(this).val()) * 1.6 : '';
-            $("#tab_repeat_last_input").val(tabLastCal.toFixed(2));
+        $("#size_total_picks, #size_repeat_first_input").on("keyup",function(){
+            const sizeTotalPicks  = parseFloat($(this).val());        
+            const sizeLabFst      = $("#size_labelhrs_first");
+            const sizeLabsec      = $("#size_labelhrs_second");
+            const sizeLabThir     = $("#size_labelhrs_third");
+            const sizeRepFst      = $("#size_repeat_first_input");
+            const sizeRepSec      = $("#size_repeat_second_input");
+            const sizeRepThir     = $("#size_repeat_last_input");
+
+            if(($("#size_total_picks").val() && !isNaN($("#size_total_picks").val())) && ($("#size_repeat_first_input").val() && !isNaN($("#size_repeat_first_input").val()))){
+              const sizeLabFirst  = (parseFloat(mullerSpeed)/sizeTotalPicks)/parseFloat(sizeRepFst.val())*60*85;
+              const sizeLabSecond = (parseFloat(airjet_12Speed)/sizeTotalPicks)/parseFloat(sizeRepSec.val())*60*85;
+              const sizeLabThird  = (parseFloat(airjet_16Speed)/sizeTotalPicks)/parseFloat(sizeRepThir.val())*60*85;
+              sizeLabFst.val(sizeLabFirst.toFixed(2));
+              sizeLabsec.val(sizeLabSecond.toFixed(2));
+              sizeLabThir.val(sizeLabThird.toFixed(2));
+            
+            }else{
+                sizeLabFst.val('');
+                sizeLabsec.val('');
+                sizeLabThir.val('');
+            }
         });
 
         $("#size_repeat_first_input").on("keyup",function(){
-            let sizeFirstCal = parseFloat($(this).val()) ? parseFloat($(this).val()) * 1.2 : '';
-            $("#size_repeat_second_input").val(sizeFirstCal.toFixed(2));
-        });
+            const sizeRepFirst    = $(this).val();
+            const sizeRepSecond   = $("#size_repeat_second_input");
+            const sizeRepThird    = $("#size_repeat_last_input");
 
-        $("#size_repeat_last_input").on("change",function(){
-            let sizeLastCal = parseFloat($(this).val()) ? parseFloat($(this).val()) * 1.6 : '';
-            $("#size_repeat_last_input").val(sizeLastCal.toFixed(2));
+            if(sizeRepFirst && !isNaN(sizeRepFirst)){
+                const sizeFirstCal = parseFloat(sizeRepFirst) * 1.2;
+                const sizeLastCal  = parseFloat(sizeRepFirst) * 1.6;
+                sizeRepSecond.val(sizeFirstCal.toFixed(2));
+                sizeRepThird.val(sizeLastCal.toFixed(2));
+            }else{
+                sizeRepSecond.val("");
+                sizeRepThird.val("");
+            }
         });
 
         $("#main_width_input, #main_length_input").on("keyup",function(){

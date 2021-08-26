@@ -15,6 +15,7 @@ use App\Models\WovenQuality;
 use App\Http\Requests\Admin\WovenRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Models\FoldMaster;
+use App\Models\YarnMaster;
 
 class WovenController extends Controller
 {
@@ -37,6 +38,7 @@ class WovenController extends Controller
     {   
         $data = $this->mastersDatas();
         $editdesignCard = "";
+        // dd($data['yarnMaster']);
         return view("woven.create", compact("data","editdesignCard"));
     }
 
@@ -313,7 +315,9 @@ class WovenController extends Controller
 
     public function mastersDatas()
     {
+        $data['yarnMaster']       = YarnMaster::get()->toArray();
         $data['customerMaster']   = CustomerMaster::orderBy('created_at', 'DESC')->get()->toArray();
+        $data['loomrMaster']      = LoomMaster::get()->toArray();
         $data['loomOperator']     = Staf_master::where('role_id',5)->orderBy('created_at', 'DESC')->get()->toArray();
         $data['designerMaster']   = Staf_master::where('role_id',1)->orderBy('created_at', 'DESC')->get()->toArray();
         $data['salesrepMaster']   = Staf_master::where('role_id',2)->orderBy('created_at', 'DESC')->get()->toArray();
