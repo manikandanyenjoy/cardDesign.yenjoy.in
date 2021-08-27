@@ -37,16 +37,14 @@
                             <tr>
                                 <th style="width: 50px">S.No</th>
                                 <th>Role</th>
-                                <!-- <th>Sales Representative</th> -->
-                                <!-- <th>Label</th> -->
-                                <!-- <th>Date</th> -->
                                 <th style="width: 200px">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                                @foreach ($roles as $index => $role)
+                                @php $i = ($roles->currentpage()-1)* $roles->perpage() + 1; @endphp
+                                @forelse ($roles as $role)
                                     <tr>
-                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $i++ }}</td>
                                         <td>{{ ucwords($role->name) }}</td>
                                         <td>
                                             <a href="{{ route('role.edit',$role->id) }}" class="btn btn-sm btn-info">Edit</a>
@@ -61,7 +59,11 @@
                                             
                                         </td>
                                     </tr>
-                                @endforeach
+                                    @empty
+                                    <tr>
+                                        <th colspan="3" class="text-center">No Data Found...</th>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

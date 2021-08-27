@@ -35,7 +35,7 @@
                         <table class="table table-bordered table-sm">
                             <thead>
                             <tr>
-                                <th style="width: 50px">#</th>
+                                <th style="width: 50px">S.No</th>
                                 <th>Quality</th>
                                 <th>Material</th>
                                 <th>Notes</th>
@@ -43,28 +43,33 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($wovenqualitys as $index => $wovenquality)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $wovenquality->quality }}</td>
-                                    <td>{{ $wovenquality->material }}</td>
-                                    <td>{{ $wovenquality->notes }}</td>
-                                    <td>
-                                        <a href="{{ route('wovenqualitys.show',$wovenquality->id) }}" class="btn btn-sm btn-warning">View</a>
-                                        @if(!$wovenquality->deleted_at)
-                                        <a href="{{ route('wovenqualitys.edit',$wovenquality->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                        <form method="POST" action="{{ route('wovenqualitys.destroy', $wovenquality->id) }}"
-                                              accept-charset="UTF-8"
-                                              style="display: inline-block;"
-                                              onsubmit="return confirm('Are you sure do you want to delete?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input class="btn btn-sm btn-danger" type="submit" value="Delete">
-                                        </form>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @php $i = ($wovenqualitys->currentpage()-1)* $wovenqualitys->perpage() + 1; @endphp
+                                @forelse ($wovenqualitys as $wovenquality)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $wovenquality->quality }}</td>
+                                        <td>{{ $wovenquality->material }}</td>
+                                        <td>{{ $wovenquality->notes }}</td>
+                                        <td>
+                                            <a href="{{ route('wovenqualitys.show',$wovenquality->id) }}" class="btn btn-sm btn-warning">View</a>
+                                            @if(!$wovenquality->deleted_at)
+                                            <a href="{{ route('wovenqualitys.edit',$wovenquality->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                            <form method="POST" action="{{ route('wovenqualitys.destroy', $wovenquality->id) }}"
+                                                accept-charset="UTF-8"
+                                                style="display: inline-block;"
+                                                onsubmit="return confirm('Are you sure do you want to delete?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+                                            </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <th colspan="5" class="text-center">No Data Found...</th>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

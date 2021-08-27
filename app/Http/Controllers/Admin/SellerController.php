@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SellerRequest;
+use Illuminate\Http\Request;
 use App\Models\VendorMaster;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Category;
 
 
 class SellerController extends Controller
@@ -20,7 +22,8 @@ class SellerController extends Controller
     public function create()
     {
         $editVendor="";
-        return view("sellers.create",compact('editVendor'));
+        $data['categoryMaster'] = Category::get()->toArray();
+        return view("sellers.create",compact('editVendor','data'));
 
     }
 
@@ -33,6 +36,7 @@ class SellerController extends Controller
         }
 
         $data               = $request->validated(); 
+        $data['category']   = $request->category;
         $data['password']   = Hash::make($request->password);
         $data['status']     = $request->status; 
 
@@ -46,7 +50,8 @@ class SellerController extends Controller
     public function edit(VendorMaster $seller)
     {   
         $editVendor= $seller;
-        return view("sellers.create",compact('editVendor'));
+        $data['categoryMaster'] = Category::get()->toArray();
+        return view("sellers.create",compact('editVendor','data'));
     }
 
     public function update(SellerRequest $request, VendorMaster $seller)
@@ -57,8 +62,9 @@ class SellerController extends Controller
             $shipping = $request->shipping_address;
         }
 
-        $data           = $request->validated(); 
-        $data['status'] = $request->status; 
+        $data               = $request->validated(); 
+        $data['category']   = $request->category;
+        $data['status']     = $request->status; 
 
         if($request->password != "" && $request->password != null)
         {
@@ -78,7 +84,7 @@ class SellerController extends Controller
 
     public function show($seller)
     {
-        $seller = VendorMaster::findOrFail(
+        $seller = VendorMaster::with('categoryMasterDetail')->findOrFail(
             $seller
         );
        

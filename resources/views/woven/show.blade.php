@@ -86,6 +86,14 @@
                                                 <th>Notes</th>
                                                 <td>{{ $viewDesignCard->description }}</td>
                                             </tr>
+
+                                            <tr>
+                                                <th>Category</th>
+                                                <td>
+                                                    {{ $viewDesignCard->categoryMasterDetail ? ucwords($viewDesignCard->categoryMasterDetail->category_name) : "-" }}
+                                                </td>
+                                                <td colspan="5"></td>
+                                            </tr>
                                         </table>
                                                 
                                         <div class="row">
@@ -386,11 +394,11 @@
                                                         <td style="background:{{ $mainNeedle['color'] ?? '' }};"></td>
                                                         <td>{{ $mainNeedle['color_shade'] ?? '-' }}</td>
                                                         <td>{{ $mainNeedle['denier'] ?? '-' }}</td>
-                                                        <td>{{ $mainNeedle['a'] ?? '-' }}</td>
-                                                        <td>{{ $mainNeedle['b'] ?? '-' }}</td>
-                                                        <td>{{ $mainNeedle['c'] ?? '-' }}</td>
-                                                        <td>{{ $mainNeedle['d'] ?? '-' }}</td>
-                                                        <td>{{ $mainNeedle['e'] ?? '-' }}</td>
+                                                        <td>{{ $mainNeedle['a1'] ?? '-' }}</td>
+                                                        <td>{{ $mainNeedle['b1'] ?? '-' }}</td>
+                                                        <td>{{ $mainNeedle['c1'] ?? '-' }}</td>
+                                                        <td>{{ $mainNeedle['d1'] ?? '-' }}</td>
+                                                        <td>{{ $mainNeedle['e1'] ?? '-' }}</td>
                                                     </tr>
                                                 @empty
                                                    <tr>
@@ -424,11 +432,11 @@
                                                         <td style="background:{{ $tabNeedle['color'] ?? '' }};"></td>
                                                         <td>{{ $tabNeedle['color_shade'] ?? '-' }}</td>
                                                         <td>{{ $tabNeedle['denier'] ?? '-' }}</td>
-                                                        <td>{{ $tabNeedle['a'] ?? '-' }}</td>
-                                                        <td>{{ $tabNeedle['b'] ?? '-' }}</td>
-                                                        <td>{{ $tabNeedle['c'] ?? '-' }}</td>
-                                                        <td>{{ $tabNeedle['d'] ?? '-' }}</td>
-                                                        <td>{{ $tabNeedle['e'] ?? '-' }}</td>
+                                                        <td>{{ $tabNeedle['a1'] ?? '-' }}</td>
+                                                        <td>{{ $tabNeedle['b1'] ?? '-' }}</td>
+                                                        <td>{{ $tabNeedle['c1'] ?? '-' }}</td>
+                                                        <td>{{ $tabNeedle['d1'] ?? '-' }}</td>
+                                                        <td>{{ $tabNeedle['e1'] ?? '-' }}</td>
                                                     </tr>
                                                 @empty
                                                    <tr>
@@ -462,11 +470,11 @@
                                                         <td style="background:{{ $sizeNeedle['color'] ?? '' }};"></td>
                                                         <td>{{ $sizeNeedle['color_shade'] ?? '-' }}</td>
                                                         <td>{{ $sizeNeedle['denier'] ?? '-' }}</td>
-                                                        <td>{{ $sizeNeedle['a'] ?? '-' }}</td>
-                                                        <td>{{ $sizeNeedle['b'] ?? '-' }}</td>
-                                                        <td>{{ $sizeNeedle['c'] ?? '-' }}</td>
-                                                        <td>{{ $sizeNeedle['d'] ?? '-' }}</td>
-                                                        <td>{{ $sizeNeedle['e'] ?? '-' }}</td>
+                                                        <td>{{ $sizeNeedle['a1'] ?? '-' }}</td>
+                                                        <td>{{ $sizeNeedle['b1'] ?? '-' }}</td>
+                                                        <td>{{ $sizeNeedle['c1'] ?? '-' }}</td>
+                                                        <td>{{ $sizeNeedle['d1'] ?? '-' }}</td>
+                                                        <td>{{ $sizeNeedle['e1'] ?? '-' }}</td>
                                                     </tr>
                                                 @empty
                                                    <tr>

@@ -28,42 +28,40 @@
                             <table class="table table-bordered table-sm">
                                 <thead>
                                 <tr>
-                                    <th style="width: 50px">#</th>
-                                    <th>Firstname</th>
-                                    <th>Lastname</th>
+                                    <th style="width: 50px">S.No</th>
+                                    <th>Fullname</th>
                                     <th>Email</th>
                                     <th>Phone</th>
-                                    
                                     <th style="width: 200px">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @forelse ($sellers as $index => $seller)
-                                    <tr>
-                                        <td>{{ $index + $sellers->firstItem() }}</td>
-                                        <td>{{ ucfirst($seller->first_name) }}</td>
-                                        <td>{{ $seller->last_name ? ucfirst($seller->last_name) : '-' }}</td>
-                                        <td>{{ $seller->email }}</td>
-                                        <td>{{ $seller->mobile_number }}</td>
-                                       
-                                        <td>
-                                            <a href="{{ route('sellers.show',$seller->id) }}" class="btn btn-sm btn-warning">View</a>
-                                            <a href="{{ route('sellers.edit',$seller->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                            <form method="POST" action="{{ route('sellers.destroy', $seller->id) }}"
-                                                  accept-charset="UTF-8"
-                                                  style="display: inline-block;"
-                                                  onsubmit="return confirm('Are you sure do you want to delete?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input class="btn btn-sm btn-danger" type="submit" value="Delete">
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="7" class="text-center">{{ __('No data available') }}</td>
-                                    </tr>
-                                @endforelse
+                                    @php $i = ($sellers->currentpage()-1)* $sellers->perpage() + 1; @endphp
+                                    @forelse ($sellers as $seller)
+                                        <tr>
+                                            <td>{{ $i++ }}</td>
+                                            <td>{{ ucfirst($seller->full_name) }}</td>
+                                            <td>{{ $seller->email }}</td>
+                                            <td>{{ $seller->mobile_number }}</td>
+                                        
+                                            <td>
+                                                <a href="{{ route('sellers.show',$seller->id) }}" class="btn btn-sm btn-warning">View</a>
+                                                <a href="{{ route('sellers.edit',$seller->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                                <form method="POST" action="{{ route('sellers.destroy', $seller->id) }}"
+                                                    accept-charset="UTF-8"
+                                                    style="display: inline-block;"
+                                                    onsubmit="return confirm('Are you sure do you want to delete?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" class="text-center">{{ __('No data Found...') }}</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

@@ -6,7 +6,7 @@
     <div class="row mb-1">
         <div class="offset-md-1 col-md-10">
             <h1 class="float-left ml-2 font-weight-bold">
-                {{ __('Seller - ') . $seller->first_name}}
+                {{ __('Seller - ') . ucwords($seller->full_name)}}
             </h1>
             <div class="float-right">
                 <a href="{{ route('sellers.edit',$seller->id) }}" class="btn bg-gradient-success btn-md mr-2">{{ __('Edit') }}</a>
@@ -31,12 +31,12 @@
                                 <tbody>
                                 
                                     <tr>
-                                        <td><strong>{{ __('First Name') }}</strong></td>
-                                        <td>{{ ucfirst($seller->first_name) }}</td>
+                                        <td><strong>{{ __('Full Name') }}</strong></td>
+                                        <td>{{ ucfirst($seller->full_name) }}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>{{ __('Last Name') }}</strong></td>
-                                        <td>{{ $seller->last_name ? ucfirst($seller->last_name) : '-' }}</td>
+                                        <td><strong>{{ __('Category') }}</strong></td>
+                                        <td>{{ $seller->categoryMasterDetail ? ucfirst($seller->categoryMasterDetail->category_name) : '-' }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('Email') }}</strong></td>

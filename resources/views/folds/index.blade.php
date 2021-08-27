@@ -35,40 +35,44 @@
                         <table class="table table-bordered table-sm">
                             <thead>
                             <tr>
-                                <th style="width: 50px">#</th>
+                                <th style="width: 50px">S.No</th>
                                 <th>Type of Fold</th>
                                 <th>Image</th>
                                 <th>Minimum mm</th>
                                 <th>Notes</th>
-                                
                                 <th style="width: 200px">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($folds as $index => $fold)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $fold->type_of_fold }}</td>
-                                    <td><img src="http://127.0.0.1:8000/storage/app/folds/{{ $fold->image }}" alt="image" width="500" height="600"></td>
-                                    <td>{{ $fold->minimum_mm }}</td>
-                                    <td>{{ $fold->notes }}</td>
-                                    
-                                    <td>
-                                        <a href="{{ route('folds.show',$fold->id) }}" class="btn btn-sm btn-warning">View</a>
-                                        @if(!$fold->deleted_at)
-                                        <a href="{{ route('folds.edit',$fold->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                        <form method="POST" action="{{ route('folds.destroy', $fold->id) }}"
-                                              accept-charset="UTF-8"
-                                              style="display: inline-block;"
-                                              onsubmit="return confirm('Are you sure do you want to delete?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input class="btn btn-sm btn-danger" type="submit" value="Delete">
-                                        </form>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @php $i = ($folds->currentpage()-1)* $folds->perpage() + 1; @endphp
+                                @forelse ($folds as $fold)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $fold->type_of_fold }}</td>
+                                        <td><img src="{{ $fold->image }}" alt="image" width="50" height="50"></td>
+                                        <td>{{ $fold->minimum_mm }}</td>
+                                        <td>{{ $fold->notes }}</td>
+                                        
+                                        <td>
+                                            <a href="{{ route('folds.show',$fold->id) }}" class="btn btn-sm btn-warning">View</a>
+                                            @if(!$fold->deleted_at)
+                                            <a href="{{ route('folds.edit',$fold->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                            <form method="POST" action="{{ route('folds.destroy', $fold->id) }}"
+                                                accept-charset="UTF-8"
+                                                style="display: inline-block;"
+                                                onsubmit="return confirm('Are you sure do you want to delete?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+                                            </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                 @empty
+                                    <tr>
+                                        <th colspan="6" class="text-center">No Data Found...</th>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

@@ -47,9 +47,7 @@ class FoldController extends Controller
 
            
 
-            return redirect()
-        ->route("folds.index")
-        ->with("success", "fold created successfully.");
+            return redirect()->route("folds.index")->with("success", "fold created successfully.");
         } catch (\Exception $exception) {
             DB::rollBack();
             return redirect()

@@ -16,9 +16,9 @@ class CustomerMaster extends Model
     use SoftDeletes;
     
     protected $fillable = [
-        "first_name",
-        "last_name",
+        "full_name",
         "email",
+        "category",
         "mobile_number",
         "secondary_email",
         "sales_rep",
@@ -48,8 +48,8 @@ class CustomerMaster extends Model
         $this->attributes["password"] = bcrypt($value);
     }
 
-    public function getFullNameAttribute()
+    public function categoryMasterDetail()
     {
-        return "{$this->first_name} {$this->last_name}";
+        return $this->hasOne(Category::class,'id','category');
     }
 }

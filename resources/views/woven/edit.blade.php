@@ -81,7 +81,7 @@
                                                                     <select class="form-control col-6 @error('customer_id') is-invalid @enderror" id="customer" name="customer_id">
                                                                         <option value="">Please Select Customer</option>
                                                                         @foreach( $data['customerMaster'] as $customer) 
-                                                                            <option value="{{$customer['id']}}" {{ old('customer_id') == $customer['id'] ? 'selected' : ($customer['id'] == $editdesignCard->customer_id ? 'selected' : '') }}>{{ucfirst($customer['first_name'])}} </option>
+                                                                            <option value="{{$customer['id']}}" {{ old('customer_id') == $customer['id'] ? 'selected' : ($customer['id'] == $editdesignCard->customer_id ? 'selected' : '') }}>{{ucfirst($customer['full_name'])}} </option>
                                                                         @endforeach
                                                                     </select>
                                                                     @error('customer_id')

@@ -12,7 +12,7 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role_master::paginate(5);
+        $roles = Role_master::paginate(config("motorTraders.paginate.perPage"));
         return view("role.index", compact("roles"));
     }
 

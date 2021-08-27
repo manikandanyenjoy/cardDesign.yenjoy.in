@@ -35,7 +35,7 @@
                         <table class="table table-bordered table-sm">
                             <thead>
                             <tr>
-                                <th style="width: 50px">#</th>
+                                <th style="width: 50px">S.No</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
@@ -45,30 +45,35 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($qualitycheckers as $index => $qualitychecker)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $qualitychecker->name }}</td>
-                                    <td>{{ $qualitychecker->email }}</td>
-                                    <td>{{ $qualitychecker->phone }}</td>
-                                    <td>{{$qualitychecker->joined_on}}</td>
-                                    <td>{{$qualitychecker->left_on}}</td>
-                                    <td>
-                                        <a href="{{ route('qualitycheckers.show',$qualitychecker->id) }}" class="btn btn-sm btn-warning">View</a>
-                                        @if(!$qualitychecker->deleted_at)
-                                        <a href="{{ route('staffs.edit',$qualitychecker->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                        <form method="POST" action="{{ route('qualitycheckers.destroy', $qualitychecker->id) }}"
-                                              accept-charset="UTF-8"
-                                              style="display: inline-block;"
-                                              onsubmit="return confirm('Are you sure do you want to delete?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input class="btn btn-sm btn-danger" type="submit" value="Delete">
-                                        </form>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @php $i = ($qualitycheckers->currentpage()-1)* $qualitycheckers->perpage() + 1; @endphp
+                                @forelse ($qualitycheckers as $index => $qualitychecker)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $qualitychecker->name }}</td>
+                                        <td>{{ $qualitychecker->email }}</td>
+                                        <td>{{ $qualitychecker->phone }}</td>
+                                        <td>{{$qualitychecker->joined_on}}</td>
+                                        <td>{{$qualitychecker->left_on}}</td>
+                                        <td>
+                                            <a href="{{ route('qualitycheckers.show',$qualitychecker->id) }}" class="btn btn-sm btn-warning">View</a>
+                                            @if(!$qualitychecker->deleted_at)
+                                            <a href="{{ route('staffs.edit',$qualitychecker->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                            <form method="POST" action="{{ route('qualitycheckers.destroy', $qualitychecker->id) }}"
+                                                accept-charset="UTF-8"
+                                                style="display: inline-block;"
+                                                onsubmit="return confirm('Are you sure do you want to delete?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+                                            </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                 @empty
+                                    <tr>
+                                        <th colspan="7" class="text-center">No Data Found...</th>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

@@ -1,0 +1,81 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Http\Requests\Admin\CategoryRequest;
+use DB;
+
+class CategoryController extends Controller
+{
+    public function index()
+    {
+        $categories = Category::paginate(config("motorTraders.paginate.perPage"));
+        return view("category.index", compact("categories"));
+    }
+
+    public function create()
+    {
+        $editCategory = "";
+        return view("category.create", compact("editCategory"));
+    }
+
+    public function store(CategoryRequest $request, Category $category)
+    {
+        try {
+            $category->create($request->validated());
+            
+            return redirect()
+            ->route("category.index")
+            ->with("success", "Category created successfully.");
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return redirect()
+            ->back()
+            ->with(
+                "danger",
+                "Something went wrong" . $exception->getMessage()
+            );
+        }
+    }
+
+    public function edit(Category $category)
+    {
+        $editCategory = $category->findOrFail($category->id);
+        
+        return view("category.create", compact("editCategory"));
+    }
+
+    public function update(CategoryRequest $request, Category $category)
+    {
+        try {
+            $category->findOrFail($category->id)->update($request->validated());
+            
+            return redirect()
+            ->route("category.index")
+            ->with("success", "Category updated successfully.");
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return redirect()
+            ->back()
+            ->with(
+                "danger",
+                "Something went wrong" . $exception->getMessage()
+            );
+        }
+    }
+
+    public function destroy(Category $category)
+    {
+        $category->delete(); 
+        return redirect()
+        ->route("category.index")
+        ->with("success", "Category deleted successfully.");
+    }
+
+
+}

@@ -35,7 +35,7 @@
                         <table class="table table-bordered table-sm">
                             <thead>
                             <tr>
-                                <th style="width: 50px">#</th>
+                                <th style="width: 50px">S.No</th>
                                 <th>Machine</th>
                                 <th>Folds Available</th>
                                 <th>Min End Fold</th>
@@ -44,38 +44,42 @@
                                 <th>Year</th>
                                 <th>Srial Nos</th>
                                 <th>Notes</th>
-
                                 <th style="width: 200px">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($finishingmachines as $index => $finishingmachine)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $finishingmachine->machine }}</td>
-                                    <td>{{ $finishingmachine->folds_available }}</td>
-                                    <td>{{ $finishingmachine->min_end_fold }}</td>
-                                    <td>{{ $finishingmachine->max_length_mm }}</td>
-                                    <td>{{ $finishingmachine->speed }}</td>
-                                    <td>{{ $finishingmachine->year }}</td>
-                                    <td>{{ $finishingmachine->serial_Nos }}</td>
-                                    <td>{{ $finishingmachine->notes }}</td>
-                                    <td>
-                                        <a href="{{ route('finishingmachines.show',$finishingmachine->id) }}" class="btn btn-sm btn-warning">View</a>
-                                        @if(!$finishingmachine->deleted_at)
-                                        <a href="{{ route('finishingmachines.edit',$finishingmachine->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                        <form method="POST" action="{{ route('finishingmachines.destroy', $finishingmachine->id) }}"
-                                              accept-charset="UTF-8"
-                                              style="display: inline-block;"
-                                              onsubmit="return confirm('Are you sure do you want to delete?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input class="btn btn-sm btn-danger" type="submit" value="Delete">
-                                        </form>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @php $i = ($finishingmachines->currentpage()-1)* $finishingmachines->perpage() + 1; @endphp
+                                @forelse ($finishingmachines as $finishingmachine)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $finishingmachine->machine }}</td>
+                                        <td>{{ $finishingmachine->folds_available }}</td>
+                                        <td>{{ $finishingmachine->min_end_fold }}</td>
+                                        <td>{{ $finishingmachine->max_length_mm }}</td>
+                                        <td>{{ $finishingmachine->speed }}</td>
+                                        <td>{{ $finishingmachine->year }}</td>
+                                        <td>{{ $finishingmachine->serial_Nos }}</td>
+                                        <td>{{ $finishingmachine->notes }}</td>
+                                        <td>
+                                            <a href="{{ route('finishingmachines.show',$finishingmachine->id) }}" class="btn btn-sm btn-warning">View</a>
+                                            @if(!$finishingmachine->deleted_at)
+                                            <a href="{{ route('finishingmachines.edit',$finishingmachine->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                            <form method="POST" action="{{ route('finishingmachines.destroy', $finishingmachine->id) }}"
+                                                accept-charset="UTF-8"
+                                                style="display: inline-block;"
+                                                onsubmit="return confirm('Are you sure do you want to delete?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+                                            </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                 @empty
+                                    <tr>
+                                        <th colspan="10" class="text-center">No Data Found...</th>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

@@ -35,34 +35,39 @@
                         <table class="table table-bordered table-sm">
                             <thead>
                             <tr>
-                                <th style="width: 50px">#</th>
+                                <th style="width: 50px">S.No</th>
                                 <th>Name</th>
                                 <th>Colour</th>
                                 <th style="width: 200px">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($warps as $index => $warp)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $warp->name }}</td>
-                                    <td style="background-color: {{ $warp->colour }};"></td>
-                                    <td>
-                                        <a href="{{ route('warps.show',$warp->id) }}" class="btn btn-sm btn-warning">View</a>
-                                        @if(!$warp->deleted_at)
-                                        <a href="{{ route('warps.edit',$warp->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                        <form method="POST" action="{{ route('warps.destroy', $warp->id) }}"
-                                              accept-charset="UTF-8"
-                                              style="display: inline-block;"
-                                              onsubmit="return confirm('Are you sure do you want to delete?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input class="btn btn-sm btn-danger" type="submit" value="Delete">
-                                        </form>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @php $i = ($warps->currentpage()-1)* $warps->perpage() + 1; @endphp
+                                @forelse ($warps as $warp)
+                                    <tr>
+                                    <td>{{ $i++ }}</td>
+                                        <td>{{ $warp->name }}</td>
+                                        <td style="background-color: {{ $warp->colour }};"></td>
+                                        <td>
+                                            <a href="{{ route('warps.show',$warp->id) }}" class="btn btn-sm btn-warning">View</a>
+                                            @if(!$warp->deleted_at)
+                                            <a href="{{ route('warps.edit',$warp->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                            <form method="POST" action="{{ route('warps.destroy', $warp->id) }}"
+                                                accept-charset="UTF-8"
+                                                style="display: inline-block;"
+                                                onsubmit="return confirm('Are you sure do you want to delete?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+                                            </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                 @empty
+                                    <tr>
+                                        <th colspan="4" class="text-center">No Data Found...</th>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

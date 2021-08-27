@@ -9,6 +9,7 @@ use App\Models\CustomerShippingAddress;
 use App\Models\CustomerBillingAddress;
 use App\Models\Staf_master;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Category;
 
 
 
@@ -24,7 +25,8 @@ class BuyerController extends Controller
     public function create()
     {   
         $editCustomer = "";  
-        $data['salesrep'] = Staf_master::where('role_id',2)->orderBy('created_at', 'DESC')->get()->toArray();
+        $data['salesrep']         = Staf_master::where('role_id',2)->orderBy('created_at', 'DESC')->get()->toArray();
+        $data['categoryMaster']   = Category::get()->toArray();
         return view("buyers.create",compact('data','editCustomer'));
     }
 
@@ -39,6 +41,7 @@ class BuyerController extends Controller
         $data                       = $request->validated(); 
         $data['password']           = Hash::make($request->password);
         $data['status']             = $request->status; 
+        $data['category']           = $request->category; 
         $data['secondary_email']    = $request->secondary_email; 
 
         CustomerMaster::create($data);
@@ -52,6 +55,7 @@ class BuyerController extends Controller
     {
         $editCustomer = $buyer;  
         $data['salesrep'] = Staf_master::where('role_id',2)->orderBy('created_at', 'DESC')->get()->toArray();
+        $data['categoryMaster']   = Category::get()->toArray();
         return view("buyers.create", compact("editCustomer","data"));
     }
 
@@ -65,6 +69,7 @@ class BuyerController extends Controller
 
         $data                    = $request->validated(); 
         $data['status']          = $request->status; 
+        $data['category']        = $request->category; 
         $data['secondary_email'] = $request->secondary_email; 
 
         if($request->password != "" && $request->password != null)
@@ -85,7 +90,7 @@ class BuyerController extends Controller
 
     public function show($buyer)
     {
-        $buyer = CustomerMaster::findOrFail($buyer);
+        $buyer = CustomerMaster::with('categoryMasterDetail')->findOrFail($buyer);
         $salesrep = Staf_master::where('id',$buyer->sales_rep)->first();
         return view("buyers.show", compact("buyer","salesrep"));
     }

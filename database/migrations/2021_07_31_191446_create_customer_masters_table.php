@@ -17,8 +17,8 @@ class CreateCustomerMastersTable extends Migration
             $table->id();
             $table->string("company_name");
             $table->string("company_phone");
-            $table->string("first_name");
-            $table->string("last_name")->nullable();
+            $table->string("full_name");
+            $table->integer("category")->nullable();
             $table->string("mobile_number");
             $table->string("email")->unique();
             $table->text("secondary_email")->nullable();

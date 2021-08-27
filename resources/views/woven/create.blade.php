@@ -200,6 +200,22 @@
                                                        </textarea>
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <th>Category</th>
+                                                    <td>
+                                                         <select name="category" class="form-control">
+                                                            <option value="">Select Category</option>
+                                                            @foreach( $data['categoryMaster'] as $category) 
+                                                                @if($editdesignCard)
+                                                                    <option value="{{$category['id']}}" {{ old('category') == $category['id'] ? 'selected' : ($category['id'] == $editdesignCard->category ? 'selected' : '') }}>{{ucfirst($category['category_name'])}} </option>
+                                                                @else
+                                                                    <option value="{{$category['id']}}" {{ old('category') == $category['id'] ? 'selected' : '' }}>{{ucfirst($category['category_name'])}} </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td colspan="5"></td>
+                                                </tr>
                                             </table>
                                                  
                                             <div class="row">
@@ -707,7 +723,7 @@
                                                                     <select name="main_needle[{{$needleIndex}}][a]" class="main_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select A</option>
                                                                         @foreach($data['yarnMaster'] as $yarn)
-                                                                            <option value="{{ $yarn['id'] }}" {{ $yarn['id'] == $mainNeedle['a'] ? 'selected' : '' }} data-main_color="{{ $yarn['yarn_color'] }}" data-main_shade="{{ $yarn['color_shade'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $yarn['id'] }}" {{ $yarn['id'] == $mainNeedle['a'] ? 'selected' : '' }} data-main_color="{{ $yarn['yarn_color'] }}" data-main_shade="{{ $yarn['color_shade'] }}">{{ $yarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -715,7 +731,7 @@
                                                                     <select name="main_needle[{{$needleIndex}}][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select B</option>
                                                                         @foreach($data['yarnMaster'] as $yarn)
-                                                                            <option value="{{ $yarn['id'] }}" {{ $yarn['id'] == $mainNeedle['b'] ? 'selected' : '' }} >{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $yarn['id'] }}" {{ $yarn['id'] == $mainNeedle['b'] ? 'selected' : '' }} >{{ $yarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -723,7 +739,7 @@
                                                                     <select name="main_needle[{{$needleIndex}}][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select C</option>
                                                                         @foreach($data['yarnMaster'] as $yarn)
-                                                                            <option value="{{ $yarn['id'] }}" {{ $yarn['id'] == $mainNeedle['c'] ? 'selected' : '' }} >{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $yarn['id'] }}" {{ $yarn['id'] == $mainNeedle['c'] ? 'selected' : '' }} >{{ $yarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -731,7 +747,7 @@
                                                                     <select name="main_needle[{{$needleIndex}}][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select D</option>
                                                                         @foreach($data['yarnMaster'] as $yarn)
-                                                                            <option value="{{ $yarn['id'] }}" {{ $yarn['id'] == $mainNeedle['d'] ? 'selected' : '' }} >{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $yarn['id'] }}" {{ $yarn['id'] == $mainNeedle['d'] ? 'selected' : '' }} >{{ $yarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -739,7 +755,7 @@
                                                                     <select name="main_needle[{{$needleIndex}}][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select E</option>
                                                                         @foreach($data['yarnMaster'] as $yarn)
-                                                                            <option value="{{ $yarn['id'] }}" {{ $yarn['id'] == $mainNeedle['e'] ? 'selected' : '' }} >{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $yarn['id'] }}" {{ $yarn['id'] == $mainNeedle['e'] ? 'selected' : '' }} >{{ $yarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -756,7 +772,7 @@
                                                                     <select name="main_needle[0][a]" class="main_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select A</option>
                                                                         @foreach($data['yarnMaster'] as $yarn)
-                                                                            <option value="{{ $yarn['id'] }}" data-main_color="{{ $yarn['yarn_color'] }}" data-main_shade="{{ $yarn['color_shade'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $yarn['id'] }}" data-main_color="{{ $yarn['yarn_color'] }}" data-main_shade="{{ $yarn['color_shade'] }}">{{ $yarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -765,7 +781,7 @@
                                                                     <select name="main_needle[0][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select B</option>
                                                                         @foreach($data['yarnMaster'] as $yarn)
-                                                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -774,7 +790,7 @@
                                                                     <select name="main_needle[0][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select C</option>
                                                                         @foreach($data['yarnMaster'] as $yarn)
-                                                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -783,7 +799,7 @@
                                                                     <select name="main_needle[0][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select D</option>
                                                                         @foreach($data['yarnMaster'] as $yarn)
-                                                                            <option value="{{ $yarn['id'] }}" >{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $yarn['id'] }}" >{{ $yarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -792,7 +808,7 @@
                                                                     <select name="main_needle[0][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select E</option>
                                                                         @foreach($data['yarnMaster'] as $yarn)
-                                                                            <option value="{{ $yarn['id'] }}" >{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $yarn['id'] }}" >{{ $yarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -810,7 +826,7 @@
                                                                 <select name="main_needle[0][a]" class="main_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                     <option value="">Select A</option>
                                                                     @foreach($data['yarnMaster'] as $yarn)
-                                                                        <option value="{{ $yarn['id'] }}" data-main_color="{{ $yarn['yarn_color'] }}" data-main_shade="{{ $yarn['color_shade'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                        <option value="{{ $yarn['id'] }}" data-main_color="{{ $yarn['yarn_color'] }}" data-main_shade="{{ $yarn['color_shade'] }}">{{ $yarn['shade_No'] }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -819,7 +835,7 @@
                                                                 <select name="main_needle[0][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                     <option value="">Select B</option>
                                                                     @foreach($data['yarnMaster'] as $yarn)
-                                                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                        <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -828,7 +844,7 @@
                                                                 <select name="main_needle[0][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                     <option value="">Select C</option>
                                                                     @foreach($data['yarnMaster'] as $yarn)
-                                                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                        <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -837,7 +853,7 @@
                                                                 <select name="main_needle[0][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                     <option value="">Select D</option>
                                                                     @foreach($data['yarnMaster'] as $yarn)
-                                                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                        <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -846,7 +862,7 @@
                                                                 <select name="main_needle[0][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                     <option value="">Select E</option>
                                                                     @foreach($data['yarnMaster'] as $yarn)
-                                                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                                                        <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -890,7 +906,7 @@
                                                                     <select name="tab_needle[{{$tabIndex}}][a]" class="tab_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select A</option>
                                                                         @foreach($data['yarnMaster'] as $tabYarn)
-                                                                            <option value="{{ $tabYarn['id'] }}" {{ $tabYarn['id'] == $tabNeedle['a'] ? 'selected' : '' }} data-tab_color="{{ $tabYarn['yarn_color'] }}" data-tab_shade="{{ $tabYarn['color_shade'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $tabYarn['id'] }}" {{ $tabYarn['id'] == $tabNeedle['a'] ? 'selected' : '' }} data-tab_color="{{ $tabYarn['yarn_color'] }}" data-tab_shade="{{ $tabYarn['color_shade'] }}">{{ $tabYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -898,7 +914,7 @@
                                                                     <select name="tab_needle[{{$tabIndex}}][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select B</option>
                                                                         @foreach($data['yarnMaster'] as $tabYarn)
-                                                                            <option value="{{ $tabYarn['id'] }}" {{ $tabYarn['id'] == $tabNeedle['b'] ? 'selected' : '' }} >{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $tabYarn['id'] }}" {{ $tabYarn['id'] == $tabNeedle['b'] ? 'selected' : '' }} >{{ $tabYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -906,7 +922,7 @@
                                                                     <select name="tab_needle[{{$tabIndex}}][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select C</option>
                                                                         @foreach($data['yarnMaster'] as $tabYarn)
-                                                                            <option value="{{ $tabYarn['id'] }}" {{ $tabYarn['id'] == $tabNeedle['c'] ? 'selected' : '' }} >{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $tabYarn['id'] }}" {{ $tabYarn['id'] == $tabNeedle['c'] ? 'selected' : '' }} >{{ $tabYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -914,7 +930,7 @@
                                                                     <select name="tab_needle[{{$tabIndex}}][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select D</option>
                                                                         @foreach($data['yarnMaster'] as $tabYarn)
-                                                                            <option value="{{ $tabYarn['id'] }}" {{ $tabYarn['id'] == $tabNeedle['d'] ? 'selected' : '' }} >{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $tabYarn['id'] }}" {{ $tabYarn['id'] == $tabNeedle['d'] ? 'selected' : '' }} >{{ $tabYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -922,7 +938,7 @@
                                                                     <select name="tab_needle[{{$tabIndex}}][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select E</option>
                                                                         @foreach($data['yarnMaster'] as $tabYarn)
-                                                                            <option value="{{ $tabYarn['id'] }}" {{ $tabYarn['id'] == $tabNeedle['e'] ? 'selected' : '' }} >{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $tabYarn['id'] }}" {{ $tabYarn['id'] == $tabNeedle['e'] ? 'selected' : '' }} >{{ $tabYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -939,7 +955,7 @@
                                                                     <select name="tab_needle[0][a]" class="tab_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select A</option>
                                                                         @foreach($data['yarnMaster'] as $tabYarn)
-                                                                            <option value="{{ $tabYarn['id'] }}" data-tab_color="{{ $tabYarn['yarn_color'] }}" data-tab_shade="{{ $tabYarn['color_shade'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $tabYarn['id'] }}" data-tab_color="{{ $tabYarn['yarn_color'] }}" data-tab_shade="{{ $tabYarn['color_shade'] }}">{{ $tabYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -948,7 +964,7 @@
                                                                     <select name="tab_needle[0][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select B</option>
                                                                         @foreach($data['yarnMaster'] as $tabYarn)
-                                                                            <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $tabYarn['id'] }}">{{ $tabYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -957,7 +973,7 @@
                                                                     <select name="tab_needle[0][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select C</option>
                                                                         @foreach($data['yarnMaster'] as $tabYarn)
-                                                                            <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $tabYarn['id'] }}">{{ $tabYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -966,7 +982,7 @@
                                                                     <select name="tab_needle[0][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select D</option>
                                                                         @foreach($data['yarnMaster'] as $tabYarn)
-                                                                            <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $tabYarn['id'] }}">{{ $tabYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -975,7 +991,7 @@
                                                                     <select name="tab_needle[0][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select E</option>
                                                                         @foreach($data['yarnMaster'] as $tabYarn)
-                                                                            <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $tabYarn['id'] }}">{{ $tabYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -993,7 +1009,7 @@
                                                                 <select name="tab_needle[0][a]" class="tab_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                     <option value="">Select A</option>
                                                                     @foreach($data['yarnMaster'] as $tabYarn)
-                                                                        <option value="{{ $tabYarn['id'] }}" data-tab_color="{{ $tabYarn['yarn_color'] }}" data-tab_shade="{{ $tabYarn['color_shade'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                        <option value="{{ $tabYarn['id'] }}" data-tab_color="{{ $tabYarn['yarn_color'] }}" data-tab_shade="{{ $tabYarn['color_shade'] }}">{{ $tabYarn['shade_No'] }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -1002,7 +1018,7 @@
                                                                 <select name="tab_needle[0][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                     <option value="">Select B</option>
                                                                     @foreach($data['yarnMaster'] as $tabYarn)
-                                                                        <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                        <option value="{{ $tabYarn['id'] }}">{{ $tabYarn['shade_No'] }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -1011,7 +1027,7 @@
                                                                 <select name="tab_needle[0][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                     <option value="">Select C</option>
                                                                     @foreach($data['yarnMaster'] as $tabYarn)
-                                                                        <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                        <option value="{{ $tabYarn['id'] }}">{{ $tabYarn['shade_No'] }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -1020,7 +1036,7 @@
                                                                 <select name="tab_needle[0][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                     <option value="">Select D</option>
                                                                     @foreach($data['yarnMaster'] as $tabYarn)
-                                                                        <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                        <option value="{{ $tabYarn['id'] }}">{{ $tabYarn['shade_No'] }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -1029,7 +1045,7 @@
                                                                 <select name="tab_needle[0][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                     <option value="">Select E</option>
                                                                     @foreach($data['yarnMaster'] as $tabYarn)
-                                                                        <option value="{{ $tabYarn['id'] }}">{{ ucwords($tabYarn['yarn_denier']) }}</option>
+                                                                        <option value="{{ $tabYarn['id'] }}">{{ $tabYarn['shade_No'] }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -1069,42 +1085,42 @@
                                                                 <td><input type="text" class="size_color_shade" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;" name="size_needle[{{$sizeIndex}}][color_shade]" value="{{ $sizeNeedle['color_shade'] }}"></td>
                                                                 <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[{{$sizeIndex}}][denier]"  value="{{ $sizeNeedle['denier'] }}" placeholder="Enter the value"></td>
                                                                 <td>
-                                                                    <select name="sizeNeedle[{{$tabIndex}}][a]" class="size_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <select name="size_needle[{{$sizeIndex}}][a]" class="size_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select A</option>
                                                                         @foreach($data['yarnMaster'] as $sizeYarn)
-                                                                            <option value="{{ $sizeYarn['id'] }}" {{ $sizeYarn['id'] == $sizeNeedle['a'] ? 'selected' : '' }} data-size_color="{{ $sizeYarn['yarn_color'] }}" data-size_shade="{{ $sizeYarn['color_shade'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $sizeYarn['id'] }}" {{ $sizeYarn['id'] == $sizeNeedle['a'] ? 'selected' : '' }} data-size_color="{{ $sizeYarn['yarn_color'] }}" data-size_shade="{{ $sizeYarn['color_shade'] }}">{{ $sizeYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <select name="sizeNeedle[{{$tabIndex}}][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <select name="size_needle[{{$sizeIndex}}][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select B</option>
                                                                         @foreach($data['yarnMaster'] as $sizeYarn)
-                                                                            <option value="{{ $sizeYarn['id'] }}" {{ $sizeYarn['id'] == $sizeNeedle['b'] ? 'selected' : '' }} >{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $sizeYarn['id'] }}" {{ $sizeYarn['id'] == $sizeNeedle['b'] ? 'selected' : '' }} >{{ $sizeYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <select name="sizeNeedle[{{$tabIndex}}][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <select name="size_needle[{{$sizeIndex}}][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select C</option>
                                                                         @foreach($data['yarnMaster'] as $sizeYarn)
-                                                                            <option value="{{ $sizeYarn['id'] }}" {{ $sizeYarn['id'] == $sizeNeedle['c'] ? 'selected' : '' }} >{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $sizeYarn['id'] }}" {{ $sizeYarn['id'] == $sizeNeedle['c'] ? 'selected' : '' }} >{{ $sizeYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <select name="sizeNeedle[{{$tabIndex}}][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <select name="size_needle[{{$sizeIndex}}][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select D</option>
                                                                         @foreach($data['yarnMaster'] as $sizeYarn)
-                                                                            <option value="{{ $sizeYarn['id'] }}" {{ $sizeYarn['id'] == $sizeNeedle['d'] ? 'selected' : '' }} >{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $sizeYarn['id'] }}" {{ $sizeYarn['id'] == $sizeNeedle['d'] ? 'selected' : '' }} >{{ $sizeYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <select name="sizeNeedle[{{$tabIndex}}][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
+                                                                    <select name="size_needle[{{$sizeIndex}}][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select E</option>
                                                                         @foreach($data['yarnMaster'] as $sizeYarn)
-                                                                            <option value="{{ $sizeYarn['id'] }}" {{ $sizeYarn['id'] == $sizeNeedle['e'] ? 'selected' : '' }} >{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $sizeYarn['id'] }}" {{ $sizeYarn['id'] == $sizeNeedle['e'] ? 'selected' : '' }} >{{ $sizeYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -1121,7 +1137,7 @@
                                                                     <select name="size_needle[0][a]" class="size_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select A</option>
                                                                         @foreach($data['yarnMaster'] as $sizeYarn)
-                                                                            <option value="{{ $sizeYarn['id'] }}" data-size_color="{{ $sizeYarn['yarn_color'] }}" data-size_shade="{{ $sizeYarn['color_shade'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $sizeYarn['id'] }}" data-size_color="{{ $sizeYarn['yarn_color'] }}" data-size_shade="{{ $sizeYarn['color_shade'] }}">{{ $sizeYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -1130,7 +1146,7 @@
                                                                     <select name="size_needle[0][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select B</option>
                                                                         @foreach($data['yarnMaster'] as $sizeYarn)
-                                                                            <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $sizeYarn['id'] }}">{{ $sizeYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -1139,7 +1155,7 @@
                                                                     <select name="size_needle[0][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select C</option>
                                                                         @foreach($data['yarnMaster'] as $sizeYarn)
-                                                                            <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $sizeYarn['id'] }}">{{ $sizeYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -1148,7 +1164,7 @@
                                                                     <select name="size_needle[0][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select D</option>
                                                                         @foreach($data['yarnMaster'] as $sizeYarn)
-                                                                            <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $sizeYarn['id'] }}">{{ $sizeYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -1157,11 +1173,10 @@
                                                                     <select name="size_needle[0][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                         <option value="">Select E</option>
                                                                         @foreach($data['yarnMaster'] as $sizeYarn)
-                                                                            <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                            <option value="{{ $sizeYarn['id'] }}">{{ $sizeYarn['shade_No'] }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
-                                                                <td><input type="text" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;"  name="size_needle[0][e]" value="" placeholder="Enter the value"></td>
                                                                 <td><button id="removeSizeRow" class="btn btn-danger" type="button">remove</button></td>
                                                             </tr>
                                                         @endforelse
@@ -1176,7 +1191,7 @@
                                                                 <select name="size_needle[0][a]" class="size_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                     <option value="">Select A</option>
                                                                     @foreach($data['yarnMaster'] as $sizeYarn)
-                                                                        <option value="{{ $sizeYarn['id'] }}" data-size_color="{{ $sizeYarn['yarn_color'] }}" data-size_shade="{{ $sizeYarn['color_shade'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                        <option value="{{ $sizeYarn['id'] }}" data-size_color="{{ $sizeYarn['yarn_color'] }}" data-size_shade="{{ $sizeYarn['color_shade'] }}">{{ $sizeYarn['shade_No'] }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -1185,7 +1200,7 @@
                                                                 <select name="size_needle[0][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                     <option value="">Select B</option>
                                                                     @foreach($data['yarnMaster'] as $sizeYarn)
-                                                                        <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                        <option value="{{ $sizeYarn['id'] }}">{{ $sizeYarn['shade_No'] }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -1194,7 +1209,7 @@
                                                                 <select name="size_needle[0][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                     <option value="">Select C</option>
                                                                     @foreach($data['yarnMaster'] as $sizeYarn)
-                                                                        <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                        <option value="{{ $sizeYarn['id'] }}">{{ $sizeYarn['shade_No'] }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -1203,7 +1218,7 @@
                                                                 <select name="size_needle[0][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                     <option value="">Select D</option>
                                                                     @foreach($data['yarnMaster'] as $sizeYarn)
-                                                                        <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                        <option value="{{ $sizeYarn['id'] }}">{{ $sizeYarn['shade_No'] }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -1212,7 +1227,7 @@
                                                                 <select name="size_needle[0][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                                                     <option value="">Select E</option>
                                                                     @foreach($data['yarnMaster'] as $sizeYarn)
-                                                                        <option value="{{ $sizeYarn['id'] }}">{{ ucwords($sizeYarn['yarn_denier']) }}</option>
+                                                                        <option value="{{ $sizeYarn['id'] }}">{{ $sizeYarn['shade_No'] }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -1380,7 +1395,7 @@
                                 <select name="main_needle[${index}][a]" class="main_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                     <option value="">Select Yarn</option>
                                     @foreach($data['yarnMaster'] as $yarn)
-                                        <option value="{{ $yarn['id'] }}" data-main_color="{{ $yarn['yarn_color'] }}" data-main_shade="{{ $yarn['color_shade'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        <option value="{{ $yarn['id'] }}" data-main_color="{{ $yarn['yarn_color'] }}" data-main_shade="{{ $yarn['color_shade'] }}">{{ $yarn['shade_No'] }}</option>
                                     @endforeach
                                 </select>
                             </td>
@@ -1389,7 +1404,7 @@
                                 <select name="main_needle[${index}][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                     <option value="">Select Yarn</option>
                                     @foreach($data['yarnMaster'] as $yarn)
-                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                     @endforeach
                                 </select>
                             </td>
@@ -1398,7 +1413,7 @@
                                 <select name="main_needle[${index}][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                     <option value="">Select Yarn</option>
                                     @foreach($data['yarnMaster'] as $yarn)
-                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                     @endforeach
                                 </select>
                             </td>
@@ -1407,7 +1422,7 @@
                                 <select name="main_needle[${index}][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                     <option value="">Select Yarn</option>
                                     @foreach($data['yarnMaster'] as $yarn)
-                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                     @endforeach
                                 </select>
                             </td>
@@ -1416,7 +1431,7 @@
                                 <select name="main_needle[${index}][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                     <option value="">Select Yarn</option>
                                     @foreach($data['yarnMaster'] as $yarn)
-                                        <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                     @endforeach
                                 </select>
                             </td>
@@ -1465,7 +1480,7 @@
                                     <select name="tab_needle[${tabIndex}][a]" class="tab_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                         <option value="">Select A</option>
                                         @foreach($data['yarnMaster'] as $yarn)
-                                            <option value="{{ $yarn['id'] }}" data-tab_color="{{ $yarn['yarn_color'] }}" data-tab_shade="{{ $yarn['color_shade'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                            <option value="{{ $yarn['id'] }}" data-tab_color="{{ $yarn['yarn_color'] }}" data-tab_shade="{{ $yarn['color_shade'] }}">{{ $yarn['shade_No'] }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -1474,7 +1489,7 @@
                                     <select name="tab_needle[${tabIndex}][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                         <option value="">Select B</option>
                                         @foreach($data['yarnMaster'] as $yarn)
-                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                            <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -1483,7 +1498,7 @@
                                     <select name="tab_needle[${tabIndex}][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                         <option value="">Select C</option>
                                         @foreach($data['yarnMaster'] as $yarn)
-                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                            <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -1492,7 +1507,7 @@
                                     <select name="tab_needle[${tabIndex}][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                         <option value="">Select D</option>
                                         @foreach($data['yarnMaster'] as $yarn)
-                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                            <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -1501,7 +1516,7 @@
                                     <select name="tab_needle[${tabIndex}][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                         <option value="">Select E</option>
                                         @foreach($data['yarnMaster'] as $yarn)
-                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                            <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -1551,7 +1566,7 @@
                                     <select name="size_needle[${sizeIndex}][a]" class="size_yarn" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                         <option value="">Select A</option>
                                         @foreach($data['yarnMaster'] as $yarn)
-                                            <option value="{{ $yarn['id'] }}" data-size_color="{{ $yarn['yarn_color'] }}" data-size_shade="{{ $yarn['color_shade'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                        <option value="{{ $yarn['id'] }}" data-size_color="{{ $yarn['yarn_color'] }}" data-size_shade="{{ $yarn['color_shade'] }}">{{ $yarn['shade_No'] }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -1560,7 +1575,7 @@
                                     <select name="size_needle[${sizeIndex}][b]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                         <option value="">Select B</option>
                                         @foreach($data['yarnMaster'] as $yarn)
-                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                            <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -1569,7 +1584,7 @@
                                     <select name="size_needle[${sizeIndex}][c]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                         <option value="">Select C</option>
                                         @foreach($data['yarnMaster'] as $yarn)
-                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                            <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -1578,7 +1593,7 @@
                                     <select name="size_needle[${sizeIndex}][d]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                         <option value="">Select D</option>
                                         @foreach($data['yarnMaster'] as $yarn)
-                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                            <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -1587,7 +1602,7 @@
                                     <select name="size_needle[${sizeIndex}][e]" style="border-radius:.25rem; padding:.375rem .75rem; color: #495057; background-color: #fff;  border: 1px solid #ced4da;">
                                         <option value="">Select E</option>
                                         @foreach($data['yarnMaster'] as $yarn)
-                                            <option value="{{ $yarn['id'] }}">{{ ucwords($yarn['yarn_denier']) }}</option>
+                                            <option value="{{ $yarn['id'] }}">{{ $yarn['shade_No'] }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -1620,9 +1635,9 @@
         });
         // size row ends     
 
-        const mullerSpeed    = "{{$data['loomrMaster'][0]['speed']}}";
-        const airjet_12Speed = "{{$data['loomrMaster'][1]['speed']}}";
-        const airjet_16Speed = "{{$data['loomrMaster'][2]['speed']}}";
+        const airjet_16Speed   = "{{$data['loomrMaster'][0]['speed']}}";
+        const airjet_12Speed   = "{{$data['loomrMaster'][1]['speed']}}";
+        const mullerSpeed      = "{{$data['loomrMaster'][2]['speed']}}";
 
         $("#main_total_picks, #main_repeat_first_input").on("keyup",function(){
             const mainTotalPicks  = parseFloat($(this).val());        

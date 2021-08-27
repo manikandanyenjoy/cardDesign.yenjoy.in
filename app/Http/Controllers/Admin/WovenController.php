@@ -16,6 +16,7 @@ use App\Http\Requests\Admin\WovenRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Models\FoldMaster;
 use App\Models\YarnMaster;
+use App\Models\Category;
 
 class WovenController extends Controller
 {
@@ -29,7 +30,8 @@ class WovenController extends Controller
 
       // echo "<pre>"; print_r($wovens);exit;
 
-        $wovens = DesignCard::with(['salesRepDetail','customerDetail'])->paginate(5);
+        $wovens = DesignCard::with(['salesRepDetail','customerDetail'])->paginate(config("motorTraders.paginate.perPage"));
+        
         return view("woven.index", compact("wovens"));
     }
 
@@ -38,7 +40,6 @@ class WovenController extends Controller
     {   
         $data = $this->mastersDatas();
         $editdesignCard = "";
-        // dd($data['yarnMaster']);
         return view("woven.create", compact("data","editdesignCard"));
     }
 
@@ -281,9 +282,8 @@ class WovenController extends Controller
     
     public function show($woven)
     {
-        $viewDesignCard = DesignCard::with(['customerDetail','designerDetail','salesRepDetail','warpDetail','foldMasterDetail'])->findOrFail($woven);
+        $viewDesignCard  = DesignCard::with(['customerDetail','designerDetail','salesRepDetail','warpDetail','foldMasterDetail','categoryMasterDetail'])->findOrFail($woven);
         $weavers         = Staf_master::where('role_id',5)->whereIn('id',$viewDesignCard->weaver)->orderBy('created_at', 'DESC')->get()->toArray();
-        
         return view("woven.show", compact("viewDesignCard","weavers"));
     }
 
@@ -315,6 +315,7 @@ class WovenController extends Controller
 
     public function mastersDatas()
     {
+        $data['categoryMaster']   = Category::get()->toArray();
         $data['yarnMaster']       = YarnMaster::get()->toArray();
         $data['customerMaster']   = CustomerMaster::orderBy('created_at', 'DESC')->get()->toArray();
         $data['loomrMaster']      = LoomMaster::get()->toArray();

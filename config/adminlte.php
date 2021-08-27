@@ -363,6 +363,12 @@ return [
             'url'         => 'roles',
 
         ],
+        [
+            'text'        => ['Category'],
+            'icon'        => 'fas fa-tags',
+            'url'         => 'categories',
+
+        ],
         
         ['header' => 'account_settings'],
         [

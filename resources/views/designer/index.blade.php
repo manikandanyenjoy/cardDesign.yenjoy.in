@@ -35,7 +35,7 @@
                         <table class="table table-bordered table-sm">
                             <thead>
                             <tr>
-                                <th style="width: 50px">#</th>
+                                <th style="width: 50px">S.No</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
@@ -45,30 +45,35 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($designers as $index => $designer)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $designer->name }}</td>
-                                    <td>{{ $designer->email }}</td>
-                                    <td>{{ $designer->phone }}</td>
-                                    <td>{{$designer->joined_on}}</td>
-                                    <td>{{$designer->left_on}}</td>
-                                    <td>
-                                        <a href="{{ route('designers.show',$designer->id) }}" class="btn btn-sm btn-warning">View</a>
-                                        @if(!$designer->deleted_at)
-                                        <a href="{{ route('staffs.edit',$designer->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                        <form method="POST" action="{{ route('designers.destroy', $designer->id) }}"
-                                              accept-charset="UTF-8"
-                                              style="display: inline-block;"
-                                              onsubmit="return confirm('Are you sure do you want to delete?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input class="btn btn-sm btn-danger" type="submit" value="Delete">
-                                        </form>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @php $i = ($designers->currentpage()-1)* $designers->perpage() + 1; @endphp
+                                @forelse ($designers as $designer)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $designer->name }}</td>
+                                        <td>{{ $designer->email }}</td>
+                                        <td>{{ $designer->phone }}</td>
+                                        <td>{{$designer->joined_on}}</td>
+                                        <td>{{$designer->left_on}}</td>
+                                        <td>
+                                            <a href="{{ route('designers.show',$designer->id) }}" class="btn btn-sm btn-warning">View</a>
+                                            @if(!$designer->deleted_at)
+                                            <a href="{{ route('staffs.edit',$designer->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                            <form method="POST" action="{{ route('designers.destroy', $designer->id) }}"
+                                                accept-charset="UTF-8"
+                                                style="display: inline-block;"
+                                                onsubmit="return confirm('Are you sure do you want to delete?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+                                            </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                 @empty
+                                    <tr>
+                                        <th colspan="7" class="text-center">No Data Found...</th>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

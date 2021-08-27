@@ -35,7 +35,7 @@
                         <table class="table table-bordered table-sm">
                             <thead>
                             <tr>
-                                <th style="width: 50px">#</th>
+                                <th style="width: 50px">S.No</th>
                                 <th>Loom Name</th>
                                 <th>Weaving</th>
                                 <th>Sections</th>
@@ -46,31 +46,36 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($looms as $index => $loom)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $loom->loom_name }}</td>
-                                    <td>{{ $loom->weaving_width_Meter }}</td>
-                                    <td>{{ $loom->sections }}</td>
-                                    <td>{{ $loom->speed }}</td>
-                                    <td>{{ $loom->year }}</td>
-                                    <td>{{ $loom->notes }}</td>
-                                    <td>
-                                        <a href="{{ route('looms.show',$loom->id) }}" class="btn btn-sm btn-warning">View</a>
-                                        @if(!$loom->deleted_at)
-                                        <a href="{{ route('looms.edit',$loom->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                        <form method="POST" action="{{ route('looms.destroy', $loom->id) }}"
-                                              accept-charset="UTF-8"
-                                              style="display: inline-block;"
-                                              onsubmit="return confirm('Are you sure do you want to delete?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input class="btn btn-sm btn-danger" type="submit" value="Delete">
-                                        </form>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @php $i = ($looms->currentpage()-1)* $looms->perpage() + 1; @endphp
+                                @forelse ($looms as $loom)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $loom->loom_name }}</td>
+                                        <td>{{ $loom->weaving_width_Meter }}</td>
+                                        <td>{{ $loom->sections }}</td>
+                                        <td>{{ $loom->speed }}</td>
+                                        <td>{{ $loom->year }}</td>
+                                        <td>{{ $loom->notes }}</td>
+                                        <td>
+                                            <a href="{{ route('looms.show',$loom->id) }}" class="btn btn-sm btn-warning">View</a>
+                                            @if(!$loom->deleted_at)
+                                            <a href="{{ route('looms.edit',$loom->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                            <form method="POST" action="{{ route('looms.destroy', $loom->id) }}"
+                                                accept-charset="UTF-8"
+                                                style="display: inline-block;"
+                                                onsubmit="return confirm('Are you sure do you want to delete?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+                                            </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <th colspan="8" class="text-center">No Data Found...</th>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

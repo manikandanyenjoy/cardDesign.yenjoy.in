@@ -37,37 +37,44 @@
                             <tr>
                                 <th style="width: 50px">S.No</th>
                                 <th>Customer</th>
-                                <th>Sales Representative</th>
                                 <th>Label</th>
-                                <th>Date</th>
+                                <th>Design No</th>
+                                <th>Sales Representative</th>
+                                <th>Created On</th>
                                 <th style="width: 200px">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($wovens as $index => $woven)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $woven->customerDetail ? ucwords($woven->customerDetail->full_name) : '-'}}</td>
-                                    <td>{{ $woven->salesRepDetail ? ucwords($woven->salesRepDetail->name) : '-'}}</td>
-                                    <td>{{ $woven->label ? ucwords($woven->label) : '-'}}</td>
-                                    <td>{{ $woven->date ? $woven->date : '-' }}</td>
-                                    
-                                    <td>
-                                        <a href="{{ route('woven.show',$woven->id) }}" class="btn btn-sm btn-warning">View</a>
+                                @php $i = ($wovens->currentpage()-1)* $wovens->perpage() + 1; @endphp
+                                @forelse ($wovens as $woven)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $woven->customerDetail ? ucwords($woven->customerDetail->company_name) : '-'}}</td>
+                                        <td>{{ $woven->label ? ucwords($woven->label) : '-'}}</td>
+                                        <td>{{ isset($woven->main_label['design_no']) ? $woven->main_label['design_no'] : '-'}}</td>
+                                        <td>{{ $woven->salesRepDetail ? ucwords($woven->salesRepDetail->name) : '-'}}</td>
+                                        <td>{{ $woven->date ? $woven->date : '-' }}</td>
                                         
-                                        <a href="{{ route('woven.edit',$woven->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                        <form method="POST" action="{{ route('woven.destroy', $woven->id) }}"
-                                              accept-charset="UTF-8"
-                                              style="display: inline-block;"
-                                              onsubmit="return confirm('Are you sure do you want to delete?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input class="btn btn-sm btn-danger" type="submit" value="Delete">
-                                        </form>
-                                        
-                                    </td>
-                                </tr>
-                            @endforeach
+                                        <td>
+                                            <a href="{{ route('woven.show',$woven->id) }}" class="btn btn-sm btn-warning">View</a>
+                                            
+                                            <a href="{{ route('woven.edit',$woven->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                            <form method="POST" action="{{ route('woven.destroy', $woven->id) }}"
+                                                accept-charset="UTF-8"
+                                                style="display: inline-block;"
+                                                onsubmit="return confirm('Are you sure do you want to delete?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+                                            </form>
+                                            
+                                        </td>
+                                    </tr>
+                                 @empty
+                                    <tr>
+                                        <th colspan="7" class="text-center">No Data Found...</th>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

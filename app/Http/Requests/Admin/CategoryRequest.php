@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class YarnRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +23,8 @@ class YarnRequest extends FormRequest
      */
     public function rules()
     {
-        $validation = [
-            "supplier" => "required",
-            "yarn_denier" => "required",
-            "shade_No" => "required",
-            "yarn_color" => "required",
-            "color_shade" => "required",
-            "notes" => "nullable",
+        return [
+            "category_name"     => "required"
         ];
-
-        return $validation;
     }
 }

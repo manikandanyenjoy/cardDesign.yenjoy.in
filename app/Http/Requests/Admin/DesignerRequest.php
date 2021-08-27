@@ -24,7 +24,7 @@ class DesignerRequest extends FormRequest
     public function rules()
     {
         $validation = [
-            "name" => "required|alpha_num|min:4|max:50",
+            "name" => "required|min:4|max:50",
             "email" => "required|email|unique:users,email",
             "password" =>
                 'required|confirmed|min:8',

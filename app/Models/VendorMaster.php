@@ -15,8 +15,8 @@ class VendorMaster extends Authenticatable
     use HasFactory, HasApiTokens, QueryScope;
     use SoftDeletes;
     protected $fillable = [
-        "first_name",
-        "last_name",
+        "full_name",
+        "category",
         "email",
         "mobile_number",
         "password",
@@ -38,5 +38,10 @@ class VendorMaster extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes["password"] = bcrypt($value);
+    }
+
+    public function categoryMasterDetail()
+    {
+        return $this->hasOne(Category::class,'id','category');
     }
 }

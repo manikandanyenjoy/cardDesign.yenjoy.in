@@ -2,6 +2,6 @@
 
 return [
     'paginate' => [
-        'perPage' => 15
+        'perPage' => 20
     ]
 ];

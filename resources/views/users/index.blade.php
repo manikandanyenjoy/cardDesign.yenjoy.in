@@ -35,7 +35,7 @@
                         <table class="table table-bordered table-sm">
                             <thead>
                             <tr>
-                                <th style="width: 50px">#</th>
+                                <th style="width: 50px">S.No</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
@@ -45,27 +45,32 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($users as $index => $user)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->phone }}</td>
-                                    <td>{{date("d-m-Y", strtotime($user->created_at) )  }}</td>
-                                    <td>@if($user->deleted_at){{ date("d-m-Y", strtotime($user->deleted_at) ) }}@endif</td>
-                                    <td>
-                                        <a href="{{ route('users.edit',$user->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                        <form method="POST" action="{{ route('users.destroy', $user->id) }}"
-                                              accept-charset="UTF-8"
-                                              style="display: inline-block;"
-                                              onsubmit="return confirm('Are you sure do you want to delete?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input class="btn btn-sm btn-danger" type="submit" value="Delete">
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @php $i = ($users->currentpage()-1)* $users->perpage() + 1; @endphp
+                                @forelse ($users as $user)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->phone }}</td>
+                                        <td>{{date("d-m-Y", strtotime($user->created_at) )  }}</td>
+                                        <td>@if($user->deleted_at){{ date("d-m-Y", strtotime($user->deleted_at) ) }}@endif</td>
+                                        <td>
+                                            <a href="{{ route('users.edit',$user->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                            <form method="POST" action="{{ route('users.destroy', $user->id) }}"
+                                                accept-charset="UTF-8"
+                                                style="display: inline-block;"
+                                                onsubmit="return confirm('Are you sure do you want to delete?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+                                            </form>
+                                        </td>
+                                    </tr>
+                                 @empty
+                                    <tr>
+                                        <th colspan="7" class="text-center">No Data Found...</th>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

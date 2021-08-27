@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use App\Models\YarnMaster;
 
 class DesignCard extends Model
 {
@@ -104,7 +105,35 @@ class DesignCard extends Model
 
     public function getMainNeedleAttribute($value)
     {
-        $mainNeedle = json_decode($value, true);
+        $mainNeedles               = !empty($value) ?  is_array(json_decode($value,true)) ? json_decode($value,true) : [] : [];
+        $mainNeedle                = [];
+        foreach($mainNeedles as $mainneedle)
+        {
+            $yarnA = YarnMaster::where("id", $mainneedle['a'])->first();
+            $yarnB = YarnMaster::where("id", $mainneedle['b'])->first();
+            $yarnC = YarnMaster::where("id", $mainneedle['c'])->first();
+            $yarnD = YarnMaster::where("id", $mainneedle['d'])->first();
+            $yarnE = YarnMaster::where("id", $mainneedle['e'])->first();
+            
+           
+            $mainNeedle[] = [
+                                'needle_no'         => $mainneedle['needle_no'],
+                                'pantone'           => $mainneedle['pantone'],
+                                'color'             => $mainneedle['color'],
+                                'color_shade'       => $mainneedle['color_shade'],
+                                'denier'            => $mainneedle['denier'],
+                                'a'                 => $mainneedle['a'],
+                                'a1'                => $yarnA['shade_No'],
+                                'b'                 => $mainneedle['b'],
+                                'b1'                => $yarnB['shade_No'],
+                                'c'                 => $mainneedle['c'],
+                                'c1'                => $yarnC['shade_No'],
+                                'd'                 => $mainneedle['d'],
+                                'd1'                => $yarnD['shade_No'],
+                                'e'                 => $mainneedle['e'],
+                                'e1'                => $yarnE['shade_No'],
+                            ];
+        }
 
         return is_array($mainNeedle) && count($mainNeedle) > 0
             ? $mainNeedle
@@ -113,7 +142,35 @@ class DesignCard extends Model
 
     public function getTabNeedleAttribute($value)
     {
-        $tabNeedle = json_decode($value, true);
+        $tabNeedles               = !empty($value) ?  is_array(json_decode($value,true)) ? json_decode($value,true) : [] : [];
+        $tabNeedle                = [];
+        foreach($tabNeedles as $tabneedle)
+        {
+            $yarnA = YarnMaster::where("id", $tabneedle['a'])->first();
+            $yarnB = YarnMaster::where("id", $tabneedle['b'])->first();
+            $yarnC = YarnMaster::where("id", $tabneedle['c'])->first();
+            $yarnD = YarnMaster::where("id", $tabneedle['d'])->first();
+            $yarnE = YarnMaster::where("id", $tabneedle['e'])->first();
+            
+           
+            $tabNeedle[] = [
+                                'needle_no'         => $tabneedle['needle_no'],
+                                'pantone'           => $tabneedle['pantone'],
+                                'color'             => $tabneedle['color'],
+                                'color_shade'       => $tabneedle['color_shade'],
+                                'denier'            => $tabneedle['denier'],
+                                'a'                 => $tabneedle['a'],
+                                'a1'                => $yarnA['shade_No'],
+                                'b'                 => $tabneedle['b'],
+                                'b1'                => $yarnB['shade_No'],
+                                'c'                 => $tabneedle['c'],
+                                'c1'                => $yarnC['shade_No'],
+                                'd'                 => $tabneedle['d'],
+                                'd1'                => $yarnD['shade_No'],
+                                'e'                 => $tabneedle['e'],
+                                'e1'                => $yarnE['shade_No'],
+                            ];
+        }
 
         return is_array($tabNeedle) && count($tabNeedle) > 0
             ? $tabNeedle
@@ -122,8 +179,36 @@ class DesignCard extends Model
 
     public function getSizeNeedleAttribute($value)
     {
-        $sizeNeedle = json_decode($value, true);
-
+        
+        $sizeNeedles               = !empty($value) ?  is_array(json_decode($value,true)) ? json_decode($value,true) : [] : [];
+        $sizeNeedle                = [];
+        foreach($sizeNeedles as $sizeneedle)
+        {
+            $yarnA = YarnMaster::where("id", $sizeneedle['a'])->first();
+            $yarnB = YarnMaster::where("id", $sizeneedle['b'])->first();
+            $yarnC = YarnMaster::where("id", $sizeneedle['c'])->first();
+            $yarnD = YarnMaster::where("id", $sizeneedle['d'])->first();
+            $yarnE = YarnMaster::where("id", $sizeneedle['e'])->first();
+            
+           
+            $sizeNeedle[] = [
+                                'needle_no'         => $sizeneedle['needle_no'],
+                                'pantone'           => $sizeneedle['pantone'],
+                                'color'             => $sizeneedle['color'],
+                                'color_shade'       => $sizeneedle['color_shade'],
+                                'denier'            => $sizeneedle['denier'],
+                                'a'                 => $sizeneedle['a'],
+                                'a1'                => $yarnA['shade_No'],
+                                'b'                 => $sizeneedle['b'],
+                                'b1'                => $yarnB['shade_No'],
+                                'c'                 => $sizeneedle['c'],
+                                'c1'                => $yarnC['shade_No'],
+                                'd'                 => $sizeneedle['d'],
+                                'd1'                => $yarnD['shade_No'],
+                                'e'                 => $sizeneedle['e'],
+                                'e1'                => $yarnE['shade_No'],
+                            ];
+        }
         return is_array($sizeNeedle) && count($sizeNeedle) > 0
             ? $sizeNeedle
             : [];
@@ -185,5 +270,10 @@ class DesignCard extends Model
     public function foldMasterDetail()
     {
         return $this->hasOne(foldMaster::class,'id','finishing');
+    }         
+
+    public function categoryMasterDetail()
+    {
+        return $this->hasOne(category::class,'id','category');
     }          
 }

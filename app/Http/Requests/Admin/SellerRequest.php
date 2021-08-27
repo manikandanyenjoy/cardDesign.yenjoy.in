@@ -25,8 +25,7 @@ class SellerRequest extends FormRequest
     public function rules()
     {
         $validation = [
-            "first_name" => "required|alpha_num|min:4|max:50",
-            "last_name" => "nullable|alpha_num|max:50",
+            "full_name" => "required|min:4|max:50",
             "email" => ["required",Rule::unique('vendor_masters')->ignore($this->seller)],
             "mobile_number" => 'required|min:10|numeric',
             "bank_name" => 'required',

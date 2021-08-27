@@ -5,7 +5,7 @@
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1>{{ __('fold - ') . $fold->fold_name}}</h1>
+            <h1>{{ __('Fold - ') . ucwords($fold->type_of_fold)}}</h1>
         </div>
         <div class="col-sm-6">
             <a href="{{ route('folds.index') }}" class="btn bg-gradient-primary float-right">Back</a>
@@ -33,7 +33,7 @@
                                     </tr>
                                     <tr>
                                         <td><strong>{{ __('Image') }}</strong></td>
-                                        <td><img src="http://127.0.0.1:8000/storage/app/folds/{{ $fold->image }}" alt="image" width="500" height="600"></td>
+                                        <td><img src="{{ $fold->image }}" alt="image" width="200" height="200"></td>
                                     </tr>
                                     
                                     <tr>

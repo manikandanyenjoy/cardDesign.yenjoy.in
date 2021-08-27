@@ -35,7 +35,7 @@
                         <table class="table table-bordered table-sm">
                             <thead>
                             <tr>
-                                <th style="width: 50px">#</th>
+                                <th style="width: 50px">S.No</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
@@ -45,30 +45,35 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($finishingoperators as $index => $finishingoperator)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $finishingoperator->name }}</td>
-                                    <td>{{ $finishingoperator->email }}</td>
-                                    <td>{{ $finishingoperator->phone }}</td>
-                                    <td>{{$finishingoperator->joined_on}}</td>
-                                    <td>{{$finishingoperator->left_on}}</td>
-                                    <td>
-                                        <a href="{{ route('finishingoperators.show',$finishingoperator->id) }}" class="btn btn-sm btn-warning">View</a>
-                                        @if(!$finishingoperator->deleted_at)
-                                        <a href="{{ route('staffs.edit',$finishingoperator->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                        <form method="POST" action="{{ route('finishingoperators.destroy', $finishingoperator->id) }}"
-                                              accept-charset="UTF-8"
-                                              style="display: inline-block;"
-                                              onsubmit="return confirm('Are you sure do you want to delete?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input class="btn btn-sm btn-danger" type="submit" value="Delete">
-                                        </form>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @php $i = ($finishingoperators->currentpage()-1)* $finishingoperators->perpage() + 1; @endphp
+                                @forelse ($finishingoperators as $finishingoperator)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $finishingoperator->name }}</td>
+                                        <td>{{ $finishingoperator->email }}</td>
+                                        <td>{{ $finishingoperator->phone }}</td>
+                                        <td>{{$finishingoperator->joined_on}}</td>
+                                        <td>{{$finishingoperator->left_on}}</td>
+                                        <td>
+                                            <a href="{{ route('finishingoperators.show',$finishingoperator->id) }}" class="btn btn-sm btn-warning">View</a>
+                                            @if(!$finishingoperator->deleted_at)
+                                            <a href="{{ route('staffs.edit',$finishingoperator->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                            <form method="POST" action="{{ route('finishingoperators.destroy', $finishingoperator->id) }}"
+                                                accept-charset="UTF-8"
+                                                style="display: inline-block;"
+                                                onsubmit="return confirm('Are you sure do you want to delete?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+                                            </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                 @empty
+                                    <tr>
+                                        <th colspan="7" class="text-center">No Data Found...</th>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

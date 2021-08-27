@@ -19,4 +19,9 @@ class FoldMaster extends Model
         "notes",
 
     ];
+
+    public function getImageAttribute($value)
+    {
+        return $value ? asset("foldsImage/${value}") : "";
+    }
 }

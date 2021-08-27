@@ -54,8 +54,10 @@ return [
 
         'folds' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            // 'root' => storage_path('app/public'),
+            // 'url' => env('APP_URL').'/storage',
+            'root' => public_path('foldsImage'),
+            'url' => env('APP_URL').'/foldsImage',
             'visibility' => 'private',
         ],
 

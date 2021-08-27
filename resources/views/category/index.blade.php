@@ -1,14 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'Finishers')
+@section('title', 'Categories')
 
 @section('content_header')
-    <div class="row mb-2">
-        <div class="col-sm-6">
-            <h1>{{ __('Finishers') }}</h1>
-        </div>
-        <div class="col-sm-6">
-            <a href="{{ route('staffs.create') }}" class="btn bg-gradient-primary float-right">Add Finishers</a>
+    <div class="container-fluid">
+        <div class="row mb-1">
+            <div class="col-md-12">
+                <h1 class="float-left font-weight-bold">Categories</h1>
+                <div class="float-right">
+                    <a href="{{ route('category.create') }}" class="btn bg-gradient-primary float-right">Add Category</a>
+                </div>
+            </div>
         </div>
     </div>
 @stop
@@ -28,7 +30,7 @@
                 @endforeach
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Finishers</h3>
+                        <h3 class="card-title">Category</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -36,29 +38,19 @@
                             <thead>
                             <tr>
                                 <th style="width: 50px">S.No</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Joined On</th>
-                                <th>Left On</th>
+                                <th>Category</th>
                                 <th style="width: 200px">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                                @php $i = ($finishers->currentpage()-1)* $finishers->perpage() + 1; @endphp
-                                @forelse ($finishers as  $finisher)
+                                @php $i = ($categories->currentpage()-1)* $categories->perpage() + 1; @endphp
+                                @forelse ($categories as $index => $category)
                                     <tr>
                                         <td>{{ $i++ }}</td>
-                                        <td>{{ $finisher->name }}</td>
-                                        <td>{{ $finisher->email }}</td>
-                                        <td>{{ $finisher->phone }}</td>
-                                        <td>{{$finisher->joined_on}}</td>
-                                        <td>{{$finisher->left_on}}</td>
+                                        <td>{{ ucwords($category->category_name) }}</td>
                                         <td>
-                                            <a href="{{ route('finishers.show',$finisher->id) }}" class="btn btn-sm btn-warning">View</a>
-                                            @if(!$finisher->deleted_at)
-                                            <a href="{{ route('staffs.edit',$finisher->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                            <form method="POST" action="{{ route('finishers.destroy', $finisher->id) }}"
+                                            <a href="{{ route('category.edit',$category->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                            <form method="POST" action="{{ route('category.destroy', $category->id) }}"
                                                 accept-charset="UTF-8"
                                                 style="display: inline-block;"
                                                 onsubmit="return confirm('Are you sure do you want to delete?');">
@@ -66,12 +58,11 @@
                                                 @method('DELETE')
                                                 <input class="btn btn-sm btn-danger" type="submit" value="Delete">
                                             </form>
-                                            @endif
                                         </td>
                                     </tr>
-                                 @empty
+                                    @empty
                                     <tr>
-                                        <th colspan="7" class="text-center">No Data Found...</th>
+                                        <th colspan="3" class="text-center">No Data Found...</th>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -80,7 +71,7 @@
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
                         <div class="float-right">
-                            {!! $finishers->links() !!}
+                            {!! $categories->links() !!}
                         </div>
                     </div>
                 </div>

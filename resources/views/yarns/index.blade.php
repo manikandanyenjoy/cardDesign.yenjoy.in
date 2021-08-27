@@ -1,14 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'yarns')
+@section('title', 'Raw Material')
 
 @section('content_header')
-    <div class="row mb-2">
-        <div class="col-sm-6">
-            <h1>{{ __('yarns') }}</h1>
-        </div>
-        <div class="col-sm-6">
-            <a href="{{ route('yarns.create') }}" class="btn bg-gradient-primary float-right">Add yarns</a>
+    <div class="row mb-1">
+        <div class="col-12">
+            <h1 class="float-left ml-2 font-weight-bold">
+              {{ __('Raw Material') }}
+            </h1>
+            <div class="float-right">
+                <a href="{{ route('yarns.create') }}" class="btn bg-gradient-primary btn-md mr-2">{{ __('Add Raw Material') }}</a>
+            </div>
         </div>
     </div>
 @stop
@@ -28,7 +30,7 @@
                 @endforeach
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">yarns</h3>
+                        <h3 class="card-title">List of Raw Materials</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -46,31 +48,36 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($yarns as $index => $yarn)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $yarn->supplier }}</td>
-                                    <td>{{ $yarn->yarn_denier }}</td>
-                                    <td>{{ $yarn->shade_No }}{{ $yarn->shade_No_suffix }}</td>
-                                    <td>{{ $yarn->yarn_color }}</td>
-                                    <td style="background-color: {{ $yarn->yarn_color }};"></td>
-                                    <td>{{ $yarn->notes }}</td>
-                                    <td>
-                                        <a href="{{ route('yarns.show',$yarn->id) }}" class="btn btn-sm btn-warning">View</a>
-                                        @if(!$yarn->deleted_at)
-                                        <a href="{{ route('yarns.edit',$yarn->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                        <form method="POST" action="{{ route('yarns.destroy', $yarn->id) }}"
-                                              accept-charset="UTF-8"
-                                              style="display: inline-block;"
-                                              onsubmit="return confirm('Are you sure do you want to delete?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input class="btn btn-sm btn-danger" type="submit" value="Delete">
-                                        </form>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @php $i = ($yarns->currentpage()-1)* $yarns->perpage() + 1; @endphp
+                                @forelse ($yarns as $yarn)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $yarn->supplier }}</td>
+                                        <td>{{ $yarn->yarn_denier }}</td>
+                                        <td>{{ $yarn->shade_No }}{{-- $yarn->shade_No_suffix --}}</td>
+                                        <td>{{ $yarn->yarn_color }}</td>
+                                        <td style="background-color: {{ $yarn->yarn_color }};"></td>
+                                        <td>{{ $yarn->notes }}</td>
+                                        <td>
+                                            <a href="{{ route('yarns.show',$yarn->id) }}" class="btn btn-sm btn-warning">View</a>
+                                            @if(!$yarn->deleted_at)
+                                            <a href="{{ route('yarns.edit',$yarn->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                            <form method="POST" action="{{ route('yarns.destroy', $yarn->id) }}"
+                                                accept-charset="UTF-8"
+                                                style="display: inline-block;"
+                                                onsubmit="return confirm('Are you sure do you want to delete?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+                                            </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <th colspan="8" class="text-center">No Data Found...</th>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

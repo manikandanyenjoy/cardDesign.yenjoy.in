@@ -10,7 +10,7 @@
         <div class="offset-md-1 col-md-10">
             <h1 class="float-left ml-2 font-weight-bold">
                 @if($editVendor)
-                {{ __('Vendor - ') . ucfirst($editVendor->first_name)}}
+                {{ __('Vendor - ') . ucfirst($editVendor->full_name)}}
                 @else
                 {{ __('Vendors') }}
                 @endif
@@ -45,19 +45,25 @@
                                         <h5 class="mb-3 font-weight-bold">{{ _('Vendor Details') }}</h5>
                                         <div class="row">
                                             <div class="form-group col-6">
-                                                <label for="first_name">First Name <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="first_name" name="first_name" value="{{ $editVendor ? old('first_name',$editVendor->first_name) : old('first_name') }}" placeholder="First Name">
-                                                @error('first_name')
+                                                <label for="full_name">Full Name <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control @error('full_name') is-invalid @enderror" id="full_name" name="full_name" value="{{ $editVendor ? old('full_name',$editVendor->full_name) : old('full_name') }}" placeholder="First Name">
+                                                @error('full_name')
                                                 <span class="error invalid-feedback">{{ $message }}</span>
                                                 @enderror
                                             </div>
 
                                             <div class="form-group col-6">
-                                                <label for="last_name">Last Name</label>
-                                                <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="last_name" name="last_name" value="{{ $editVendor ? old('last_name',$editVendor->last_name) : old('last_name') }}" placeholder="Last Name">
-                                                @error('last_name')
-                                                <span class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
+                                                <label for="last_name">Category</label>
+                                                <select name="category" class="form-control">
+                                                    <option value="">Select Category</option>
+                                                    @foreach($data['categoryMaster'] as $category) 
+                                                        @if($editVendor)
+                                                            <option value="{{$category['id']}}" {{ old('category') == $category['id'] ? 'selected' : ($category['id'] == $editVendor->category ? 'selected' : '') }}>{{ucfirst($category['category_name'])}} </option>
+                                                        @else
+                                                            <option value="{{$category['id']}}" {{ old('category') == $category['id'] ? 'selected' : '' }}>{{ucfirst($category['category_name'])}} </option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
 

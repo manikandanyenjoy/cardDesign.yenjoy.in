@@ -20,13 +20,14 @@ class YarnController extends Controller
 
     public function create()
     {   
-        return view("yarns.create");
+        $editYarn = "";
+        return view("yarns.create",compact('editYarn'));
     }
    
     public function store(YarnRequest $request)
     {
 
-        $user = YarnMaster::create($request->all());
+        $user = YarnMaster::create($request->validated());
 
         return redirect()
         ->route("yarns.index")
@@ -36,15 +37,14 @@ class YarnController extends Controller
     
     public function edit(YarnMaster $yarn)
     {   
-        
-        $colour = YarnMaster::where('id',$yarn->id)->first();
-        return view("yarns.edit", compact("yarn"));
+        $editYarn = YarnMaster::where('id',$yarn->id)->first();
+        return view("yarns.create",compact('editYarn'));
     }
 
 
     public function update(YarnRequest $request, YarnMaster $yarn)
     {
-        $yarn->update($request->all());
+        $yarn->update($request->validated());
 
         return redirect()
         ->route("yarns.index")

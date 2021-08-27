@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -215,6 +216,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('roles/{role}/edit',[RoleController::class,'edit'])->name('role.edit');
     Route::put('roles/{role}',[RoleController::class,'update'])->name('role.update');
     Route::delete('roles/{role}',[RoleController::class,'destroy'])->name('role.destroy');
+
+    Route::get('categories',[CategoryController::class,'index'])->name('category.index');
+    Route::get('categories/create',[CategoryController::class,'create'])->name('category.create');
+    Route::post('categories/store',[CategoryController::class,'store'])->name('category.store');
+    Route::get('categories/{category}/edit',[CategoryController::class,'edit'])->name('category.edit');
+    Route::put('categories/{category}',[CategoryController::class,'update'])->name('category.update');
+    Route::delete('categories/{category}',[CategoryController::class,'destroy'])->name('category.destroy');
 
 });
 
