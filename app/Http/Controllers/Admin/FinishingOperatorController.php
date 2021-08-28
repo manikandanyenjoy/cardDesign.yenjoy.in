@@ -75,7 +75,7 @@ class FinishingOperatorController extends Controller
      */
     public function show($finishingoperator)
     {
-        $finishingoperator = Staf_master::withTrashed()->findOrFail($finishingoperator);
+        $finishingoperator = Staf_master::with('roleDetial')->withTrashed()->findOrFail($finishingoperator);
         $address = Staf_address::where('staf_id',$finishingoperator->id)->first();
         return view("finishingoperator.show", compact("finishingoperator","address"));
     }

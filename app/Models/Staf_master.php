@@ -23,4 +23,9 @@ class Staf_master extends Model
     {
         return $value ? asset('staffs_document/'.$value) : "";
     }
+
+    public function roleDetial()
+    {
+        return $this->hasOne(Role_master::class,'id','role_id');
+    }
 }

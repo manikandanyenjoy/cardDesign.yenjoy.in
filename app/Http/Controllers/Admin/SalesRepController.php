@@ -75,7 +75,7 @@ class SalesRepController extends Controller
      */
     public function show($salesrep)
     {
-        $salesrep = Staf_master::withTrashed()->findOrFail($salesrep);
+        $salesrep = Staf_master::with('roleDetial')->withTrashed()->findOrFail($salesrep);
         $address = Staf_address::where('staf_id',$salesrep->id)->first();
         return view("salesrep.show", compact("salesrep","address"));
     }

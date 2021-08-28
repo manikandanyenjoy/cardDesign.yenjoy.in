@@ -11,6 +11,7 @@ use App\Models\Staf_master;
 use App\Models\Role_master;
 use App\Models\Staf_address;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class StaffController extends Controller
 {
@@ -20,8 +21,10 @@ class StaffController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   $roles = Role_master::get();
-        return view("staff.create",compact("roles"));
+    {   
+        $editStaff = "";
+        $roles     = Role_master::get();
+        return view("staff.create",compact("roles","editStaff"));
     }
 
     /**
@@ -34,10 +37,9 @@ class StaffController extends Controller
     {   
 
         try {
-            $validatedFields = $request->all();
-            unset($validatedFields["document_name"]);
-
-            $user = Staf_master::create($request->all());
+            $validatedFields                       = $request->validated(); 
+            $validatedFields['password']           = Hash::make($request->password);
+            $user                                  = Staf_master::create($validatedFields);
 
             if ($request->hasFile("document_name")) {
                 $file = $request->file("document_name");
@@ -111,8 +113,9 @@ class StaffController extends Controller
      */
     public function edit(Staf_master $staff)
     { 
+        $editStaff = $staff;
         $roles = Role_master::get();
-        return view("staff.edit", compact("staff","roles"));
+        return view("staff.create", compact("editStaff","roles"));
     }
 
     /**
@@ -126,10 +129,17 @@ class StaffController extends Controller
     {
        
         try {
-            $validatedFields = $request->all();
-            unset($validatedFields["document_name"]);
-
-            $staff->update($request->all());
+            $validatedFields                       = $request->validated(); 
+            if($request->password != "" && $request->password != null)
+            {
+                $validatedFields['password']       = Hash::make($request->password);
+            }
+            else
+            {
+                unset($validatedFields['password']);
+            }
+            
+            $staff->update($validatedFields);
 
             if ($request->hasFile("document_name")) {
                 $file = $request->file("document_name");

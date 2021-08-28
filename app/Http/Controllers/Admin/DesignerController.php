@@ -62,7 +62,7 @@ class DesignerController extends Controller
      */
     public function show($designer)
     {
-        $designer = Staf_master::withTrashed()->findOrFail($designer);
+        $designer = Staf_master::with('roleDetial')->withTrashed()->findOrFail($designer);
         $address = Staf_address::where('staf_id',$designer->id)->first();
         return view("designer.show", compact("designer","address"));
     }

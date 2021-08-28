@@ -76,7 +76,7 @@ class FinisherController extends Controller
      */
     public function show($finisher)
     {
-        $finisher = Staf_master::withTrashed()->findOrFail($finisher);
+        $finisher = Staf_master::with('roleDetial')->withTrashed()->findOrFail($finisher);
         $address = Staf_address::where('staf_id',$finisher->id)->first();
         return view("finisher.show", compact("finisher","address"));
     }

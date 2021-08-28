@@ -198,15 +198,15 @@ class DesignCard extends Model
                                 'color_shade'       => $sizeneedle['color_shade'],
                                 'denier'            => $sizeneedle['denier'],
                                 'a'                 => isset($sizeneedle['a']) ? $sizeneedle['a'] : '',
-                                'a1'                => $yarnA['shade_No'],
+                                'a1'                => isset($yarnA['shade_No']) ? $yarnA['shade_No'] : '-',
                                 'b'                 => isset($sizeneedle['b']) ? $sizeneedle['b'] : '',
-                                'b1'                => $yarnB['shade_No'],
+                                'b1'                => isset($yarnB['shade_No']) ? $yarnB['shade_No'] : '-',
                                 'c'                 => isset($sizeneedle['c']) ? $sizeneedle['c'] : '',
-                                'c1'                => $yarnC['shade_No'],
+                                'c1'                => isset($yarnC['shade_No']) ? $yarnC['shade_No'] : '-',
                                 'd'                 => isset($sizeneedle['d']) ? $sizeneedle['d'] : '',
-                                'd1'                => $yarnD['shade_No'],
+                                'd1'                => isset($yarnD['shade_No']) ? $yarnD['shade_No'] : '-',
                                 'e'                 => isset($sizeneedle['e']) ? $sizeneedle['e'] : '',
-                                'e1'                => $yarnE['shade_No'],
+                                'e1'                => isset($yarnE['shade_No']) ? $yarnE['shade_No'] : '-',
                             ];
         }
         return is_array($sizeNeedle) && count($sizeNeedle) > 0

@@ -75,7 +75,7 @@ class QualityCheckerController extends Controller
      */
     public function show($qualitychecker)
     {
-        $qualitychecker = Staf_master::withTrashed()->findOrFail($qualitychecker);
+        $qualitychecker = Staf_master::with('roleDetial')->withTrashed()->findOrFail($qualitychecker);
         $address = Staf_address::where('staf_id',$qualitychecker->id)->first();
         return view("qualitychecker.show", compact("qualitychecker","address"));
     }

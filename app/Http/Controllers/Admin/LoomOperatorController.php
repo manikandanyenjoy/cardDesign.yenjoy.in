@@ -75,7 +75,7 @@ class LoomOperatorController extends Controller
      */
     public function show($loomoperator)
     {
-        $loomoperator = Staf_master::withTrashed()->findOrFail($loomoperator);
+        $loomoperator = Staf_master::with('roleDetial')->withTrashed()->findOrFail($loomoperator);
         $address = Staf_address::where('staf_id',$loomoperator->id)->first();
         return view("loomoperator.show", compact("loomoperator","address"));
     }

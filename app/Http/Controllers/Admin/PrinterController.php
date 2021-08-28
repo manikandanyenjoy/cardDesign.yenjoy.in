@@ -75,7 +75,7 @@ class PrinterController extends Controller
      */
     public function show($printer)
     {
-        $printer = Staf_master::withTrashed()->findOrFail($printer);
+        $printer = Staf_master::with('roleDetial')->withTrashed()->findOrFail($printer);
         $address = Staf_address::where('staf_id',$printer->id)->first();
         return view("printer.show", compact("printer","address"));
     }

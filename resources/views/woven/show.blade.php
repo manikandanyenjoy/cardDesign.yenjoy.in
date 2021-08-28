@@ -34,6 +34,7 @@
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-12 pr-4 d-flex justify-content-end">
+            <button type="button" class="btn col-1 bg-gradient-success mr-3" id="print">Print</button>
             <a href="{{ route('woven.edit',$viewDesignCard->id) }}" class="btn col-1 bg-gradient-primary mr-3">Edit</a>
             <a href="{{ route('woven.index') }}" class="btn col-1 bg-gradient-danger">Back</a>
         </div>
@@ -45,7 +46,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-primary">
+                    <div class="card card-primary" id="print_area">
                         <div class="card-header">
                             <h3 class="card-title">{{ __('View Design Card - ')}} <span class="font-weight-bold">{{ucfirst($viewDesignCard->label)}}</span></h3>
                         </div>
@@ -81,7 +82,7 @@
                                             <tr>
                                                 <th>Warp</th>
                                                 <td>{{ $viewDesignCard->warpDetail ? ucwords($viewDesignCard->warpDetail->name) : '-' }}</td>
-                                                <th>Finishing</th>
+                                                <th>Folds</th>
                                                 <td>{{ $viewDesignCard->foldMasterDetail ? ucwords($viewDesignCard->foldMasterDetail->type_of_fold ) : '-' }}</td>
                                                 <th>Notes</th>
                                                 <td>{{ $viewDesignCard->description }}</td>
@@ -401,9 +402,18 @@
                                                         <td>{{ $mainNeedle['e1'] ?? '-' }}</td>
                                                     </tr>
                                                 @empty
-                                                   <tr>
-                                                       <td colspan="9"></td>
-                                                   </tr>
+                                                    <tr>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                    </tr>
                                                 @endforelse
                                             </tbody>
                                         </table>
@@ -439,9 +449,18 @@
                                                         <td>{{ $tabNeedle['e1'] ?? '-' }}</td>
                                                     </tr>
                                                 @empty
-                                                   <tr>
-                                                       <td colspan="9"></td>
-                                                   </tr>
+                                                    <tr>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                    </tr>
                                                 @endforelse
                                             </tbody>
                                         </table>
@@ -477,9 +496,18 @@
                                                         <td>{{ $sizeNeedle['e1'] ?? '-' }}</td>
                                                     </tr>
                                                 @empty
-                                                   <tr>
-                                                       <td colspan="9"></td>
-                                                   </tr>
+                                                    <tr>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                    </tr>
                                                 @endforelse
                                             </tbody>
                                         </table>
@@ -518,11 +546,9 @@
                                             <label for="document_name">Design File</label>
                                             @if($viewDesignCard->design_file && count(json_decode($viewDesignCard->design_file)) > 0)
                                                 @foreach(json_decode($viewDesignCard->design_file) as $designFile)
-                                                    {{ $loop->first ? '' : ', ' }}
-                                                    <a href="{{asset('./cardsDocuments/'.$viewDesignCard->id.'/'.$designFile)}}" download>
-                                                      <img style="width: 20px; border: 2px solid black;" src="https://cdn.icon-icons.com/icons2/1875/PNG/512/download_120262.png" alt="W3Schools">
-                                                    </a>
-                                                    {{ $designFile }}
+                                                <p class="mt-1">
+                                                    <a href="{{asset('./cardsDocuments/'.$viewDesignCard->id.'/'.$designFile)}}" class="text-success" download><i class="fas fa-download mr-2"></i> {{ $designFile }}</a>
+                                                </p>
                                                 @endforeach
                                             @endif
                                         </div>
@@ -537,4 +563,11 @@
             </div>
         </div>
     </section>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $("#print").on('click', function () {
+            // $("#print_area").show();
+            window.print();
+        })
+    </script>
 @stop

@@ -1640,21 +1640,21 @@
         const mullerSpeed      = "{{$data['loomrMaster'][2]['speed']}}";
 
         $("#main_total_picks, #main_repeat_first_input").on("keyup",function(){
-            const mainTotalPicks  = parseFloat($(this).val());        
+            const mainTotalPicks  = parseFloat($('#main_total_picks').val());        
             const mainLabFst      = $("#main_labelhrs_first");
             const mainLabsec      = $("#main_labelhrs_second");
             const mainLabThir     = $("#main_labelhrs_third");
-            const mainRepFst        = $("#main_repeat_first_input");
+            const mainRepFst      = $("#main_repeat_first_input");
             const mainRepSec      = $("#main_repeat_second_input");
             const mainRepThir     = $("#main_repeat_last_input");
 
             if(($("#main_total_picks").val() && !isNaN($("#main_total_picks").val())) && ($("#main_repeat_first_input").val() && !isNaN($("#main_repeat_first_input").val()))){
-              const mainLabFirst  = (parseFloat(mullerSpeed)/mainTotalPicks)/parseFloat(mainRepFst.val())*60*0.85;
-              const mainLabSecond = (parseFloat(airjet_12Speed)/mainTotalPicks)/parseFloat(mainRepSec.val())*60*0.85;
-              const mainLabThird  = (parseFloat(airjet_16Speed)/mainTotalPicks)/parseFloat(mainRepThir.val())*60*0.85;
-              mainLabFst.val(mainLabFirst.toFixed(2));
-              mainLabsec.val(mainLabSecond.toFixed(2));
-              mainLabThir.val(mainLabThird.toFixed(2));
+              const mainLabFirst  = (parseFloat(mullerSpeed)/mainTotalPicks)*parseFloat(mainRepFst.val())*60*0.85;
+              const mainLabSecond = (parseFloat(airjet_12Speed)/mainTotalPicks)*(mainRepFst.val()*1.2)*60*0.85;
+              const mainLabThird  = (parseFloat(airjet_16Speed)/mainTotalPicks)*(mainRepFst.val()*1.6)*60*0.85;
+              mainLabFst.val(Math.floor(mainLabFirst));
+              mainLabsec.val(Math.floor(mainLabSecond));
+              mainLabThir.val(Math.floor(mainLabThird));
             
             }else{
                 mainLabFst.val('');
@@ -1672,8 +1672,8 @@
                 const mainFirstCal = parseFloat(mainRepFirst) * 1.2;
                 const mainLastCal  = parseFloat(mainRepFirst) * 1.6;
 
-                mainRepSecond.val(mainFirstCal.toFixed(2));
-                mainRepThird.val(mainLastCal.toFixed(2));
+                mainRepSecond.val(Math.floor(mainFirstCal));
+                mainRepThird.val(Math.floor(mainLastCal));
             }
             else{
                 mainRepSecond.val('');
@@ -1682,7 +1682,7 @@
         });
 
         $("#tab_total_picks, #tab_repeat_first_input").on("keyup",function(){
-            const tabTotalPicks  = parseFloat($(this).val());        
+            const tabTotalPicks  = parseFloat($("#tab_total_picks").val());        
             const tabLabFst      = $("#tab_labelhrs_first");
             const tabLabsec      = $("#tab_labelhrs_second");
             const tabLabThir     = $("#tab_labelhrs_third");
@@ -1690,13 +1690,13 @@
             const tabRepSec      = $("#tab_repeat_second_input");
             const tabRepThir     = $("#tab_repeat_last_input");
 
-            if(($("#tab_total_picks").val() && !isNaN($("#tab_total_picks").val())) && ($("#tab_repeat_first_input").val() && !isNaN($("#tab_repeat_first_input").val()))){
-              const tabLabFirst  = (parseFloat(mullerSpeed)/tabTotalPicks)/parseFloat(tabRepFst.val())*60*0.85;
-              const tabLabSecond = (parseFloat(airjet_12Speed)/tabTotalPicks)/parseFloat(tabRepSec.val())*60*0.85;
-              const tabLabThird  = (parseFloat(airjet_16Speed)/tabTotalPicks)/parseFloat(tabRepThir.val())*60*0.85;
-              tabLabFst.val(tabLabFirst.toFixed(2));
-              tabLabsec.val(tabLabSecond.toFixed(2));
-              tabLabThir.val(tabLabThird.toFixed(2));
+            if(($("#tab_total_picks").val() != "" && !isNaN($("#tab_total_picks").val())) && ($("#tab_repeat_first_input").val() !="" && !isNaN($("#tab_repeat_first_input").val()))){
+              const tabLabFirst  = (parseFloat(mullerSpeed)/tabTotalPicks)*parseFloat(tabRepFst.val())*60*0.85;
+              const tabLabSecond = (parseFloat(airjet_12Speed)/tabTotalPicks)*(tabRepFst.val() * 1.2)*60*0.85;
+              const tabLabThird  = (parseFloat(airjet_16Speed)/tabTotalPicks)*(tabRepFst.val() * 1.6)*60*0.85;
+              tabLabFst.val(Math.floor(tabLabFirst));
+              tabLabsec.val(Math.floor(tabLabSecond));
+              tabLabThir.val(Math.floor(tabLabThird));
             
             }else{
                 tabLabFst.val('');
@@ -1714,8 +1714,8 @@
                 const tabFirstCal     = parseFloat(tabRepFirst) * 1.2;
                 const tabLastCal      = parseFloat(tabRepFirst) * 1.6;
 
-                tabRepSecond.val(tabFirstCal.toFixed(2));
-                tabRepThird.val(tabLastCal.toFixed(2));
+                tabRepSecond.val(Math.floor(tabFirstCal));
+                tabRepThird.val(Math.floor(tabLastCal));
             }else{
                 tabRepSecond.val("");
                 tabRepThird.val("");
@@ -1723,7 +1723,7 @@
         });
 
         $("#size_total_picks, #size_repeat_first_input").on("keyup",function(){
-            const sizeTotalPicks  = parseFloat($(this).val());        
+            const sizeTotalPicks  = parseFloat($("#size_total_picks").val());        
             const sizeLabFst      = $("#size_labelhrs_first");
             const sizeLabsec      = $("#size_labelhrs_second");
             const sizeLabThir     = $("#size_labelhrs_third");
@@ -1732,12 +1732,12 @@
             const sizeRepThir     = $("#size_repeat_last_input");
 
             if(($("#size_total_picks").val() && !isNaN($("#size_total_picks").val())) && ($("#size_repeat_first_input").val() && !isNaN($("#size_repeat_first_input").val()))){
-              const sizeLabFirst  = (parseFloat(mullerSpeed)/sizeTotalPicks)/parseFloat(sizeRepFst.val())*60*0.85;
-              const sizeLabSecond = (parseFloat(airjet_12Speed)/sizeTotalPicks)/parseFloat(sizeRepSec.val())*60*0.85;
-              const sizeLabThird  = (parseFloat(airjet_16Speed)/sizeTotalPicks)/parseFloat(sizeRepThir.val())*60*0.85;
-              sizeLabFst.val(sizeLabFirst.toFixed(2));
-              sizeLabsec.val(sizeLabSecond.toFixed(2));
-              sizeLabThir.val(sizeLabThird.toFixed(2));
+              const sizeLabFirst  = (parseFloat(mullerSpeed)/sizeTotalPicks)*parseFloat(sizeRepFst.val())*60*0.85;
+              const sizeLabSecond = (parseFloat(airjet_12Speed)/sizeTotalPicks)*(sizeRepFst.val()*1.2)*60*0.85;
+              const sizeLabThird  = (parseFloat(airjet_16Speed)/sizeTotalPicks)*(sizeRepFst.val()*1.6)*60*0.85;
+              sizeLabFst.val(Math.floor(sizeLabFirst));
+              sizeLabsec.val(Math.floor(sizeLabSecond));
+              sizeLabThir.val(Math.floor(sizeLabThird));
             
             }else{
                 sizeLabFst.val('');
@@ -1754,8 +1754,8 @@
             if(sizeRepFirst && !isNaN(sizeRepFirst)){
                 const sizeFirstCal = parseFloat(sizeRepFirst) * 1.2;
                 const sizeLastCal  = parseFloat(sizeRepFirst) * 1.6;
-                sizeRepSecond.val(sizeFirstCal.toFixed(2));
-                sizeRepThird.val(sizeLastCal.toFixed(2));
+                sizeRepSecond.val(Math.floor(sizeFirstCal));
+                sizeRepThird.val(Math.floor(sizeLastCal));
             }else{
                 sizeRepSecond.val("");
                 sizeRepThird.val("");
