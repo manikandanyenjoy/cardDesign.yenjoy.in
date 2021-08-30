@@ -269,11 +269,11 @@ class DesignCard extends Model
 
     public function foldMasterDetail()
     {
-        return $this->hasOne(foldMaster::class,'id','finishing');
+        return $this->hasOne(FoldMaster::class,'id','finishing');
     }         
 
     public function categoryMasterDetail()
     {
-        return $this->hasOne(category::class,'id','category');
+        return $this->hasOne(Category::class,'id','category');
     }          
 }
