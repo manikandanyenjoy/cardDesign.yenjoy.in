@@ -40,9 +40,6 @@ class BuyerController extends Controller
 
         $data                       = $request->validated(); 
         $data['password']           = Hash::make($request->password);
-        $data['status']             = $request->status; 
-        $data['category']           = $request->category; 
-        $data['secondary_email']    = $request->secondary_email; 
 
         CustomerMaster::create($data);
 
@@ -61,6 +58,7 @@ class BuyerController extends Controller
 
     public function update(BuyerRequest $request, CustomerMaster $buyer)
     {
+        dd($request->all());
         if($request->same_as){
             $shipping = $request->billing_address;
         }else{
@@ -68,9 +66,6 @@ class BuyerController extends Controller
         }
 
         $data                    = $request->validated(); 
-        $data['status']          = $request->status; 
-        $data['category']        = $request->category; 
-        $data['secondary_email'] = $request->secondary_email; 
 
         if($request->password != "" && $request->password != null)
         {

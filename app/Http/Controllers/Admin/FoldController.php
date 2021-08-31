@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\FoldMaster;
 use App\Http\Requests\Admin\FoldRequest;
+use Illuminate\Support\Facades\Storage;
 
 class FoldController extends Controller
 {
@@ -30,17 +31,20 @@ class FoldController extends Controller
             $validatedFields = $request->validated();
             unset($validatedFields["image"]);
 
-            $user = FoldMaster::create($request->all());
+            $foldCreate = FoldMaster::create($request->all());
 
             if ($request->hasFile("image")) {
                 $file = $request->file("image");
-                $filePath = $file->store("{$user->id}/business_document", [
-                    "disk" => "folds",
-                ]);
+                if(Storage::disk('folds')->makeDirectory("{$fold->id}", 0755, true))
+                {
+                    $filePath = $file->store("{$foldCreate->id}", [
+                        "disk" => "folds",
+                    ]);
+                }
             }
 
             if (isset($filePath)) {
-                $user->update([
+                $foldCreate->update([
                     "image" => $filePath,
                 ]);
             }
@@ -80,9 +84,12 @@ class FoldController extends Controller
 
             if ($request->hasFile("image")) {
                 $file = $request->file("image");
-                $filePath = $file->store("{$fold->id}/business_document", [
-                    "disk" => "folds",
-                ]);
+                if(Storage::disk('folds')->makeDirectory("{$fold->id}", 0777, true))
+                {
+                    $filePath = $file->store("{$fold->id}", [
+                        "disk" => "folds",
+                    ]);
+                }
             }
 
             if (isset($filePath)) {

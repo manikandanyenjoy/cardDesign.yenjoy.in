@@ -26,6 +26,13 @@ class VendorMaster extends Authenticatable
         "opening_balance",
         "credit_period",
         "grade",
+        "GST",
+        "status",
+        "shipping_address",
+        "billing_address",
+        "CGST",
+        "SGST",
+        "IGST",
         
     ];
 

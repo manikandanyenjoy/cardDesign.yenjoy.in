@@ -53,8 +53,8 @@ class DesignerRequest extends FormRequest
     public function messages()
     {
         return [
-            "email.unique"  => "This email already exist",
-            "phone.unique"  => "This phone number already exist",
+            "email.unique"  => "This email already exists",
+            "phone.unique"  => "This phone number already exists",
             "password.regex" =>
                 "Password must be minimum 8 character and should contain atleast one number and a special character",
         ];

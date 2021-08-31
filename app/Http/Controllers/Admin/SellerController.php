@@ -36,10 +36,7 @@ class SellerController extends Controller
         }
 
         $data               = $request->validated(); 
-        $data['category']   = $request->category;
         $data['password']   = Hash::make($request->password);
-        $data['status']     = $request->status; 
-
         VendorMaster::create($data);
        
         return redirect()
@@ -63,8 +60,6 @@ class SellerController extends Controller
         }
 
         $data               = $request->validated(); 
-        $data['category']   = $request->category;
-        $data['status']     = $request->status; 
 
         if($request->password != "" && $request->password != null)
         {

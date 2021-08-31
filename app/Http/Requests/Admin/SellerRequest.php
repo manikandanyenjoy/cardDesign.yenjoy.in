@@ -25,16 +25,20 @@ class SellerRequest extends FormRequest
     public function rules()
     {
         $validation = [
-            "full_name" => "required|min:4|max:50",
-            "email" => ["required",Rule::unique('vendor_masters')->ignore($this->seller)],
-            "mobile_number" => 'required|min:10|numeric',
-            "bank_name" => 'required',
-            "account_no" => 'required',
-            "IFSCCode" => 'required',
-            "opening_balance" => 'required',
-            "credit_period" => 'required',
-            "grade" => 'required',
-            "GST" => 'required',
+            "full_name"                 => "required|min:4|max:50",
+            "email"                     => ["required","email",Rule::unique('vendor_masters')->ignore($this->seller)],
+            "mobile_number"             => ["required","min:10","numeric", Rule::unique('vendor_masters')->ignore($this->seller)],
+            "billing_address"           => "required",
+            "shipping_address"          => "required",
+            "bank_name"                 => "required",
+            "account_no"                => ["required",Rule::unique('vendor_masters')->ignore($this->seller)],
+            "IFSCCode"                  => "required",
+            "opening_balance"           => "required",
+            "credit_period"             => "required",
+            "grade"                     => "required",
+            "GST"                       => ["required",Rule::unique('vendor_masters')->ignore($this->seller)],
+            "category"                  => "nullable",
+            "status"                    => "required",
             
         ];
 
@@ -54,8 +58,11 @@ class SellerRequest extends FormRequest
     public function messages()
     {
         return [
-            "password.regex" =>
-                "Password must be minimum 8 character and should contain atleast one number and a special character",
+            "email.unique"           => "This email already exists",
+            "mobile_number.unique"   => "This mobile number already exists",
+            "account_no.unique"      => "This account number already exists",
+            "GST.unique"             => "This GST number already exists",
+            "password.regex"         => "Password must be minimum 8 character and should contain atleast one number and a special character",
         ];
     }
 }

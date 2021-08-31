@@ -73,8 +73,12 @@ class WovenController extends Controller
             $result = DesignCard::create($validatedFields);
 
             if ($request->hasFile("front_crop_image")) {
-                $frontFileName = $this->decodeBase64Image($request->front_image, $result->id, 'front_image');
-                $uploadFiles["front_image"] = $frontFileName;
+               
+                if(Storage::disk('cardsImage')->makeDirectory("{$result->id}", 0755, true))
+                {
+                    $frontFileName = $this->decodeBase64Image($request->front_image, $result->id, 'front_image');
+                    $uploadFiles["front_image"] = $frontFileName;
+                }
             }else{
                 unset($validatedFields["front_image"]);
             }
@@ -90,9 +94,12 @@ class WovenController extends Controller
             // }
 
             if ($request->hasFile("back_crop_image")) {
-                $backFilename = $this->decodeBase64Image($request->back_image, $result->id, 'back_image');
+                if(Storage::disk('cardsImage')->makeDirectory("{$result->id}", 0755, true))
+                {
+                    $backFilename = $this->decodeBase64Image($request->back_image, $result->id, 'back_image');
 
-                $uploadFiles["back_image"] = $backFilename;
+                    $uploadFiles["back_image"] = $backFilename;
+                }
             }else{
                 unset($validatedFields["back_image"]);
             }
@@ -108,9 +115,12 @@ class WovenController extends Controller
             // }
 
             if ($request->hasFile("all_view_crop_image")) {
-                $viewAllFilename = $this->decodeBase64Image($request->all_view_image, $result->id, 'all_view_image');
+                if(Storage::disk('cardsImage')->makeDirectory("{$result->id}", 0755, true))
+                {
+                    $viewAllFilename = $this->decodeBase64Image($request->all_view_image, $result->id, 'all_view_image');
 
-                $uploadFiles["all_view_image"] = $viewAllFilename;
+                    $uploadFiles["all_view_image"] = $viewAllFilename;
+                }
             }else{
                 unset($validatedFields["all_view_image"]);
             }
@@ -145,8 +155,10 @@ class WovenController extends Controller
                 {
                     $designfileName   = time().$key.'.'.$designFile->getClientOriginalExtension();
                     $mulitpleDesignFile[] = $designfileName;
-
-                    $designFile->move(public_path("cardsDocuments/{$result->id}/"), $designfileName);
+                    if(Storage::disk('cardsDocuments')->makeDirectory("{$result->id}", 0755, true))
+                    {
+                        $designFile->move(public_path("cardsDocuments/{$result->id}/"), $designfileName);
+                    }
                 }
                 $uploadFiles['design_file'] = json_encode($mulitpleDesignFile);
             }else{
@@ -220,25 +232,34 @@ class WovenController extends Controller
             // }
 
             if ($request->hasFile("front_crop_image")) {
-                $frontFileName = $this->decodeBase64Image($request->front_image, $woven->id, 'front_image');
+                if(Storage::disk('cardsImage')->makeDirectory("{$woven->id}", 0755, true))
+                {
+                    $frontFileName = $this->decodeBase64Image($request->front_image, $woven->id, 'front_image');
 
-                $validatedFields["front_image"] = $frontFileName;
+                    $validatedFields["front_image"] = $frontFileName;
+                }
             }else{
                 unset($validatedFields["front_image"]);
             }
             
             if ($request->hasFile("back_crop_image")) {
-                $backFilename = $this->decodeBase64Image($request->back_image, $woven->id, 'back_image');
+                if(Storage::disk('cardsImage')->makeDirectory("{$woven->id}", 0755, true))
+                {
+                    $backFilename = $this->decodeBase64Image($request->back_image, $woven->id, 'back_image');
 
-                $validatedFields["back_image"] = $backFilename;
+                    $validatedFields["back_image"] = $backFilename;
+                }
             }else{
                 unset($validatedFields["back_image"]);
             }
 
             if ($request->hasFile("all_view_crop_image")) {
-                $viewAllFilename = $this->decodeBase64Image($request->all_view_image, $woven->id, 'all_view_image');
+                if(Storage::disk('cardsImage')->makeDirectory("{$woven->id}", 0755, true))
+                {
+                    $viewAllFilename = $this->decodeBase64Image($request->all_view_image, $woven->id, 'all_view_image');
 
-                $validatedFields["all_view_image"] = $viewAllFilename;
+                    $validatedFields["all_view_image"] = $viewAllFilename;
+                }
             }else{
                 unset($validatedFields["all_view_image"]);
             }
@@ -251,8 +272,10 @@ class WovenController extends Controller
                 {
                     $designfileName   = time().$key.'.'.$designFile->getClientOriginalExtension();
                     $mulitpleDesignFile[] = $designfileName;
-
-                    $designFile->move(public_path("cardsDocuments/{$woven->id}/"), $designfileName);
+                    if(Storage::disk('cardsDocuments')->makeDirectory("{$woven->id}", 0755, true))
+                    {
+                        $designFile->move(public_path("cardsDocuments/{$woven->id}/"), $designfileName);
+                    }
                  
                     // $filePath = $designFile->store("{$woven->id}", [
                     //     "disk" => "cardsDocuments",

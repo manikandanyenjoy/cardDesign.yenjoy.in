@@ -28,9 +28,9 @@ class WovenRequest extends FormRequest
             "label"                 => "required",
             "date"                  => "required",
             "salesrep_id"           => "required",
-            "front_crop_image"      => "nullable|mimes:jpg,jpeg,png|max:2000",
-            "back_crop_image"       => "nullable|mimes:jpg,jpeg,png|max:2000",
-            "all_view_crop_image"   => "nullable|mimes:jpg,jpeg,png|max:2000",
+            "front_crop_image"      => "nullable|mimes:jpg,jpeg,png|max:5000",
+            "back_crop_image"       => "nullable|mimes:jpg,jpeg,png|max:5000",
+            "all_view_crop_image"   => "nullable|mimes:jpg,jpeg,png|max:5000",
             "design_files"          => "nullable",
             "design_files.*"        => "max:25000",
         ];

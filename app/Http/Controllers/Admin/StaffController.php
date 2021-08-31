@@ -12,6 +12,7 @@ use App\Models\Role_master;
 use App\Models\Staf_address;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class StaffController extends Controller
 {
@@ -43,9 +44,13 @@ class StaffController extends Controller
 
             if ($request->hasFile("document_name")) {
                 $file = $request->file("document_name");
-                $filePath = $file->store("{$user->id}/staffs_document", [
-                    "disk" => "staffs",
-                ]);
+               
+                if(Storage::disk('staffs_document')->makeDirectory("{$user->id}", 0777, true))
+                {
+                    $filePath = $file->store("{$user->id}", [
+                        "disk" => "staffs",
+                    ]);
+                }
             }
 
             if (isset($filePath)) {
@@ -143,9 +148,12 @@ class StaffController extends Controller
 
             if ($request->hasFile("document_name")) {
                 $file = $request->file("document_name");
-                $filePath = $file->store("{$staff->id}", [
-                    "disk" => "staffs",
-                ]);
+                if(Storage::disk('staffs_document')->makeDirectory("{$staff->id}", 0755, true))
+                {
+                    $filePath = $file->store("{$staff->id}", [
+                        "disk" => "staffs",
+                    ]);
+                }
             }
 
             if (isset($filePath)) {

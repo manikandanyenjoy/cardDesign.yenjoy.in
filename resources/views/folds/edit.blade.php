@@ -35,7 +35,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form method="POST" action="{{ route('folds.update', $fold->id) }}" novalidate>
+                        <form method="POST" action="{{ route('folds.update', $fold->id) }}" enctype="multipart/form-data" novalidate>
                             @csrf
                             @method('PUT')
                             <div class="card-body row">

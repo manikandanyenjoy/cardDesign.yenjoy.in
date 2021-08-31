@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class BuyerRequest extends FormRequest
 {
@@ -24,23 +25,24 @@ class BuyerRequest extends FormRequest
     public function rules()
     {
         $validation = [
-            "full_name" => "required|min:4|max:50",
-            "email" => "required|email|unique:vendor_masters,email",
-         
-            "mobile_number" => 'required|min:10|numeric',
-            "sales_rep" =>'required',
-            // "secondary_email"=>'required',
-            "bank_name" => 'required',
-            "account_no" => 'required',
-            "IFSCCode" => 'required',
-            "opening_balance" => 'required',
-            "credit_period" => 'required',
-            "grade" => 'required',
-            "company_name"=>'required',
-            "company_phone"=> 'required|min:10|numeric',
-            "billing_address"=>'required',
-            "shipping_address"=>'required',
-            "GST"=>'required',
+            "full_name"                 => "required|min:4|max:50",
+            "email"                     => ["required","email",Rule::unique('customer_masters')->ignore($this->buyer)],
+            "mobile_number"             => ["required","min:10","numeric", Rule::unique('customer_masters')->ignore($this->buyer)],
+            "sales_rep"                 =>'required',
+            "bank_name"                 => 'required',
+            "account_no"                => ["required",Rule::unique('customer_masters')->ignore($this->buyer)],
+            "IFSCCode"                  => 'required',
+            "opening_balance"           => 'required',
+            "credit_period"             => 'required',
+            "grade"                     => 'required',
+            "company_name"              =>'required',
+            "company_phone"             => 'required|min:10|numeric',
+            "billing_address"           =>'required',
+            "shipping_address"          =>'required',
+            "GST"                       => ["required",Rule::unique('customer_masters')->ignore($this->buyer)],
+            "category"                  => "nullable",
+            "secondary_email"           => "nullable",
+            "status"                    => "required",
 
             
         ];
@@ -61,8 +63,11 @@ class BuyerRequest extends FormRequest
     public function messages()
     {
         return [
-            "password.regex" =>
-                "Password must be minimum 8 character and should contain atleast one number and a special character",
+            "email.unique"           => "This email already exists",
+            "mobile_number.unique"   => "This mobile number already exists",
+            "account_no.unique"      => "This account number already exists",
+            "GST.unique"             => "This GST number already exists",
+            "password.regex"         => "Password must be minimum 8 character and should contain atleast one number and a special character",
         ];
     }
 }

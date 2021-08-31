@@ -107,7 +107,7 @@
                                           
 
                                             <div class="form-group col-6">
-                                                <label for="status">Status</label>
+                                                <label for="status">Status <span class="text-danger">*</span></label>
                                                 <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
                                                     @if($editVendor)
                                                         <option value='1' {{ old('status') == '1' ? 'selected' : ($editVendor->status == '1' ? 'selected' : '') }}>Active </option>
@@ -142,7 +142,7 @@
                                                     <label class="form-check-label font-weight-bold">
                                                         @if($editVendor)
                                                         @php 
-                                                            $sameAsBilling = (strcmp($editVendor->billing_address, $editVendor->shipping_address) == 0) ? 1 : 0;
+                                                            $sameAsBilling = (strcmp($editVendor->billing_address, $editVendor->shipping_address) == 0 && ($editVendor->billing_address || $editVendor->shipping_address)) ? 1 : 0;
                                                         @endphp
                                                             <input class="form-check-input" type="checkbox" class="form-control @error('same_as') is-invalid @enderror" id="same_as" name="same_as" value=1 {{ old('same_as') == 1 ? 'checked' : ($sameAsBilling == 1 ? 'checked' : '') }}/>
                                                         @else
