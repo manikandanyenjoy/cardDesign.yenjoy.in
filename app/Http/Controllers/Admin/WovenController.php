@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\FoldMaster;
 use App\Models\YarnMaster;
 use App\Models\Category;
+use File;
 
 class WovenController extends Controller
 {
@@ -74,7 +75,8 @@ class WovenController extends Controller
 
             if ($request->hasFile("front_crop_image")) {
                
-                if(Storage::disk('cardsImage')->makeDirectory("{$result->id}", 0755, true))
+                // if(Storage::disk('cardsImage')->makeDirectory("{$result->id}", 0755, true))
+                if(File::makeDirectory("designCards", 0755, true))
                 {
                     $frontFileName = $this->decodeBase64Image($request->front_image, $result->id, 'front_image');
                     $uploadFiles["front_image"] = $frontFileName;
@@ -94,7 +96,8 @@ class WovenController extends Controller
             // }
 
             if ($request->hasFile("back_crop_image")) {
-                if(Storage::disk('cardsImage')->makeDirectory("{$result->id}", 0755, true))
+                // if(Storage::disk('cardsImage')->makeDirectory("{$result->id}", 0755, true))
+                if(File::makeDirectory("designCards", 0755, true))
                 {
                     $backFilename = $this->decodeBase64Image($request->back_image, $result->id, 'back_image');
 
@@ -115,7 +118,8 @@ class WovenController extends Controller
             // }
 
             if ($request->hasFile("all_view_crop_image")) {
-                if(Storage::disk('cardsImage')->makeDirectory("{$result->id}", 0755, true))
+                // if(Storage::disk('cardsImage')->makeDirectory("{$result->id}", 0755, true))
+                if(File::makeDirectory("designCards", 0755, true))
                 {
                     $viewAllFilename = $this->decodeBase64Image($request->all_view_image, $result->id, 'all_view_image');
 
@@ -155,7 +159,8 @@ class WovenController extends Controller
                 {
                     $designfileName   = time().$key.'.'.$designFile->getClientOriginalExtension();
                     $mulitpleDesignFile[] = $designfileName;
-                    if(Storage::disk('cardsDocuments')->makeDirectory("{$result->id}", 0755, true))
+                    // if(Storage::disk('cardsDocuments')->makeDirectory("{$result->id}", 0755, true))
+                    if(File::makeDirectory("cardsDocuments", 0755, true))
                     {
                         $designFile->move(public_path("cardsDocuments/{$result->id}/"), $designfileName);
                     }
