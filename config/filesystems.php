@@ -57,6 +57,12 @@ return [
             // 'root' => storage_path('app/public'),
             // 'url' => env('APP_URL').'/storage',
             'root' => public_path('foldsImage'),
+            'permissions' => [
+                'file' => [
+                    'public' => 0664,
+                    'private' => 0664,
+                ]
+            ],
             'url' => env('APP_URL').'/foldsImage',
             'visibility' => 'private',
         ],
@@ -65,12 +71,24 @@ return [
             'driver' => 'local',
             // 'root' => storage_path('app/public/staffs_document'),
             'root' => public_path('staffs_document'),
+            'permissions' => [
+                'file' => [
+                    'public' => 0664,
+                    'private' => 0664,
+                ]
+            ],
             'url' => env('APP_URL').'/staffs_document',
             'visibility' => 'private',
         ],
         'cardsImage' => [
             'driver' => 'local',
             'root' => public_path('designCards'),
+            'permissions' => [
+                'file' => [
+                    'public' => 0664,
+                    'private' => 0664,
+                ]
+            ],
             // 'url' => env('APP_URL').'/storage',
             'url' => env('APP_URL').'/designCards',
             'visibility' => 'public',
@@ -78,6 +96,12 @@ return [
         'cardsDocuments' => [
             'driver' => 'local',
             'root' => public_path('cardsDocuments'),
+            'permissions' => [
+                'file' => [
+                    'public' => 0664,
+                    'private' => 0664,
+                ]
+            ],
             'url' => env('APP_URL').'/cardsDocuments',
             'visibility' => 'public',
         ],
