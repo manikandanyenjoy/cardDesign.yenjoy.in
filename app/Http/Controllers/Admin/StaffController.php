@@ -47,12 +47,14 @@ class StaffController extends Controller
                 $file = $request->file("document_name");
                
                 // if(Storage::disk('staffs_document')->makeDirectory("{$user->id}", 0777, true))
-                if(File::makeDirectory("staffs_document", 0755, true))
+                if(!File::exists('staffs_document'))
                 {
-                    $filePath = $file->store("{$user->id}", [
-                        "disk" => "staffs",
-                    ]);
+                    File::makeDirectory("staffs_document", 0755, true);
                 }
+                
+                $filePath = $file->store("{$user->id}", [
+                    "disk" => "staffs",
+                ]);
             }
 
             if (isset($filePath)) {
@@ -151,12 +153,14 @@ class StaffController extends Controller
             if ($request->hasFile("document_name")) {
                 $file = $request->file("document_name");
                 // if(Storage::disk('staffs_document')->makeDirectory("{$staff->id}", 0755, true))
-                if(File::makeDirectory("staffs_document", 0755, true))
+                if(!File::exists('staffs_document'))
                 {
-                    $filePath = $file->store("{$staff->id}", [
-                        "disk" => "staffs",
-                    ]);
+                    File::makeDirectory("staffs_document", 0755, true);
                 }
+            
+                $filePath = $file->store("{$staff->id}", [
+                    "disk" => "staffs",
+                ]);
             }
 
             if (isset($filePath)) {
