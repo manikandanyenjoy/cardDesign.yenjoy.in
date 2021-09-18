@@ -10,9 +10,24 @@ use DB;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::paginate(config("motorTraders.paginate.perPage"));
+      
+      $categories = New Category();
+      
+        if($request->search){
+          $columnsToSearch = DB::getSchemaBuilder()->getColumnListing('categories');
+
+          $searchQuery = '%' . $request->search . '%'; 
+
+          foreach($columnsToSearch as $column) {
+              $categories = $categories->orWhere($column, 'LIKE', $searchQuery);
+          }
+        }
+      
+        $categories = $categories->paginate(config("motorTraders.paginate.perPage"));
+      
+        //$categories = Category::paginate(config("motorTraders.paginate.perPage"));
         return view("category.index", compact("categories"));
     }
 

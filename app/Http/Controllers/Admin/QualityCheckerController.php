@@ -11,6 +11,7 @@ use App\Models\Staf_master;
 use App\Models\Role_master;
 use App\Models\Staf_address;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class QualityCheckerController extends Controller
 {
@@ -19,11 +20,28 @@ class QualityCheckerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+   public function index(Request $request)
     {
-        $qualitycheckers = Staf_master::where('role_id',7)->orderBy('id', 'DESC')->withTrashed()->paginate(
+        $staf = Staf_master::where('role_id',7);
+      
+        if($request->search){
+          $columnsToSearch = DB::getSchemaBuilder()->getColumnListing('staf_masters');
+
+          $searchQuery = '%' . $request->search . '%'; 
+
+         $staf ->where(function ($query) use ($columnsToSearch,$searchQuery) {
+            foreach($columnsToSearch as $column) {
+                      $query = $query->orWhere($column, 'LIKE', $searchQuery);
+                  }
+			});
+          
+        }
+      
+        $qualitycheckers = $staf->orderBy('created_at', 'DESC')->withTrashed()->paginate(config("motorTraders.paginate.perPage"));
+      
+        /*$qualitycheckers = Staf_master::where('role_id',7)->orderBy('id', 'DESC')->withTrashed()->paginate(
             config("motorTraders.paginate.perPage")
-        );
+        );*/
 
         return view("qualitychecker.index", compact("qualitycheckers"));
     }

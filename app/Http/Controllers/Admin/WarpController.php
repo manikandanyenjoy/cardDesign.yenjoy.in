@@ -6,15 +6,29 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\WarpMaster;
 use App\Http\Requests\Admin\WarpRequest;
+use DB;
 
 
 class WarpController extends Controller
 {
     
-    public function index()
+     public function index(Request $request)
     {
-        $warps = WarpMaster::orderBy('created_at', 'DESC')
+         $master = new WarpMaster();
+      
+        if($request->search){
+          $columnsToSearch = DB::getSchemaBuilder()->getColumnListing('warp_masters');
+
+          $searchQuery = '%' . $request->search . '%'; 
+
+          foreach($columnsToSearch as $column) {
+              $master = $master->orWhere($column, 'LIKE', $searchQuery);
+          }
+        }
+      
+        $warps = $master->orderBy('created_at', 'DESC')
         ->paginate(config("motorTraders.paginate.perPage"));
+       
         return view("warps.index", compact("warps"));
     }
 

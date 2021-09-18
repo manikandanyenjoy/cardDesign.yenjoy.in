@@ -7,13 +7,27 @@ use Illuminate\Http\Request;
 
 use App\Models\LoomMaster;
 use App\Http\Requests\Admin\LoomRequest;
+use DB;
 
 class LoomController extends Controller
 {
-    public function index()
+     public function index(Request $request)
     {
-        $looms = LoomMaster::orderBy('created_at', 'DESC')
+         $master = new LoomMaster();
+      
+        if($request->search){
+          $columnsToSearch = DB::getSchemaBuilder()->getColumnListing('loom_masters');
+
+          $searchQuery = '%' . $request->search . '%'; 
+
+          foreach($columnsToSearch as $column) {
+              $master = $master->orWhere($column, 'LIKE', $searchQuery);
+          }
+        }
+      
+        $looms = $master->orderBy('created_at', 'DESC')
         ->paginate(config("motorTraders.paginate.perPage"));
+       
         return view("looms.index", compact("looms"));
     }
 

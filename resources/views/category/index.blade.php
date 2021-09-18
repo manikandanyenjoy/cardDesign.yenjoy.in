@@ -31,6 +31,12 @@
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Category</h3>
+                      <form class="float-right">
+                          <input class="" type="text" name="search" >
+                          <button class="btn btn-sm btn-info" type="submit">
+                            search
+                          </button>
+                      </form>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">

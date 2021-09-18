@@ -36,6 +36,11 @@
         <div class="col-sm-12 pr-4 d-flex justify-content-end">
             <button type="button" class="btn col-1 bg-gradient-success mr-3" id="print">Print</button>
             <a href="{{ route('woven.edit',$viewDesignCard->id) }}" class="btn col-1 bg-gradient-primary mr-3">Edit</a>
+          @if($viewDesignCard->po_status == 0)
+            <a href="{{ route('create.purchaseorder',$viewDesignCard->id) }}" class="btn col-1 bg-gradient-success mr-3">Make PO</a>
+          @else
+           <a href="{{ route('purchaseorder.show',$viewDesignCard->id) }}" class="btn col-1 bg-gradient-success mr-3">Goto PO</a>
+          @endif
             <a href="{{ route('woven.index') }}" class="btn col-1 bg-gradient-danger">Back</a>
         </div>
     </div>
@@ -111,8 +116,9 @@
                                                     </tr>
                                                     
                                                     <tr class="main_label_input">
-                                                        <th width="200px">Quality</th>
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['quality']) ? $viewDesignCard->main_label['quality'] : '-' }}</td>
+                                                        <th width="200px">Quality
+                                                      </th>
+                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->main_label['quality']) ? \App\Models\WovenQuality::find($viewDesignCard->main_label['quality'])->quality : '-' }}</td>
                                                     </tr>
                                                     
                                                     <tr class="main_label_input">
@@ -144,7 +150,7 @@
                                                     </tr>
 
                                                     <tr class="main_label_input">
-                                                        <th width="200px">Total Labour Hours</th>
+                                                        <th width="200px">Total Lable/Hours</th>
                                                         <td width="200px">
                                                             @if(isset($viewDesignCard->main_label['total_labour_hours']))
                                                                 @foreach($viewDesignCard->main_label['total_labour_hours'] as $total_labour_hours)
@@ -199,7 +205,10 @@
                                                     </tr>
                                                     
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->tab_label['quality']) ? $viewDesignCard->tab_label['quality'] : '-' }}</td>
+                                                        <td width="200px">
+                                                          
+                                                          {{ $viewDesignCard && isset($viewDesignCard->tab_label['quality']) ? \App\Models\WovenQuality::find($viewDesignCard->tab_label['quality'])->quality : '-' }}
+                                                         </td>
                                                     </tr>
                                                     
                                                     <tr class="main_label_input">
@@ -263,7 +272,10 @@
                                                     </tr>
                                                     
                                                     <tr class="main_label_input">
-                                                        <td width="200px">{{ $viewDesignCard && isset($viewDesignCard->size_label['quality']) ? $viewDesignCard->size_label['quality'] : '-' }}</td>
+                                                        <td width="200px">
+                                                          {{ $viewDesignCard && isset($viewDesignCard->size_label['quality']) ? \App\Models\WovenQuality::find($viewDesignCard->size_label['quality'])->quality : '-' }}
+                                                         
+                                                          </td>
                                                     </tr>
                                                     
                                                     <tr class="main_label_input">

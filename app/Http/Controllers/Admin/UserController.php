@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\UserRequest;
 use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Models\User;
 use App\Models\Admin_address;
+use DB;
 
 
 
@@ -15,11 +16,22 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::desc()->withTrashed()->paginate(
-            config("motorTraders.paginate.perPage")
-        );
+      $users = User::desc()->withTrashed();
+      
+        if($request->search){
+          $columnsToSearch = DB::getSchemaBuilder()->getColumnListing('users');
+
+          $searchQuery = '%' . $request->search . '%'; 
+
+          foreach($columnsToSearch as $column) {
+              $users = $users->orWhere($column, 'LIKE', $searchQuery);
+          }
+        }
+      
+        $users = $users->paginate(config("motorTraders.paginate.perPage"));
+        
 
         return view("users.index", compact("users"));
     }

@@ -10,15 +10,29 @@ use App\Models\CustomerBillingAddress;
 use App\Models\Staf_master;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Category;
+use Illuminate\Http\Request;
+use DB;
 
 
 
 class BuyerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $buyers = CustomerMaster::orderBy('created_at', 'DESC')
-            ->paginate(config("motorTraders.paginate.perPage"));
+      
+      	 $buyers = CustomerMaster::orderBy('created_at', 'DESC');
+      
+      if($request->search){
+        $columnsToSearch = DB::getSchemaBuilder()->getColumnListing('customer_masters');
+        
+        $searchQuery = '%' . $request->search . '%'; 
+
+        foreach($columnsToSearch as $column) {
+            $buyers = $buyers->orWhere($column, 'LIKE', $searchQuery);
+        }
+      }
+        $buyers = $buyers->paginate(config("motorTraders.paginate.perPage"));
+      
         return view("buyers.index", compact("buyers"));
     }
 
@@ -58,7 +72,7 @@ class BuyerController extends Controller
 
     public function update(BuyerRequest $request, CustomerMaster $buyer)
     {
-        dd($request->all());
+        //dd($request->all());
         if($request->same_as){
             $shipping = $request->billing_address;
         }else{
@@ -80,7 +94,7 @@ class BuyerController extends Controller
 
         return redirect()
             ->route("buyers.index")
-            ->with("success", "Buyer updated successfully");
+            ->with("success", "Customers updated successfully");
     }
 
     public function show($buyer)
@@ -95,6 +109,6 @@ class BuyerController extends Controller
         $buyer->delete();
         return redirect()
             ->route("buyers.index")
-            ->with("success", "Buyer deleted successfully");
+            ->with("success", "Customers deleted successfully");
     }
 }

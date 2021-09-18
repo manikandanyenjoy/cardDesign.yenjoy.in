@@ -357,6 +357,12 @@ return [
             'url'         => 'woven-design-cards',
 
         ],
+      [
+            'text'        => ['Purchase Order'],
+            'icon'        => 'fas fa-fw fa-object-group',
+            'url'         => 'purchase-order',
+
+        ],
         [
             'text'        => ['Roles'],
             'icon'        => 'far fa-id-badge',

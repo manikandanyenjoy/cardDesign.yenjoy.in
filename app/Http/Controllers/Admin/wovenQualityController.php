@@ -6,14 +6,29 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\WovenQuality;
 use App\Http\Requests\Admin\WovenQualityRequest;
+use DB;
 
 class wovenQualityController extends Controller
 {
     
-    public function index()
+    public function index(Request $request)
     {
-        $wovenqualitys = WovenQuality::orderBy('created_at', 'DESC')
+         $master = new WovenQuality();
+      
+        if($request->search){
+          $columnsToSearch = DB::getSchemaBuilder()->getColumnListing('woven_qualities');
+
+          $searchQuery = '%' . $request->search . '%'; 
+
+          foreach($columnsToSearch as $column) {
+              $master = $master->orWhere($column, 'LIKE', $searchQuery);
+          }
+        }
+      
+        $wovenqualitys = $master->orderBy('created_at', 'DESC')
         ->paginate(config("motorTraders.paginate.perPage"));
+       
+       
         return view("wovenqualitys.index", compact("wovenqualitys"));
     }
 

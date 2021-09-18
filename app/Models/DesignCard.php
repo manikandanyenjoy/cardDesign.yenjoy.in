@@ -275,5 +275,6 @@ class DesignCard extends Model
     public function categoryMasterDetail()
     {
         return $this->hasOne(Category::class,'id','category');
-    }          
+    }
+    
 }

@@ -6,12 +6,25 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FinishingMachineMaster;
 use App\Http\Requests\Admin\FinishingMachineRequest;
+use DB;
 
 class FinishingMachinesController extends Controller
 {
-       public function index()
+       public function index(Request $request)
     {
-        $finishingmachines = FinishingMachineMaster::orderBy('created_at', 'DESC')
+         $finishingmachines = new FinishingMachineMaster();
+      
+        if($request->search){
+          $columnsToSearch = DB::getSchemaBuilder()->getColumnListing('finishing_machine_masters');
+
+          $searchQuery = '%' . $request->search . '%'; 
+
+          foreach($columnsToSearch as $column) {
+              $finishingmachines = $finishingmachines->orWhere($column, 'LIKE', $searchQuery);
+          }
+        }
+      
+        $finishingmachines = $finishingmachines->orderBy('created_at', 'DESC')
         ->paginate(config("motorTraders.paginate.perPage"));
         return view("finishingmachines.index", compact("finishingmachines"));
     }

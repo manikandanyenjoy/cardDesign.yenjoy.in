@@ -12,10 +12,23 @@ use File;
 
 class FoldController extends Controller
 {
-    public function index()
+     public function index(Request $request)
     {
-        $folds = FoldMaster::orderBy('created_at', 'DESC')
+         $master = new FoldMaster();
+      
+        if($request->search){
+          $columnsToSearch = DB::getSchemaBuilder()->getColumnListing('fold_masters');
+
+          $searchQuery = '%' . $request->search . '%'; 
+
+          foreach($columnsToSearch as $column) {
+              $master = $master->orWhere($column, 'LIKE', $searchQuery);
+          }
+        }
+      
+        $folds = $master->orderBy('created_at', 'DESC')
         ->paginate(config("motorTraders.paginate.perPage"));
+       
         return view("folds.index", compact("folds"));
     }
 
@@ -37,12 +50,14 @@ class FoldController extends Controller
             if ($request->hasFile("image")) {
                 $file = $request->file("image");
                 // if(Storage::disk('folds')->makeDirectory("{$foldCreate->id}", 0755, true))
-                if(File::makeDirectory("foldsImage", 0755, true))
+                if(!File::exists('foldsImage'))
                 {
-                    $filePath = $file->store("{$foldCreate->id}", [
-                        "disk" => "folds",
-                    ]);
+                    File::makeDirectory("foldsImage", 0755, true);
                 }
+
+                $filePath = $file->store("{$foldCreate->id}", [
+                    "disk" => "folds",
+                ]);
             }
 
             if (isset($filePath)) {
@@ -87,12 +102,13 @@ class FoldController extends Controller
             if ($request->hasFile("image")) {
                 $file = $request->file("image");
                 // if(Storage::disk('folds')->makeDirectory("{$fold->id}", 0777, true))
-                if(File::makeDirectory("foldsImage", 0755, true))
+                if(!File::exists('foldsImage'))
                 {
-                    $filePath = $file->store("{$fold->id}", [
-                        "disk" => "folds",
-                    ]);
+                    File::makeDirectory("foldsImage", 0755, true);
                 }
+                $filePath = $file->store("{$fold->id}", [
+                    "disk" => "folds",
+                ]);
             }
 
             if (isset($filePath)) {

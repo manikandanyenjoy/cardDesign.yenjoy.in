@@ -11,6 +11,7 @@ use App\Models\Staf_master;
 use App\Models\Role_master;
 use App\Models\Staf_address;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class DesignerController extends Controller
 {
@@ -19,11 +20,30 @@ class DesignerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $designers = Staf_master::where('role_id',1)->orderBy('created_at', 'DESC')->withTrashed()->paginate(
+        $staf = Staf_master::where('role_id',1);
+      
+        if($request->search){
+          $columnsToSearch = DB::getSchemaBuilder()->getColumnListing('staf_masters');
+
+          $searchQuery = '%' . $request->search . '%'; 
+
+         $staf ->where(function ($query) use ($columnsToSearch,$searchQuery) {
+            foreach($columnsToSearch as $column) {
+                      $query = $query->orWhere($column, 'LIKE', $searchQuery);
+                  }
+			});
+          
+        }
+      
+        $designers = $staf->orderBy('created_at', 'DESC')->withTrashed()->paginate(config("motorTraders.paginate.perPage"));
+      
+      
+      
+      /*$designers = Staf_master::where('role_id',1)->orderBy('created_at', 'DESC')->withTrashed()->paginate(
             config("motorTraders.paginate.perPage")
-        );
+        );*/
 
         return view("designer.index", compact("designers"));
     }

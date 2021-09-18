@@ -7,13 +7,28 @@ use Illuminate\Http\Request;
 
 use App\Models\YarnMaster;
 use App\Http\Requests\Admin\YarnRequest;
+use DB;
 
 class YarnController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $yarns = YarnMaster::orderBy('created_at', 'DESC')
+         $master = new YarnMaster();
+      
+        if($request->search){
+          $columnsToSearch = DB::getSchemaBuilder()->getColumnListing('yarn_masters');
+
+          $searchQuery = '%' . $request->search . '%'; 
+
+          foreach($columnsToSearch as $column) {
+              $master = $master->orWhere($column, 'LIKE', $searchQuery);
+          }
+        }
+      
+        $yarns = $master->orderBy('created_at', 'DESC')
         ->paginate(config("motorTraders.paginate.perPage"));
+       
+        
         return view("yarns.index", compact("yarns"));
     }
 

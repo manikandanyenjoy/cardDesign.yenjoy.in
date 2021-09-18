@@ -19,8 +19,9 @@ use App\Http\Controllers\Admin\CategoryController;
 Auth::routes(['register' => false]);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+  
+  	
+   Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
     Route::get('users/create', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('users.create');
     Route::post('users', [\App\Http\Controllers\Admin\UserController::class, 'store'])->name('users.store');
@@ -53,7 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('staffs/{staff}', [\App\Http\Controllers\Admin\StaffController::class, 'update'])->name('staffs.update');
     Route::get('staffs/{staff}', [\App\Http\Controllers\Admin\StaffController::class, 'show'])->name('staffs.show');
 
-
+ 
 
     //Designer
 
@@ -209,6 +210,11 @@ Route::middleware(['auth'])->group(function () {
  Route::put('woven-design-card/{woven}', [\App\Http\Controllers\Admin\WovenController::class, 'update'])->name('woven.update');
  Route::get('woven-design-card/{woven}', [\App\Http\Controllers\Admin\WovenController::class, 'show'])->name('woven.show');
  Route::delete('woven-design-card/{woven}', [\App\Http\Controllers\Admin\WovenController::class, 'destroy'])->name('woven.destroy');
+ Route::get('create-purchaseorder/{woven}', [\App\Http\Controllers\Admin\WovenController::class, 'po'])->name('create.purchaseorder');
+  
+  //create.purchaseorder
+  
+  
 
     Route::get('roles',[RoleController::class,'index'])->name('role.index');
     Route::get('roles/create',[RoleController::class,'create'])->name('role.create');
@@ -223,6 +229,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('categories/{category}/edit',[CategoryController::class,'edit'])->name('category.edit');
     Route::put('categories/{category}',[CategoryController::class,'update'])->name('category.update');
     Route::delete('categories/{category}',[CategoryController::class,'destroy'])->name('category.destroy');
+  
+  
+   //woven design card
 
+ Route::get('purchase-order', [\App\Http\Controllers\Admin\PurchaseorderController::class, 'index'])->name('purchaseorder.index');
+ Route::get('purchase-order/create', [\App\Http\Controllers\Admin\PurchaseorderController::class, 'create'])->name('purchaseorder.create');
+ Route::post('purchase-order', [\App\Http\Controllers\Admin\PurchaseorderController::class, 'store'])->name('purchaseorder.store');
+ Route::get('purchase-order/{woven}/edit', [\App\Http\Controllers\Admin\PurchaseorderController::class, 'edit'])->name('purchaseorder.edit');
+ Route::put('purchase-order/{woven}', [\App\Http\Controllers\Admin\PurchaseorderController::class, 'update'])->name('purchaseorder.update');
+ Route::get('purchase-order/{woven}', [\App\Http\Controllers\Admin\PurchaseorderController::class, 'show'])->name('purchaseorder.show');
+ Route::delete('purchase-order/{woven}', [\App\Http\Controllers\Admin\PurchaseorderController::class, 'destroy'])->name('purchaseorder.destroy');
+  
+
+  Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
 
