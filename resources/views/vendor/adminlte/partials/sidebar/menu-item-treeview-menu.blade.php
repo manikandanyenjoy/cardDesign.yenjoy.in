@@ -3,11 +3,13 @@
     {{-- Menu toggler --}}
     <a class="nav-link {{ $item['class'] }} @isset($item['shift']) {{ $item['shift'] }} @endisset"
        href="" {!! $item['data-compiled'] ?? '' !!}>
-
+        @if($item['icon'])
+        <img src="{{url('../img/',$item['icon'] ?? 'setting.png')}}" alt="">
+        @else
         <i class="{{ $item['icon'] ?? 'far fa-fw fa-circle' }} {{
             isset($item['icon_color']) ? 'text-'.$item['icon_color'] : ''
         }}"></i>
-
+        @endif
         <p>
             {{ $item['text'] }}
             <i class="fas fa-angle-left right"></i>
@@ -20,7 +22,15 @@
         </p>
 
     </a>
-
+    @if($item['text']=='Staffs')
+    @php
+            
+    
+        $item['submenu'] = \App\Models\Role_master::getMenu();
+      
+          
+        @endphp
+    @endif
     {{-- Menu items --}}
     <ul class="nav nav-treeview">
         @each('adminlte::partials.sidebar.menu-item', $item['submenu'], 'item')

@@ -46,11 +46,11 @@ return [
     */
 
     'logo' => '<b>Card</b>Designs',
-    'logo_img' => 'images/plus.jpeg',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
-    'logo_img_xl' => null,
-    'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Card Designs',
+    'logo_icon' => 'images/plus.jpeg',
+    'logo_icon_class' => 'brand-image icon-circle elevation-3',
+    'logo_icon_xl' => null,
+    'logo_icon_xl_class' => 'brand-image-xs',
+    'logo_icon_alt' => 'Card Designs',
 
     /*
     |--------------------------------------------------------------------------
@@ -245,26 +245,31 @@ return [
         [
             'text'        => ['Dashboard'],
             'url'         => '',
-            'icon'        => 'fas fa-fw fa-tachometer-alt',
+            // 'icon'        => 'fas fa-fw fa-tachometer-alt',
+            'icon'       => 'dashboard.png',
         ],
         [
             'text'        => ['Admin'],
             'url'         => 'users',
-            'icon'        => 'fas fa-fw fa-user-shield',
+            // 'icon'        => 'fas fa-fw fa-user-shield',
+            'icon'       => 'admin.png',
         ],
         [
             'text'        => ['Vendors'],
             'url'         => 'sellers',
-            'icon'        => 'fas fa-fw fa-user',
+            // 'icon'        => 'fas fa-fw fa-user',
+            'icon'       => 'vendor.png',
         ],
         [
             'text'        => ['Customers'],
             'url'         => 'buyers',
-            'icon'        => 'fas fa-fw fa-user',
+            // 'icon'        => 'fas fa-fw fa-user',
+            'icon'       => 'people.png',
         ],
         [
             'text'        => ['Staffs'],
-            'icon'        => 'fas fa-fw fa-user-tie',
+            // 'icon'        => 'fas fa-fw fa-user-tie',
+            'icon'       => 'employees.png',
             'submenu' => [
                 [
                     'text'        => ['Add Staff'],
@@ -313,7 +318,8 @@ return [
         ],
         [
             'text'        => ['Masters'],
-            'icon'        => 'fas fa-fw fa-dice-d6',
+            // 'icon'        => 'fas fa-fw fa-dice-d6',
+            'icon'       => 'supplies.png',
             'submenu' => [
                 [
                     'text'        => ['Raw Materials'],
@@ -352,26 +358,71 @@ return [
 
         ],
         [
+            'text'        => ['Printed Masters'],
+            // 'icon'        => 'fas fa-fw fa-dice-d6',
+            'icon'       => '3d-printing.png',
+            'submenu' => [
+                [
+                    'text'        => ['Ink Master'],
+                    'url'         => 'ink',
+                    
+                ],
+                [
+                    'text'        => ['Material  Master'],
+                    'url'         => 'material-master',
+                   
+                ],
+                [
+                    'text'        => ['Size Master mm'],
+                    'url'         => 'size-master-mm',
+                   
+                ],
+                
+                [
+                    'text'        => ['Fold Master'],
+                    'url'         => 'folds',
+                    
+                ],
+                 [
+                    'text'        => ['Machine master'],
+                    'url'         => 'folds',
+                    
+                ],
+                 [
+                    'text'        => ['Cut fold  Machine master'],
+                    'url'         => 'cut-fold-machine-master',
+                    
+                ],
+
+            ],
+
+
+        ],
+        [
             'text'        => ['Design Cards'],
-            'icon'        => 'fas fa-fw fa-object-group',
+            // 'icon'        => 'fas fa-fw fa-object-group',
+            'icon'       => 'web-design.png',
             'url'         => 'woven-design-cards',
 
         ],
       [
             'text'        => ['Purchase Order'],
-            'icon'        => 'fas fa-fw fa-object-group',
+            // 'icon'        => 'fas fa-fw fa-object-group',
+            'icon'       => 'purchase.png',
             'url'         => 'purchase-order',
 
         ],
         [
             'text'        => ['Roles'],
-            'icon'        => 'far fa-id-badge',
+            // 'icon'        => 'far fa-id-badge',
+            'icon'       => 'settings.png',
             'url'         => 'roles',
 
         ],
         [
             'text'        => ['Category'],
-            'icon'        => 'fas fa-tags',
+            // 'icon'        => 'fas fa-tags',
+            'icon'       => 'category.png',
             'url'         => 'categories',
 
         ],
@@ -380,7 +431,8 @@ return [
         [
             'text' => ['Change Password'],
             'url'  => 'users/change-password',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon'       => 'padlock.png',
+            // 'icon' => 'fas fa-fw fa-lock',
         ]
     ],
 

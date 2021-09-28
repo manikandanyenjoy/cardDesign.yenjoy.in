@@ -17,7 +17,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="offset-md-1">
+                <div class="">
 
                     @foreach (['danger', 'warning', 'success', 'info'] as $message)
                         @if(Session::has($message))

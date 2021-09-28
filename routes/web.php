@@ -53,7 +53,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('staffs/{staff}/edit', [\App\Http\Controllers\Admin\StaffController::class, 'edit'])->name('staffs.edit');
     Route::put('staffs/{staff}', [\App\Http\Controllers\Admin\StaffController::class, 'update'])->name('staffs.update');
     Route::get('staffs/{staff}', [\App\Http\Controllers\Admin\StaffController::class, 'show'])->name('staffs.show');
-
+    Route::get('stafflist/{role}', [\App\Http\Controllers\Admin\StaffController::class, 'index'])->name('staffs.index');
  
 
     //Designer
@@ -240,6 +240,18 @@ Route::middleware(['auth'])->group(function () {
  Route::put('purchase-order/{woven}', [\App\Http\Controllers\Admin\PurchaseorderController::class, 'update'])->name('purchaseorder.update');
  Route::get('purchase-order/{woven}', [\App\Http\Controllers\Admin\PurchaseorderController::class, 'show'])->name('purchaseorder.show');
  Route::delete('purchase-order/{woven}', [\App\Http\Controllers\Admin\PurchaseorderController::class, 'destroy'])->name('purchaseorder.destroy');
+ 
+ 
+ 
+  //ink
+
+  Route::get('ink', [\App\Http\Controllers\Admin\InkController::class, 'index'])->name('ink.index');
+  Route::get('ink/create', [\App\Http\Controllers\Admin\InkController::class, 'create'])->name('ink.create');
+  Route::post('ink', [\App\Http\Controllers\Admin\InkController::class, 'store'])->name('ink.store');
+  Route::get('ink/{ink}/edit', [\App\Http\Controllers\Admin\InkController::class, 'edit'])->name('ink.edit');
+  Route::put('ink/{ink}', [\App\Http\Controllers\Admin\InkController::class, 'update'])->name('ink.update');
+  Route::get('ink/{ink}', [\App\Http\Controllers\Admin\InkController::class, 'show'])->name('ink.show');
+  Route::delete('ink/{ink}', [\App\Http\Controllers\Admin\InkController::class, 'destroy'])->name('ink.destroy');
   
 
   Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

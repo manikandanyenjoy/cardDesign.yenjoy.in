@@ -7,7 +7,7 @@
 
 @section('content_header')
     <div class="row mb-1">
-        <div class="offset-md-1 col-md-10">
+        <div class=" col-md-12">
             <h1 class="float-left ml-2 font-weight-bold">
                 @if($editCustomer)
                 {{ __('Customer - ') . ucfirst($editCustomer->full_name)}}
@@ -29,7 +29,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="offset-md-1 col-md-10">
+                <div class="col-md-12">
                     @include('shared.errors')
                     <!-- general form elements -->
                     <div class="card card-primary">

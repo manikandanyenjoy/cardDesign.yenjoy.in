@@ -75,11 +75,11 @@
                     <div class="card card-primary" >
                         <!-- card-header -->
                         <div class="card-header">
-                            <h3 class="card-title">{{$editdesignCard ? 'Edit' : 'Create'}} Design Card</h3>
+                            <h3 class="card-title">{{$editdesignCard ? 'Edit' : 'Create'}} Purchase Order</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form method="POST" action="{{ $editdesignCard ? route('woven.update', $editdesignCard->id) : route('woven.store')  }}" enctype="multipart/form-data" novalidate>
+                        <form method="POST" action="{{ $editdesignCard ? route('purchaseorder.update', $editdesignCard->id) : route('purchaseorder.store')  }}" enctype="multipart/form-data" novalidate>
                             @csrf
                             @if($editdesignCard) @method('PUT') @endif
                             <div class="card-body">
@@ -89,7 +89,7 @@
                                             <table class="table table-bordered text-nowrap">
                                                 <tr>
                                                     <th>Customer</th>
-                                                    <td>
+                                                    <td colspan="2" >
                                                         <select class="form-control @error('customer_id') is-invalid @enderror" name="customer_id">
                                                             <option value="">Select Customer</option>
                                                             @foreach( $data['customerMaster'] as $customer) 
@@ -106,63 +106,24 @@
                                                             </div>
                                                         @enderror
                                                     </td>
-                                                    <th>Label</th>
-                                                    <td><input type="text" name="label" value="{{ $editdesignCard ? old('label',$editdesignCard->label) : old('label') }}" class="form-control"></td>
+                                                    <!--<th>Label</th>-->
+                                                    <!--<td><input type="text" name="label" value="{{ $editdesignCard ? old('label',$editdesignCard->label) : old('label') }}" class="form-control"></td>-->
                                                     <th>Date</th>
-                                                    <td><input type="date" name="date" value="{{ $editdesignCard ? old('date',$editdesignCard->date) : old('date') }}" class="form-control"></td>
+                                                    <td colspan="2" ><input type="date" name="date" value="{{ $editdesignCard ? old('date',$editdesignCard->date) : old('date') }}" class="form-control"></td>
                                                 </tr>
 
                                                 <tr>
-                                                    <th>Designer</th>
+                                                    <th>Party PO No </th>
                                                     <td>
-                                                        <select class="form-control" name="designer_id">
-                                                            <option value="">Select Designer</option>
-                                                            @foreach( $data['designerMaster'] as $designer) 
-                                                                @if($editdesignCard)
-                                                                    <option value="{{$designer['id']}}" {{ old('designer_id') == $designer['id'] ? 'selected' : ($designer['id'] == $editdesignCard->designer_id ? 'selected' : '') }}>{{ucfirst($designer['name'])}} </option>
-                                                                @else
-                                                                    <option value="{{$designer['id']}}" {{ old('designer_id') == $designer['id'] ? 'selected' : '' }}>{{ucfirst($designer['name'])}} </option>
-                                                                @endif
-                                                            @endforeach
-                                                        </select>
+                                                      <input type="text" name="party_po_no" value="{{ $party_po_no ? old('date',$Po->party_po_no) : old('party_po_no') }}" class="form-control"> 
                                                     </td>
-                                                    <th>Sales Rep</th>
+                                                    <th>Sale Order No </th>
                                                     <td>
-                                                        <select class="form-control" name="salesrep_id">
-                                                            <option value="">Select Sales Rep</option>
-                                                            @foreach( $data['salesrepMaster'] as $salesrep) 
-                                                                @if($editdesignCard)
-                                                                    <option value="{{$salesrep['id']}}" {{ old('salesrep_id') == $salesrep['id'] ? 'selected' : ($salesrep['id'] == $editdesignCard->salesrep_id ? 'selected' : '') }}>{{ucfirst($salesrep['name'])}} </option>
-                                                                    @else
-                                                                    <option value="{{$salesrep['id']}}" {{ old('salesrep_id') == $salesrep['id'] ? 'selected' : '' }}>{{ucfirst($salesrep['name'])}} </option>
-                                                                @endif
-                                                            @endforeach
-                                                        </select>
+                                                       <input type="text" name="sale_order_no" value="{{ $sale_order_no ? old('date',$Po->sale_order_no) : old('sale_order_no') }}" class="form-control">
                                                     </td>
-                                                    <th>Weaver</th>
-                                                    <td width="150px">
-                                                        <div class="form-group row mx-2">
-                                                            <select style="width: 50%;"  class="form-control" name="weaver[]">
-                                                                <option value="">Select</option>
-                                                                @foreach( $data['loomOperator'] as $loom) 
-                                                                    @if($editdesignCard)
-                                                                        <option value="{{$loom['id']}}" {{ old('weaver.0') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[0]) ? $editdesignCard->weaver[0] : '')? 'selected' : '') }}>{{ucfirst($loom['name'])}} </option>
-                                                                    @else
-                                                                        <option value="{{$loom['id']}}" {{ old('weaver.0') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['name'])}} </option>
-                                                                    @endif
-                                                                @endforeach
-                                                            </select>
-                                                            <select style="width: 50%;" class="form-control" name="weaver[]">
-                                                                <option value="">Select</option>
-                                                                @foreach( $data['loomOperator'] as $loom) 
-                                                                    @if($editdesignCard)
-                                                                        <option value="{{$loom['id']}}" {{ old('weaver.1') == $loom['id'] ? 'selected' : ($loom['id'] == (isset($editdesignCard->weaver[1]) ? $editdesignCard->weaver[1] : '')? 'selected' : '') }}>{{ucfirst($loom['name'])}} </option>
-                                                                        @else
-                                                                        <option value="{{$loom['id']}}" {{ old('weaver.1') == $loom['id'] ? 'selected' : '' }}>{{ucfirst($loom['name'])}} </option>
-                                                                    @endif
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
+                                                    <th>Our Design  No </th>
+                                                    <td width="">
+                                                       <input type="text" name="our_design_no" value="{{ $our_design_no ? old('date',$Po->our_design_no) : old('our_design_no') }}" class="form-control">
                                                     </td>
                                                 </tr>
 

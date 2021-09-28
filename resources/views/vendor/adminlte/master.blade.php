@@ -34,6 +34,8 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
           <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" type="text/css" href="{{asset('css/pixelarity.css')}}">
+		
+		<link rel="stylesheet" type="text/css" href="{{asset('css/admin_custom.css')}}">
     @else
         <link rel="stylesheet" href="{{ mix(config('adminlte.laravel_mix_css_path', 'css/app.css')) }}">
     @endif

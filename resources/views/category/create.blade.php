@@ -18,7 +18,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-md-7">
+                <div class="col-md-12">
 
                 @include('shared.errors')
 
@@ -31,7 +31,7 @@
                             @if($editCategory) @method('PUT') @endif
                             @csrf
                             <div class="card-body row">
-                                <div class="form-group col-12">
+                                <div class="form-group col-4">
                                     <label for="category_name">Category Name</label>
                                     <input type="text" class="form-control @error('category_name') is-invalid @enderror" id="category_name" name="category_name" value="{{ $editCategory ? old('category_name',$editCategory->category_name) : old('category_name') }}" placeholder="Category Name">
                                     @error('category_name')

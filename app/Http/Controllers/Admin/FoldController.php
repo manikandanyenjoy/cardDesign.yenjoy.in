@@ -12,10 +12,23 @@ use File;
 
 class FoldController extends Controller
 {
-    public function index()
+     public function index(Request $request)
     {
-        $folds = FoldMaster::orderBy('created_at', 'DESC')
+         $master = new FoldMaster();
+      
+        if($request->search){
+          $columnsToSearch = DB::getSchemaBuilder()->getColumnListing('fold_masters');
+
+          $searchQuery = '%' . $request->search . '%'; 
+
+          foreach($columnsToSearch as $column) {
+              $master = $master->orWhere($column, 'LIKE', $searchQuery);
+          }
+        }
+      
+        $folds = $master->orderBy('created_at', 'DESC')
         ->paginate(config("motorTraders.paginate.perPage"));
+       
         return view("folds.index", compact("folds"));
     }
 

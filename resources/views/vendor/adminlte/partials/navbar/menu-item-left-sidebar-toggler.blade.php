@@ -9,7 +9,7 @@
         @if(config('adminlte.sidebar_collapse_auto_size'))
             data-auto-collapse-size="{{ config('adminlte.sidebar_collapse_auto_size') }}"
         @endif>
-        <i class="fas fa-bars"></i>
+        <img src="{{url('../img/Folder 2.png')}}" alt="">
         <span class="sr-only">{{ __('adminlte::adminlte.toggle_navigation') }}</span>
     </a>
 </li>

@@ -17,6 +17,34 @@ use File;
 
 class StaffController extends Controller
 {
+    
+     public function index($role,Request $request)
+    {
+        $staf = Staf_master::where('role_id',$role);
+        $role = Role_master::where('id',$role)->first();
+        if($request->search){
+          $columnsToSearch = DB::getSchemaBuilder()->getColumnListing('staf_masters');
+
+          $searchQuery = '%' . $request->search . '%'; 
+
+         $staf ->where(function ($query) use ($columnsToSearch,$searchQuery) {
+            foreach($columnsToSearch as $column) {
+                      $query = $query->orWhere($column, 'LIKE', $searchQuery);
+                  }
+			});
+          
+        }
+      
+        $designers = $staf->orderBy('created_at', 'DESC')->withTrashed()->paginate(config("motorTraders.paginate.perPage"));
+      
+      
+      
+      /*$designers = Staf_master::where('role_id',1)->orderBy('created_at', 'DESC')->withTrashed()->paginate(
+            config("motorTraders.paginate.perPage")
+        );*/
+
+        return view("staff.index", compact("designers","role"));
+    }
     /**
      * Show the form for creating a new resource.
      *

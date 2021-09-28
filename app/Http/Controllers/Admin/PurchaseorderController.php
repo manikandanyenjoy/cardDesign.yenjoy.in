@@ -208,8 +208,13 @@ class PurchaseorderController extends Controller
     {   
         $data           = $this->mastersDatas();
         $editdesignCard = DesignCard::where('id',$woven->id)->first();
+        $Po = [
+            "party_po_no"=>'',
+            "sale_order_no"=>'',
+            "our_design_no"=>''
+            ];
         
-        return view("purchaseorder.create", compact("data","editdesignCard"));
+        return view("purchaseorder.create", compact("data","editdesignCard","Po"));
     }
 
     public function update(WovenRequest $request, DesignCard $woven)
